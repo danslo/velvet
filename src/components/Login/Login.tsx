@@ -1,7 +1,6 @@
-import {FormEvent, useState} from "react";
-import {useGetStoreNameQuery} from "../../types";
+import React, {FormEvent, useState} from "react";
 
-const Login: React.FC<{setToken: (token: string) => void}> = () => {
+const Login: React.FC = () => {
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
 
@@ -12,13 +11,6 @@ const Login: React.FC<{setToken: (token: string) => void}> = () => {
     console.log(password);
   };
 
-  const { data } = useGetStoreNameQuery();
-
-  return (
-    <h1>{data?.storeConfig?.store_name}</h1>
-  );
-
-  /*
   return(
     <form onSubmit={handleSubmit}>
       <label>
@@ -33,8 +25,7 @@ const Login: React.FC<{setToken: (token: string) => void}> = () => {
         <button type="submit">Submit</button>
       </div>
     </form>
-  )*/
-
+  )
 }
 
 export default Login;

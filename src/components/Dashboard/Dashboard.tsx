@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 
-export default function Dashboard() {
+const Dashboard: React.FC = () => {
     return (
-        <h2>Dashboard</h2>
-    );
-}
+        <h1>Dashboard</h1>
+    )
+};
+
+export default Dashboard;
