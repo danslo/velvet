@@ -8,19 +8,20 @@ import {AuthContext} from "./state/context";
 const App: React.FC = () => {
     const [state, dispatch] = useReducer(authReducer, initialAuthState);
 
+    const AppRoutes = () =>
+        <Routes>
+            {routes.map((route) =>
+                <Route path={route.path} key={route.path} element={route.component({})} />
+            )}
+        </Routes>
+
     return (
         <AuthContext.Provider value={{state, dispatch}}>
             <BrowserRouter>
-                <Routes>
-                    {routes.map((route) =>
-                        <Route path={route.path}
-                               key={route.path}
-                               element={route.component({})} />
-                    )}
-                </Routes>
+                <AppRoutes />
             </BrowserRouter>
         </AuthContext.Provider>
-    );
+    )
 }
 
 export default App;

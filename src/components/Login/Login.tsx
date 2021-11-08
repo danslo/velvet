@@ -4,7 +4,6 @@ import {login} from "../../state/actions";
 
 const Login: React.FC = () => {
   const { state, dispatch } = useContext(AuthContext);
-  console.log(dispatch);
 
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
