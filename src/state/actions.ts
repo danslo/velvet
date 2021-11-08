@@ -4,20 +4,16 @@ export enum ActionType {
     LoginUser,
     LogoutUser
 }
+
 export type AuthAction =
-    | { type: ActionType.LoginUser, payload: { token: string } }
+    | { type: ActionType.LoginUser, token: string }
     | { type: ActionType.LogoutUser };
 
-interface LoginPayload {
+export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
     username: string,
     password: string
-}
-
-export async function login(dispatch: Dispatch<AuthAction>, loginPayload: LoginPayload) {
-    console.log('Attempting to login...');
-    console.log(loginPayload.username);
-    console.log(loginPayload.password);
-    dispatch({type: ActionType.LoginUser, payload: {token: "abc"}});
+}) {
+    dispatch({type: ActionType.LoginUser, token: "abc"});
 }
 
 export async function logout(dispatch: Dispatch<AuthAction>) {

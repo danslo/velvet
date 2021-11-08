@@ -1,18 +1,24 @@
-import React, {FormEvent, useState} from "react";
+import React, {FormEvent, useContext, useState} from "react";
+import {AuthContext} from "../../state/context";
+import {login} from "../../state/actions";
 
 const Login: React.FC = () => {
+  const { state, dispatch } = useContext(AuthContext);
+  console.log(dispatch);
+
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(username);
-    console.log(password);
-  };
+    if (username && password) {
+        login(dispatch, {username, password});
+    }
+  }
 
   return(
     <form onSubmit={handleSubmit}>
+      <h2>{state.token}</h2>
       <label>
         <p>Username</p>
         <input type="text" onChange={e => setUsername(e.target.value)} />
