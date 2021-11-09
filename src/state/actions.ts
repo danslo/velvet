@@ -5,27 +5,34 @@ import {NavigateFunction} from "react-router";
 
 export enum ActionType {
     LoginUser,
-    LogoutUser
+    LogoutUser,
+    LoginFailed,
+    LoginRequest
 }
 
 export type AuthAction =
     | { type: ActionType.LoginUser, token: string }
-    | { type: ActionType.LogoutUser };
+    | { type: ActionType.LogoutUser }
+    | { type: ActionType.LoginFailed, errorMessage: string }
+    | { type: ActionType.LoginRequest };
 
 export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthAction>, loginPayload: {
     username: string,
     password: string
 }) {
+    dispatch({type: ActionType.LoginRequest});
     client.mutate({
         mutation: GenerateAdminTokenDocument,
         variables: {
             username: loginPayload.username,
             password: loginPayload.password
         }
-    }).catch(reason => console.log(reason)).then((result: any) => { // TODO: fix type
+    }).then((result: any) => { // todo: type the result. GenerateAdminTokenMutationResult does not work?
         dispatch({type: ActionType.LoginUser, token: result.data.generateAdminToken});
         navigate("/dashboard");
-    })
+    }).catch((reason: {message: string}) => {
+        dispatch({type: ActionType.LoginFailed, errorMessage: reason.message});
+    });
 }
 
 export async function logout(dispatch: Dispatch<AuthAction>) {
