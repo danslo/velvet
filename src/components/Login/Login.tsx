@@ -1,8 +1,7 @@
 import React, {FormEvent} from "react";
 import {useAuthDispatch} from "../../state/context";
 import {login} from "../../state/actions";
-import {Avatar, Box, Button, TextField, Typography} from "@mui/material";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {Box, Button, TextField, Typography} from "@mui/material";
 
 const Login = () => {
   const {dispatch} = useAuthDispatch();
