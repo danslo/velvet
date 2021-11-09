@@ -1,26 +1,15 @@
-import React, {useReducer} from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import routes from "./config/Routes";
-import {authReducer} from "./state/reducer";
-import {initialAuthState} from "./state/state";
-import {AuthContext} from "./state/context";
+import React from 'react';
+import {BrowserRouter} from 'react-router-dom';
+import {AuthProvider} from "./state/context";
+import {AppRoutes} from "./AppRoutes";
 
-const App: React.FC = () => {
-    const [state, dispatch] = useReducer(authReducer, initialAuthState);
-
-    const AppRoutes = () =>
-        <Routes>
-            {routes.map((route) =>
-                <Route path={route.path} key={route.path} element={route.component({})} />
-            )}
-        </Routes>
-
+const App = () => {
     return (
-        <AuthContext.Provider value={{state, dispatch}}>
+        <AuthProvider>
             <BrowserRouter>
                 <AppRoutes />
             </BrowserRouter>
-        </AuthContext.Provider>
+        </AuthProvider>
     )
 }
 
