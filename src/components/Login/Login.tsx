@@ -2,9 +2,11 @@ import React, {FormEvent} from "react";
 import {useAuthDispatch} from "../../state/context";
 import {login} from "../../state/actions";
 import {Box, Button, TextField, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
   const {dispatch} = useAuthDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -12,7 +14,7 @@ const Login = () => {
       const username = data.get('username')?.toString();
       const password = data.get('password')?.toString();
       if (username && password) {
-          login(dispatch, {username, password});
+          login(navigate, dispatch, {username, password});
       }
   }
 

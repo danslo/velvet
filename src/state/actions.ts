@@ -1,6 +1,7 @@
 import {Dispatch} from "react";
 import {GenerateAdminTokenDocument} from "../types";
 import {client} from "../index";
+import {NavigateFunction} from "react-router";
 
 export enum ActionType {
     LoginUser,
@@ -11,7 +12,7 @@ export type AuthAction =
     | { type: ActionType.LoginUser, token: string }
     | { type: ActionType.LogoutUser };
 
-export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
+export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthAction>, loginPayload: {
     username: string,
     password: string
 }) {
@@ -23,8 +24,7 @@ export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
         }
     }).catch(reason => console.log(reason)).then((result: any) => { // TODO: fix type
         dispatch({type: ActionType.LoginUser, token: result.data.generateAdminToken});
-
-        // todo: navigate
+        navigate("/dashboard");
     })
 }
 
