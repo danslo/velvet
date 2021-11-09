@@ -1,6 +1,6 @@
-import React, {FunctionComponent} from "react";
+import React from "react";
 
-const Dashboard: FunctionComponent = () => {
+const Dashboard = () => {
     return (
         <h1>Dashboard</h1>
     )
