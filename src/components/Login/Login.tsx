@@ -1,9 +1,9 @@
-import React, {FormEvent, useContext, useState} from "react";
-import {AuthContext} from "../../state/context";
+import React, {FormEvent, useState} from "react";
+import {useAuthDispatch} from "../../state/context";
 import {login} from "../../state/actions";
 
 const Login: React.FC = () => {
-  const { state, dispatch } = useContext(AuthContext);
+  const {dispatch} = useAuthDispatch();
 
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
@@ -17,7 +17,6 @@ const Login: React.FC = () => {
 
   return(
     <form onSubmit={handleSubmit}>
-      <h2>{state.token}</h2>
       <label>
         <p>Username</p>
         <input type="text" onChange={e => setUsername(e.target.value)} />
