@@ -1,8 +1,8 @@
-import React, {FormEvent, useState} from "react";
+import React, {FormEvent, FunctionComponent, useState} from "react";
 import {useAuthDispatch} from "../../state/context";
 import {login} from "../../state/actions";
 
-const Login: React.FC = () => {
+const Login: FunctionComponent = () => {
   const {dispatch} = useAuthDispatch();
 
   const [username, setUsername] = useState<string>();

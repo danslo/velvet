@@ -1,11 +1,11 @@
 import Login from "../components/Login/Login";
 import Dashboard from "../components/Dashboard/Dashboard";
 import PageNotFound from "../components/PageNotFound/PageNotFound";
-import {FC} from "react";
+import {FunctionComponent} from "react";
 
 const routes: Array<{
     path: string,
-    component: FC,
+    component: FunctionComponent,
     is_private: boolean
 }> = [
     {
