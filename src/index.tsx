@@ -5,7 +5,7 @@ import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from "@apollo/cli
 
 const link = new HttpLink({uri: "https://magento24.test/graphql"});
 const cache = new InMemoryCache({});
-const client = new ApolloClient({link, cache});
+export const client = new ApolloClient({link, cache}); // todo: hmmmm
 
 ReactDOM.render(
   <React.StrictMode>

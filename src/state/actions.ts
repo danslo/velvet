@@ -1,4 +1,6 @@
 import {Dispatch} from "react";
+import {GenerateAdminTokenDocument} from "../types";
+import {client} from "../index";
 
 export enum ActionType {
     LoginUser,
@@ -13,7 +15,17 @@ export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
     username: string,
     password: string
 }) {
-    dispatch({type: ActionType.LoginUser, token: "abc"});
+    client.mutate({
+        mutation: GenerateAdminTokenDocument,
+        variables: {
+            username: loginPayload.username,
+            password: loginPayload.password
+        }
+    }).catch(reason => console.log(reason)).then((result: any) => { // TODO: fix type
+        dispatch({type: ActionType.LoginUser, token: result.data.generateAdminToken});
+
+        // todo: navigate
+    })
 }
 
 export async function logout(dispatch: Dispatch<AuthAction>) {

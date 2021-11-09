@@ -8,7 +8,7 @@ export const AppRoutes = () => {
     return (
         <Routes>
             {routes
-                .filter(route => !route.is_private || state.token)
+                //.filter(route => !route.is_private || state.token)
                 .map(route =>
                     <Route
                         element={route.component({})}

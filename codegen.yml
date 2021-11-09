@@ -2,13 +2,11 @@ overwrite: true
 schema: "https://magento24.test/graphql"
 documents: "src/**/*.graphql"
 generates:
-  ./src/types.d.ts:
+  ./src/types.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+      - named-operations-object
     config:
       withHooks: true
-#  ./graphql.schema.json:
-#    plugins:
-#      - "introspection"

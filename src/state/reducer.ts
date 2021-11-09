@@ -1,16 +1,18 @@
-import {AuthState, initialAuthState} from "./state";
+import {AuthState} from "./state";
 import {ActionType, AuthAction} from "./actions";
 
 export function authReducer(state: AuthState, action: AuthAction) {
+    console.log(action);
+
     switch (action.type) {
         case ActionType.LoginUser:
             return {
-                ...initialAuthState,
+                ...state,
                 token: action.token
             };
         case ActionType.LogoutUser:
             return {
-                ...initialAuthState,
+                ...state,
                 token: null
             }
         default:

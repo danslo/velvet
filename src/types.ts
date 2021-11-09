@@ -1,6 +1,5 @@
+import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-import {gql} from '@apollo/client';
-
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -29,8 +28,6 @@ export type Query = {
   category?: Maybe<CategoryTree>;
   /** Returns an array of categories based on the specified filters. */
   categoryList?: Maybe<Array<Maybe<CategoryTree>>>;
-  /** Retrieves an array of configuration data for the chat widget. */
-  chatData?: Maybe<ChatData>;
   /** The Checkout Agreements information */
   checkoutAgreements?: Maybe<Array<Maybe<CheckoutAgreement>>>;
   /** The CMS block query returns information about CMS blocks */
@@ -57,33 +54,20 @@ export type Query = {
   customerOrders?: Maybe<CustomerOrders>;
   /** Return a list of customer payment tokens */
   customerPaymentTokens?: Maybe<CustomerPaymentTokens>;
-  /** Returns status of Easy Email Capture for Checkout. */
-  emailCaptureCheckout?: Maybe<IsConfigSettingEnabledOutput>;
-  /** Returns status of Easy Email Capture for Newsletter. */
-  emailCaptureNewsletter?: Maybe<IsConfigSettingEnabledOutput>;
   /** Retrieve secure PayPal url for Payments Pro Hosted Solution transaction. */
   getHostedProUrl?: Maybe<HostedProUrl>;
   /** Retrieve payment credentials for transaction. Use this query for Payflow Link and Payments Advanced payment methods. */
   getPayflowLinkToken?: Maybe<PayflowLinkToken>;
   isEmailAvailable?: Maybe<IsEmailAvailableOutput>;
-  /** Retrieves information about an order by order id. */
-  orderData?: Maybe<Order>;
   /** The pickup locations query searches for locations that match the search request requirements. */
   pickupLocations?: Maybe<PickupLocations>;
   /** Retrieves metadata required by clients to render the Reviews section. */
   productReviewRatingsMetadata: ProductReviewRatingsMetadata;
   /** The products query searches for products that match the criteria specified in the search and filter attributes. */
   products?: Maybe<Products>;
-  /** Return the full details for a specified product, category, or CMS page given the specified url_key, appended by the url_suffix, if one exists */
-  route?: Maybe<RoutableInterface>;
   /** The store config query */
   storeConfig?: Maybe<StoreConfig>;
-  /** Retrieves an array of configuration data for different types of tracking. */
-  trackingData?: Maybe<TrackingData>;
-  /**
-   * The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists
-   * @deprecated Use the 'route' query instead
-   */
+  /** The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists */
   urlResolver?: Maybe<EntityUrl>;
   /**
    * The wishlist query returns the contents of a customer's wish list
@@ -161,11 +145,6 @@ export type QueryIsEmailAvailableArgs = {
 };
 
 
-export type QueryOrderDataArgs = {
-  orderId: Scalars['String'];
-};
-
-
 export type QueryPickupLocationsArgs = {
   area?: Maybe<AreaInput>;
   currentPage?: Maybe<Scalars['Int']>;
@@ -182,11 +161,6 @@ export type QueryProductsArgs = {
   pageSize?: Maybe<Scalars['Int']>;
   search?: Maybe<Scalars['String']>;
   sort?: Maybe<ProductAttributeSortInput>;
-};
-
-
-export type QueryRouteArgs = {
-  url: Scalars['String'];
 };
 
 
@@ -482,8 +456,6 @@ export type CartItemPrices = {
   __typename?: 'CartItemPrices';
   /** An array of discounts to be applied to the cart item */
   discounts?: Maybe<Array<Maybe<Discount>>>;
-  /** Applied FPT to the cart item. */
-  fixed_product_taxes?: Maybe<Array<Maybe<FixedProductTax>>>;
   price: Money;
   row_total: Money;
   row_total_including_tax: Money;
@@ -683,17 +655,9 @@ export enum CurrencyEnum {
   Zwd = 'ZWD'
 }
 
-/** A single FPT that can be applied to a product price. */
-export type FixedProductTax = {
-  __typename?: 'FixedProductTax';
-  /** Amount of the FPT as a money object. */
-  amount?: Maybe<Money>;
-  /** The label assigned to the FPT to be displayed on the frontend. */
-  label?: Maybe<Scalars['String']>;
-};
-
 /** The ProductInterface contains attributes that are common to all types of products. Note that descriptions may not be available for custom and EAV attributes. */
 export type ProductInterface = {
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -703,6 +667,9 @@ export type ProductInterface = {
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  category_gear?: Maybe<Scalars['String']>;
+  climate?: Maybe<Scalars['String']>;
+  collar?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -715,6 +682,11 @@ export type ProductInterface = {
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  eco_collection?: Maybe<Scalars['Int']>;
+  erin_recommends?: Maybe<Scalars['Int']>;
+  features_bags?: Maybe<Scalars['String']>;
+  format?: Maybe<Scalars['Int']>;
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -726,6 +698,7 @@ export type ProductInterface = {
   image?: Maybe<ProductImage>;
   /** A number representing the product's manufacturer. */
   manufacturer?: Maybe<Scalars['Int']>;
+  material?: Maybe<Scalars['String']>;
   /** An array of Media Gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -741,6 +714,7 @@ export type ProductInterface = {
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  new?: Maybe<Scalars['Int']>;
   /**
    * The beginning date for new product listings, and determines if the product is featured as a new product.
    * @deprecated The field should not be used on the storefront.
@@ -755,6 +729,8 @@ export type ProductInterface = {
   only_x_left_in_stock?: Maybe<Scalars['Float']>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  pattern?: Maybe<Scalars['String']>;
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * A ProductPrices object, indicating the price of an item.
    * @deprecated Use price_range for product price information.
@@ -774,10 +750,13 @@ export type ProductInterface = {
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -791,6 +770,10 @@ export type ProductInterface = {
   special_to_date?: Maybe<Scalars['String']>;
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  strap_bags?: Maybe<Scalars['String']>;
+  style_bags?: Maybe<Scalars['String']>;
+  style_bottom?: Maybe<Scalars['String']>;
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -1166,6 +1149,15 @@ export type ProductDiscount = {
   percent_off?: Maybe<Scalars['Float']>;
 };
 
+/** A single FPT that can be applied to a product price. */
+export type FixedProductTax = {
+  __typename?: 'FixedProductTax';
+  /** Amount of the FPT as a money object. */
+  amount?: Maybe<Money>;
+  /** The label assigned to the FPT to be displayed on the frontend. */
+  label?: Maybe<Scalars['String']>;
+};
+
 /** A price based on the quantity purchased. */
 export type TierPrice = {
   __typename?: 'TierPrice';
@@ -1451,8 +1443,8 @@ export type CategoryResult = {
   total_count?: Maybe<Scalars['Int']>;
 };
 
-/** Category tree implementation */
-export type CategoryTree = CategoryInterface & RoutableInterface & {
+/** Category Tree implementation. */
+export type CategoryTree = CategoryInterface & {
   __typename?: 'CategoryTree';
   available_sort_by?: Maybe<Array<Maybe<Scalars['String']>>>;
   /** Breadcrumbs, parent categories info. */
@@ -1502,12 +1494,6 @@ export type CategoryTree = CategoryInterface & RoutableInterface & {
   product_count?: Maybe<Scalars['Int']>;
   /** The list of products assigned to the category. */
   products?: Maybe<CategoryProducts>;
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /** The unique ID for a `CategoryInterface` object. */
   uid: Scalars['ID'];
   /**
@@ -1524,38 +1510,11 @@ export type CategoryTree = CategoryInterface & RoutableInterface & {
 };
 
 
-/** Category tree implementation */
+/** Category Tree implementation. */
 export type CategoryTreeProductsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
   sort?: Maybe<ProductAttributeSortInput>;
-};
-
-/** Routable entities serve as the model for a rendered page */
-export type RoutableInterface = {
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
-};
-
-/** This enumeration defines the entity type. */
-export enum UrlRewriteEntityTypeEnum {
-  Category = 'CATEGORY',
-  CmsPage = 'CMS_PAGE',
-  Product = 'PRODUCT'
-}
-
-export type ChatData = {
-  __typename?: 'ChatData';
-  /** API space id */
-  api_space_id?: Maybe<Scalars['String']>;
-  /** Cookie name */
-  cookie_name?: Maybe<Scalars['String']>;
-  /** Is chat enabled */
-  is_enabled?: Maybe<Scalars['Boolean']>;
 };
 
 /** Defines all Checkout Agreement information */
@@ -1589,7 +1548,7 @@ export type CmsBlocks = {
 };
 
 /** CMS page defines all CMS page information */
-export type CmsPage = RoutableInterface & {
+export type CmsPage = {
   __typename?: 'CmsPage';
   /** CMS page content */
   content?: Maybe<Scalars['String']>;
@@ -1605,14 +1564,8 @@ export type CmsPage = RoutableInterface & {
   meta_title?: Maybe<Scalars['String']>;
   /** CMS page content heading */
   page_layout?: Maybe<Scalars['String']>;
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
   /** CMS page title */
   title?: Maybe<Scalars['String']>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /** URL key of CMS page */
   url_key?: Maybe<Scalars['String']>;
 };
@@ -1722,8 +1675,6 @@ export type Attribute = {
   entity_type?: Maybe<Scalars['String']>;
   /** The frontend input type of the attribute */
   input_type?: Maybe<Scalars['String']>;
-  /** Contains details about the storefront properties configured for the attribute */
-  storefront_properties?: Maybe<StorefrontProperties>;
 };
 
 /** Attribute option. */
@@ -1734,26 +1685,6 @@ export type AttributeOption = {
   /** Attribute option value. */
   value?: Maybe<Scalars['String']>;
 };
-
-export type StorefrontProperties = {
-  __typename?: 'StorefrontProperties';
-  /** The relative position of the attribute in the layered navigation block */
-  position?: Maybe<Scalars['Int']>;
-  /** Indicates whether the attribute is filterable with results, without results, or not at all */
-  use_in_layered_navigation?: Maybe<UseInLayeredNavigationOptions>;
-  /** Indicates whether the attribute is displayed in product listings */
-  use_in_product_listing?: Maybe<Scalars['Boolean']>;
-  /** Indicates whether the attribute can be used in layered navigation on search results pages */
-  use_in_search_results_layered_navigation?: Maybe<Scalars['Boolean']>;
-  /** Indicates whether the attribute is displayed on product pages */
-  visible_on_catalog_pages?: Maybe<Scalars['Boolean']>;
-};
-
-export enum UseInLayeredNavigationOptions {
-  FilterableNoResult = 'FILTERABLE_NO_RESULT',
-  FilterableWithResults = 'FILTERABLE_WITH_RESULTS',
-  No = 'NO'
-}
 
 /** Customer defines the customer name and address and other details */
 export type Customer = {
@@ -2934,12 +2865,6 @@ export enum PaymentTokenTypeEnum {
   Card = 'card'
 }
 
-export type IsConfigSettingEnabledOutput = {
-  __typename?: 'IsConfigSettingEnabledOutput';
-  /** Is config setting enabled */
-  is_enabled?: Maybe<Scalars['Boolean']>;
-};
-
 /** The required input to request the secure URL for Payments Pro Hosted Solution payment. */
 export type HostedProUrlInput = {
   /** The unique ID that identifies the customer's cart */
@@ -2982,19 +2907,6 @@ export type IsEmailAvailableOutput = {
   __typename?: 'IsEmailAvailableOutput';
   /** Is email availabel value */
   is_email_available?: Maybe<Scalars['Boolean']>;
-};
-
-/** Contains details about the requested order */
-export type Order = {
-  __typename?: 'Order';
-  /** An array containing the items purchased in this order */
-  items?: Maybe<Array<Maybe<Scalars['String']>>>;
-  /** @deprecated The order_id field is deprecated, use order_number instead. */
-  order_id?: Maybe<Scalars['String']>;
-  /** The unique ID for a `Order` object. */
-  order_number: Scalars['String'];
-  /** Contains the calculated total for this order */
-  total?: Maybe<Scalars['String']>;
 };
 
 /** AreaInput defines the parameters which will be used for filter by specified location. */
@@ -3157,20 +3069,62 @@ export type ProductReviewRatingValueMetadata = {
 
 /** ProductAttributeFilterInput defines the filters to be used in the search. A filter contains at least one attribute, a comparison operator, and the value that is being searched for. */
 export type ProductAttributeFilterInput = {
+  /** Attribute label: Activity */
+  activity?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Category Gear */
+  category_gear?: Maybe<FilterEqualTypeInput>;
   /** Deprecated: use `category_uid` to filter product by category id. */
   category_id?: Maybe<FilterEqualTypeInput>;
   /** Filter product by the unique ID for a `CategoryInterface` object. */
   category_uid?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Climate */
+  climate?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Collar */
+  collar?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Color */
+  color?: Maybe<FilterEqualTypeInput>;
   /** Attribute label: Description */
   description?: Maybe<FilterMatchTypeInput>;
+  /** Attribute label: Eco Collection */
+  eco_collection?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Erin Recommends */
+  erin_recommends?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Features */
+  features_bags?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Format */
+  format?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Gender */
+  gender?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Material */
+  material?: Maybe<FilterEqualTypeInput>;
   /** Attribute label: Product Name */
   name?: Maybe<FilterMatchTypeInput>;
+  /** Attribute label: New */
+  new?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Pattern */
+  pattern?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Performance Fabric */
+  performance_fabric?: Maybe<FilterEqualTypeInput>;
   /** Attribute label: Price */
   price?: Maybe<FilterRangeTypeInput>;
+  /** Attribute label: Sale */
+  sale?: Maybe<FilterEqualTypeInput>;
   /** Attribute label: Short Description */
   short_description?: Maybe<FilterMatchTypeInput>;
+  /** Attribute label: Size */
+  size?: Maybe<FilterEqualTypeInput>;
   /** Attribute label: SKU */
   sku?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Sleeve */
+  sleeve?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Strap/Handle */
+  strap_bags?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Style Bags */
+  style_bags?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Style Bottom */
+  style_bottom?: Maybe<FilterEqualTypeInput>;
+  /** Attribute label: Style General */
+  style_general?: Maybe<FilterEqualTypeInput>;
   /** The part of the URL that identifies the product */
   url_key?: Maybe<FilterEqualTypeInput>;
 };
@@ -3214,8 +3168,6 @@ export type Aggregation = {
   label?: Maybe<Scalars['String']>;
   /** Array of options for the aggregation. */
   options?: Maybe<Array<Maybe<AggregationOption>>>;
-  /** The relative position of the attribute in a layered navigation block */
-  position?: Maybe<Scalars['Int']>;
 };
 
 export type AggregationOption = AggregationOptionInterface & {
@@ -3296,18 +3248,6 @@ export type SortField = {
   value?: Maybe<Scalars['String']>;
 };
 
-export type TrackingData = {
-  __typename?: 'TrackingData';
-  /** Is Page Tracking enabled */
-  page_tracking_enabled?: Maybe<Scalars['Boolean']>;
-  /** dotdigital region prefix */
-  region_prefix?: Maybe<Scalars['String']>;
-  /** Is ROI Tracking enabled */
-  roi_tracking_enabled?: Maybe<Scalars['Boolean']>;
-  /** Web Behaviour Tracking profile ID */
-  wbt_profile_id?: Maybe<Scalars['String']>;
-};
-
 /** EntityUrl is an output object containing the `id`, `relative_url`, and `type` attributes */
 export type EntityUrl = {
   __typename?: 'EntityUrl';
@@ -3327,6 +3267,13 @@ export type EntityUrl = {
   /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
   type?: Maybe<UrlRewriteEntityTypeEnum>;
 };
+
+/** This enumeration defines the entity type. */
+export enum UrlRewriteEntityTypeEnum {
+  Category = 'CATEGORY',
+  CmsPage = 'CMS_PAGE',
+  Product = 'PRODUCT'
+}
 
 /** Deprecated: `Wishlist` type should be used instead */
 export type WishlistOutput = {
@@ -3371,8 +3318,6 @@ export type Mutation = {
   addProductsToWishlist?: Maybe<AddProductsToWishlistOutput>;
   addSimpleProductsToCart?: Maybe<AddSimpleProductsToCartOutput>;
   addVirtualProductsToCart?: Maybe<AddVirtualProductsToCartOutput>;
-  /** Add items in the specified wishlist to the customer's cart */
-  addWishlistItemsToCart?: Maybe<AddWishlistItemsToCartOutput>;
   applyCouponToCart?: Maybe<ApplyCouponToCartOutput>;
   /** Assign the specified compare list to the logged in customer */
   assignCompareListToCustomer?: Maybe<AssignCompareListToCustomerOutput>;
@@ -3404,6 +3349,7 @@ export type Mutation = {
   deleteCustomerAddress?: Maybe<Scalars['Boolean']>;
   /** Delete a customer payment token */
   deletePaymentToken?: Maybe<DeletePaymentTokenOutput>;
+  generateAdminToken: Scalars['String'];
   /** Retrieve the customer token */
   generateCustomerToken?: Maybe<CustomerToken>;
   /** Request a customer token so that an administrator can perform remote shopping assistance */
@@ -3439,8 +3385,6 @@ export type Mutation = {
   /** Subscribes the specified email to a newsletter */
   subscribeEmailToNewsletter?: Maybe<SubscribeEmailToNewsletterOutput>;
   updateCartItems?: Maybe<UpdateCartItemsOutput>;
-  /** Sends chat profile data to Engagement Cloud. */
-  updateChatProfile?: Maybe<Scalars['Boolean']>;
   /** Deprecated. Use UpdateCustomerV2 instead. */
   updateCustomer?: Maybe<CustomerOutput>;
   /** Update customer address */
@@ -3450,8 +3394,6 @@ export type Mutation = {
   updateCustomerV2?: Maybe<CustomerOutput>;
   /** Updates one or more products in the specified wish list */
   updateProductsInWishlist?: Maybe<UpdateProductsInWishlistOutput>;
-  /** Updates the email address of a quote. */
-  updateQuoteEmail?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -3494,12 +3436,6 @@ export type MutationAddSimpleProductsToCartArgs = {
 
 export type MutationAddVirtualProductsToCartArgs = {
   input?: Maybe<AddVirtualProductsToCartInput>;
-};
-
-
-export type MutationAddWishlistItemsToCartArgs = {
-  wishlistId: Scalars['ID'];
-  wishlistItemIds?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -3576,6 +3512,12 @@ export type MutationDeleteCustomerAddressArgs = {
 
 export type MutationDeletePaymentTokenArgs = {
   public_hash: Scalars['String'];
+};
+
+
+export type MutationGenerateAdminTokenArgs = {
+  password: Scalars['String'];
+  username: Scalars['String'];
 };
 
 
@@ -3689,14 +3631,6 @@ export type MutationUpdateCartItemsArgs = {
 };
 
 
-export type MutationUpdateChatProfileArgs = {
-  email?: Maybe<Scalars['String']>;
-  firstname?: Maybe<Scalars['String']>;
-  lastname?: Maybe<Scalars['String']>;
-  profileId: Scalars['String'];
-};
-
-
 export type MutationUpdateCustomerArgs = {
   input: CustomerInput;
 };
@@ -3722,12 +3656,6 @@ export type MutationUpdateCustomerV2Args = {
 export type MutationUpdateProductsInWishlistArgs = {
   wishlistId: Scalars['ID'];
   wishlistItems: Array<WishlistItemUpdateInput>;
-};
-
-
-export type MutationUpdateQuoteEmailArgs = {
-  cartId: Scalars['String'];
-  email: Scalars['String'];
 };
 
 export type AddBundleProductsToCartInput = {
@@ -3914,35 +3842,6 @@ export type AddVirtualProductsToCartOutput = {
   __typename?: 'AddVirtualProductsToCartOutput';
   cart: Cart;
 };
-
-export type AddWishlistItemsToCartOutput = {
-  __typename?: 'AddWishlistItemsToCartOutput';
-  /** An array of errors encountered while adding products to the customer's cart */
-  add_wishlist_items_to_cart_user_errors: Array<Maybe<WishlistCartUserInputError>>;
-  /** Indicates whether the attempt to add items to the customer's cart was successful */
-  status: Scalars['Boolean'];
-  /** Contains the wish list with all items that were successfully added */
-  wishlist: Wishlist;
-};
-
-export type WishlistCartUserInputError = {
-  __typename?: 'WishlistCartUserInputError';
-  /** An error code that describes the error encountered */
-  code: WishlistCartUserInputErrorType;
-  /** A localized error message */
-  message: Scalars['String'];
-  /** The unique ID of the `Wishlist` object containing an error */
-  wishlistId: Scalars['ID'];
-  /** The unique ID of the wish list item containing an error */
-  wishlistItemId: Scalars['ID'];
-};
-
-export enum WishlistCartUserInputErrorType {
-  InsufficientStock = 'INSUFFICIENT_STOCK',
-  NotSalable = 'NOT_SALABLE',
-  ProductNotFound = 'PRODUCT_NOT_FOUND',
-  Undefined = 'UNDEFINED'
-}
 
 export type ApplyCouponToCartInput = {
   cart_id: Scalars['String'];
@@ -4262,6 +4161,14 @@ export type PlaceOrderInput = {
 export type PlaceOrderOutput = {
   __typename?: 'PlaceOrderOutput';
   order: Order;
+};
+
+export type Order = {
+  __typename?: 'Order';
+  /** @deprecated The order_id field is deprecated, use order_number instead. */
+  order_id?: Maybe<Scalars['String']>;
+  /** The unique ID for a `Order` object. */
+  order_number: Scalars['String'];
 };
 
 export type RemoveCouponFromCartInput = {
@@ -4863,9 +4770,10 @@ export type BundleOrderItem = OrderItemInterface & {
   status?: Maybe<Scalars['String']>;
 };
 
-/** Defines basic features of a bundle product and contains multiple BundleItems */
-export type BundleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
+/** BundleProduct defines basic features of a bundle product and contains multiple BundleItems. */
+export type BundleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & {
   __typename?: 'BundleProduct';
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -4875,6 +4783,9 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  category_gear?: Maybe<Scalars['String']>;
+  climate?: Maybe<Scalars['String']>;
+  collar?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -4893,6 +4804,11 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   dynamic_sku?: Maybe<Scalars['Boolean']>;
   /** Indicates whether the bundle product has a dynamically calculated weight. */
   dynamic_weight?: Maybe<Scalars['Boolean']>;
+  eco_collection?: Maybe<Scalars['Int']>;
+  erin_recommends?: Maybe<Scalars['Int']>;
+  features_bags?: Maybe<Scalars['String']>;
+  format?: Maybe<Scalars['Int']>;
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -4906,6 +4822,7 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   items?: Maybe<Array<Maybe<BundleItem>>>;
   /** A number representing the product's manufacturer. */
   manufacturer?: Maybe<Scalars['Int']>;
+  material?: Maybe<Scalars['String']>;
   /** An array of Media Gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -4921,6 +4838,7 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  new?: Maybe<Scalars['Int']>;
   /**
    * The beginning date for new product listings, and determines if the product is featured as a new product.
    * @deprecated The field should not be used on the storefront.
@@ -4937,6 +4855,8 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  pattern?: Maybe<Scalars['String']>;
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * A ProductPrices object, indicating the price of an item.
    * @deprecated Use price_range for product price information.
@@ -4952,22 +4872,21 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  sale?: Maybe<Scalars['Int']>;
   /** Indicates whether to ship bundle items together or individually. */
   ship_bundle_items?: Maybe<ShipBundleItemsEnum>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -4981,6 +4900,10 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   special_to_date?: Maybe<Scalars['String']>;
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  strap_bags?: Maybe<Scalars['String']>;
+  style_bags?: Maybe<Scalars['String']>;
+  style_bottom?: Maybe<Scalars['String']>;
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -4995,8 +4918,6 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -5029,7 +4950,7 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
 };
 
 
-/** Defines basic features of a bundle product and contains multiple BundleItems */
+/** BundleProduct defines basic features of a bundle product and contains multiple BundleItems. */
 export type BundleProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -5139,8 +5060,6 @@ export type ConfigurableAttributeOption = {
 export type ConfigurableCartItem = CartItemInterface & {
   __typename?: 'ConfigurableCartItem';
   configurable_options: Array<Maybe<SelectedConfigurableOption>>;
-  /** Product details of the cart item */
-  configured_variant: ProductInterface;
   customizable_options?: Maybe<Array<Maybe<SelectedCustomizableOption>>>;
   /** The entered gift message for the cart item */
   gift_message?: Maybe<GiftMessage>;
@@ -5177,8 +5096,9 @@ export type ConfigurableOptionAvailableForSelection = {
 };
 
 /** ConfigurableProduct defines basic features of a configurable product and its simple product variants */
-export type ConfigurableProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
+export type ConfigurableProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & {
   __typename?: 'ConfigurableProduct';
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -5188,10 +5108,13 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  category_gear?: Maybe<Scalars['String']>;
+  climate?: Maybe<Scalars['String']>;
+  collar?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['Int']>;
   /** An array of linked simple product items */
   configurable_options?: Maybe<Array<Maybe<ConfigurableProductOptions>>>;
-  /** Specified configurable product options selection */
+  /** Metadata for the specified configurable options selection */
   configurable_product_options_selection?: Maybe<ConfigurableProductOptionsSelection>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -5204,6 +5127,11 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  eco_collection?: Maybe<Scalars['Int']>;
+  erin_recommends?: Maybe<Scalars['Int']>;
+  features_bags?: Maybe<Scalars['String']>;
+  format?: Maybe<Scalars['Int']>;
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -5215,6 +5143,7 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   image?: Maybe<ProductImage>;
   /** A number representing the product's manufacturer. */
   manufacturer?: Maybe<Scalars['Int']>;
+  material?: Maybe<Scalars['String']>;
   /** An array of Media Gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -5230,6 +5159,7 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  new?: Maybe<Scalars['Int']>;
   /**
    * The beginning date for new product listings, and determines if the product is featured as a new product.
    * @deprecated The field should not be used on the storefront.
@@ -5246,6 +5176,8 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  pattern?: Maybe<Scalars['String']>;
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * A ProductPrices object, indicating the price of an item.
    * @deprecated Use price_range for product price information.
@@ -5259,20 +5191,19 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -5286,6 +5217,10 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   special_to_date?: Maybe<Scalars['String']>;
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  strap_bags?: Maybe<Scalars['String']>;
+  style_bags?: Maybe<Scalars['String']>;
+  style_bottom?: Maybe<Scalars['String']>;
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -5300,8 +5235,6 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -5412,8 +5345,6 @@ export type ConfigurableProductOptionsValues = {
 /** Metadata corresponding to the configurable options selection. */
 export type ConfigurableProductOptionsSelection = {
   __typename?: 'ConfigurableProductOptionsSelection';
-  /** Configurable options available for further selection based on current selection. */
-  configurable_options?: Maybe<Array<Maybe<ConfigurableProductOption>>>;
   /** Product images and videos corresponding to the specified configurable options selection. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /** Configurable options available for further selection based on current selection. */
@@ -5422,26 +5353,10 @@ export type ConfigurableProductOptionsSelection = {
   variant?: Maybe<SimpleProduct>;
 };
 
-export type ConfigurableProductOption = {
-  __typename?: 'ConfigurableProductOption';
-  attribute_code: Scalars['String'];
-  label: Scalars['String'];
-  uid: Scalars['ID'];
-  values?: Maybe<Array<Maybe<ConfigurableProductOptionValue>>>;
-};
-
-export type ConfigurableProductOptionValue = {
-  __typename?: 'ConfigurableProductOptionValue';
-  is_available: Scalars['Boolean'];
-  is_use_default: Scalars['Boolean'];
-  label: Scalars['String'];
-  swatch?: Maybe<SwatchDataInterface>;
-  uid: Scalars['ID'];
-};
-
-/** A simple product is tangible and is usually sold in single units or in fixed quantities */
-export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
+/** A simple product is tangible and are usually sold as single units or in fixed quantities. */
+export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & {
   __typename?: 'SimpleProduct';
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -5451,6 +5366,9 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  category_gear?: Maybe<Scalars['String']>;
+  climate?: Maybe<Scalars['String']>;
+  collar?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -5463,6 +5381,11 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  eco_collection?: Maybe<Scalars['Int']>;
+  erin_recommends?: Maybe<Scalars['Int']>;
+  features_bags?: Maybe<Scalars['String']>;
+  format?: Maybe<Scalars['Int']>;
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -5474,6 +5397,7 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   image?: Maybe<ProductImage>;
   /** A number representing the product's manufacturer. */
   manufacturer?: Maybe<Scalars['Int']>;
+  material?: Maybe<Scalars['String']>;
   /** An array of Media Gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -5489,6 +5413,7 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  new?: Maybe<Scalars['Int']>;
   /**
    * The beginning date for new product listings, and determines if the product is featured as a new product.
    * @deprecated The field should not be used on the storefront.
@@ -5505,6 +5430,8 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  pattern?: Maybe<Scalars['String']>;
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * A ProductPrices object, indicating the price of an item.
    * @deprecated Use price_range for product price information.
@@ -5518,20 +5445,19 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -5545,6 +5471,10 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   special_to_date?: Maybe<Scalars['String']>;
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  strap_bags?: Maybe<Scalars['String']>;
+  style_bags?: Maybe<Scalars['String']>;
+  style_bottom?: Maybe<Scalars['String']>;
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -5559,8 +5489,6 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -5593,7 +5521,7 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
 };
 
 
-/** A simple product is tangible and is usually sold in single units or in fixed quantities */
+/** A simple product is tangible and are usually sold as single units or in fixed quantities. */
 export type SimpleProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -5752,18 +5680,9 @@ export type CustomizableDateValue = {
   price_type?: Maybe<PriceTypeEnum>;
   /** The Stock Keeping Unit for this option. */
   sku?: Maybe<Scalars['String']>;
-  /** DATE, DATE_TIME or TIME */
-  type?: Maybe<CustomizableDateTypeEnum>;
   /** The unique ID for a `CustomizableDateValue` object. */
   uid: Scalars['ID'];
 };
-
-/** This enumeration customizable date type. */
-export enum CustomizableDateTypeEnum {
-  Date = 'DATE',
-  DateTime = 'DATE_TIME',
-  Time = 'TIME'
-}
 
 /** CustomizableDropDownOption contains information about a drop down menu that is defined as part of a customizable option. */
 export type CustomizableDropDownOption = CustomizableOptionInterface & {
@@ -6115,9 +6034,10 @@ export type DownloadableOrderItem = OrderItemInterface & {
   status?: Maybe<Scalars['String']>;
 };
 
-/** DownloadableProduct defines a product that the shopper downloads */
-export type DownloadableProduct = CustomizableProductInterface & ProductInterface & RoutableInterface & {
+/** DownloadableProduct defines a product that the customer downloads */
+export type DownloadableProduct = CustomizableProductInterface & ProductInterface & {
   __typename?: 'DownloadableProduct';
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -6127,6 +6047,9 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  category_gear?: Maybe<Scalars['String']>;
+  climate?: Maybe<Scalars['String']>;
+  collar?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -6143,6 +6066,11 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   downloadable_product_links?: Maybe<Array<Maybe<DownloadableProductLinks>>>;
   /** An array containing information about samples of this downloadable product. */
   downloadable_product_samples?: Maybe<Array<Maybe<DownloadableProductSamples>>>;
+  eco_collection?: Maybe<Scalars['Int']>;
+  erin_recommends?: Maybe<Scalars['Int']>;
+  features_bags?: Maybe<Scalars['String']>;
+  format?: Maybe<Scalars['Int']>;
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -6158,6 +6086,7 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   links_title?: Maybe<Scalars['String']>;
   /** A number representing the product's manufacturer. */
   manufacturer?: Maybe<Scalars['Int']>;
+  material?: Maybe<Scalars['String']>;
   /** An array of Media Gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -6173,6 +6102,7 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  new?: Maybe<Scalars['Int']>;
   /**
    * The beginning date for new product listings, and determines if the product is featured as a new product.
    * @deprecated The field should not be used on the storefront.
@@ -6189,6 +6119,8 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  pattern?: Maybe<Scalars['String']>;
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * A ProductPrices object, indicating the price of an item.
    * @deprecated Use price_range for product price information.
@@ -6202,20 +6134,19 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -6229,6 +6160,10 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   special_to_date?: Maybe<Scalars['String']>;
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  strap_bags?: Maybe<Scalars['String']>;
+  style_bags?: Maybe<Scalars['String']>;
+  style_bottom?: Maybe<Scalars['String']>;
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -6243,8 +6178,6 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -6275,7 +6208,7 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
 };
 
 
-/** DownloadableProduct defines a product that the shopper downloads */
+/** DownloadableProduct defines a product that the customer downloads */
 export type DownloadableProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -6302,9 +6235,10 @@ export type DownloadableWishlistItem = WishlistItemInterface & {
   samples?: Maybe<Array<Maybe<DownloadableProductSamples>>>;
 };
 
-/** A grouped product consists of simple standalone products that are presented as a group */
-export type GroupedProduct = PhysicalProductInterface & ProductInterface & RoutableInterface & {
+/** GroupedProduct defines a grouped product */
+export type GroupedProduct = PhysicalProductInterface & ProductInterface & {
   __typename?: 'GroupedProduct';
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -6314,6 +6248,9 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  category_gear?: Maybe<Scalars['String']>;
+  climate?: Maybe<Scalars['String']>;
+  collar?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -6326,6 +6263,11 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  eco_collection?: Maybe<Scalars['Int']>;
+  erin_recommends?: Maybe<Scalars['Int']>;
+  features_bags?: Maybe<Scalars['String']>;
+  format?: Maybe<Scalars['Int']>;
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -6339,6 +6281,7 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   items?: Maybe<Array<Maybe<GroupedProductItem>>>;
   /** A number representing the product's manufacturer. */
   manufacturer?: Maybe<Scalars['Int']>;
+  material?: Maybe<Scalars['String']>;
   /** An array of Media Gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -6354,6 +6297,7 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  new?: Maybe<Scalars['Int']>;
   /**
    * The beginning date for new product listings, and determines if the product is featured as a new product.
    * @deprecated The field should not be used on the storefront.
@@ -6368,6 +6312,8 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   only_x_left_in_stock?: Maybe<Scalars['Float']>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  pattern?: Maybe<Scalars['String']>;
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * A ProductPrices object, indicating the price of an item.
    * @deprecated Use price_range for product price information.
@@ -6381,20 +6327,19 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -6408,6 +6353,10 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
   special_to_date?: Maybe<Scalars['String']>;
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  strap_bags?: Maybe<Scalars['String']>;
+  style_bags?: Maybe<Scalars['String']>;
+  style_bottom?: Maybe<Scalars['String']>;
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -6422,8 +6371,6 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -6456,7 +6403,7 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & Routa
 };
 
 
-/** A grouped product consists of simple standalone products that are presented as a group */
+/** GroupedProduct defines a grouped product */
 export type GroupedProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -6883,9 +6830,10 @@ export type VirtualCartItem = CartItemInterface & {
   uid: Scalars['ID'];
 };
 
-/** A virtual product is a non-tangible product that does not require shipping and is not kept in inventory */
-export type VirtualProduct = CustomizableProductInterface & ProductInterface & RoutableInterface & {
+/** A virtual product is non-tangible product that does not require shipping and is not kept in inventory. */
+export type VirtualProduct = CustomizableProductInterface & ProductInterface & {
   __typename?: 'VirtualProduct';
+  activity?: Maybe<Scalars['String']>;
   /**
    * The attribute set assigned to the product.
    * @deprecated The field should not be used on the storefront.
@@ -6895,6 +6843,9 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   canonical_url?: Maybe<Scalars['String']>;
   /** The categories assigned to a product. */
   categories?: Maybe<Array<Maybe<CategoryInterface>>>;
+  category_gear?: Maybe<Scalars['String']>;
+  climate?: Maybe<Scalars['String']>;
+  collar?: Maybe<Scalars['String']>;
   color?: Maybe<Scalars['Int']>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -6907,6 +6858,11 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   crosssell_products?: Maybe<Array<Maybe<ProductInterface>>>;
   /** Detailed information about the product. The value can include simple HTML tags. */
   description?: Maybe<ComplexTextValue>;
+  eco_collection?: Maybe<Scalars['Int']>;
+  erin_recommends?: Maybe<Scalars['Int']>;
+  features_bags?: Maybe<Scalars['String']>;
+  format?: Maybe<Scalars['Int']>;
+  gender?: Maybe<Scalars['String']>;
   /** Indicates whether a gift message is available. */
   gift_message_available?: Maybe<Scalars['String']>;
   /**
@@ -6918,6 +6874,7 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   image?: Maybe<ProductImage>;
   /** A number representing the product's manufacturer. */
   manufacturer?: Maybe<Scalars['Int']>;
+  material?: Maybe<Scalars['String']>;
   /** An array of Media Gallery objects. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /**
@@ -6933,6 +6890,7 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   meta_title?: Maybe<Scalars['String']>;
   /** The product name. Customers use this name to identify the product. */
   name?: Maybe<Scalars['String']>;
+  new?: Maybe<Scalars['Int']>;
   /**
    * The beginning date for new product listings, and determines if the product is featured as a new product.
    * @deprecated The field should not be used on the storefront.
@@ -6949,6 +6907,8 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   options?: Maybe<Array<Maybe<CustomizableOptionInterface>>>;
   /** If the product has multiple options, determines where they appear on the product page. */
   options_container?: Maybe<Scalars['String']>;
+  pattern?: Maybe<Scalars['String']>;
+  performance_fabric?: Maybe<Scalars['Int']>;
   /**
    * A ProductPrices object, indicating the price of an item.
    * @deprecated Use price_range for product price information.
@@ -6962,20 +6922,19 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
-  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
-  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
-  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
-  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
   reviews: ProductReviews;
+  sale?: Maybe<Scalars['Int']>;
   /** A short description of the product. Its use depends on the theme. */
   short_description?: Maybe<ComplexTextValue>;
+  size?: Maybe<Scalars['Int']>;
   /** A number or code assigned to a product to identify the product, options, price, and manufacturer. */
   sku?: Maybe<Scalars['String']>;
+  sleeve?: Maybe<Scalars['String']>;
   /** The relative path to the small image, which is used on catalog pages. */
   small_image?: Maybe<ProductImage>;
   /**
@@ -6989,6 +6948,10 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
   special_to_date?: Maybe<Scalars['String']>;
   /** Stock status of the product */
   stock_status?: Maybe<ProductStockStatus>;
+  strap_bags?: Maybe<Scalars['String']>;
+  style_bags?: Maybe<Scalars['String']>;
+  style_bottom?: Maybe<Scalars['String']>;
+  style_general?: Maybe<Scalars['String']>;
   /** The file name of a swatch image */
   swatch_image?: Maybe<Scalars['String']>;
   /** The relative path to the product's thumbnail image. */
@@ -7003,8 +6966,6 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
-  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
-  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -7035,7 +6996,7 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & R
 };
 
 
-/** A virtual product is a non-tangible product that does not require shipping and is not kept in inventory */
+/** A virtual product is non-tangible product that does not require shipping and is not kept in inventory. */
 export type VirtualProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -7058,43 +7019,49 @@ export type VirtualWishlistItem = WishlistItemInterface & {
   quantity: Scalars['Float'];
 };
 
-export type GetStoreNameQueryVariables = Exact<{ [key: string]: never; }>;
+export type GenerateAdminTokenMutationVariables = Exact<{
+  username: Scalars['String'];
+  password: Scalars['String'];
+}>;
 
 
-export type GetStoreNameQuery = { __typename?: 'Query', storeConfig?: { __typename?: 'StoreConfig', store_name?: string | null | undefined } | null | undefined };
+export type GenerateAdminTokenMutation = { __typename?: 'Mutation', generateAdminToken: string };
 
 
-export const GetStoreNameDocument = gql`
-    query GetStoreName {
-  storeConfig {
-    store_name
-  }
+export const GenerateAdminTokenDocument = gql`
+    mutation generateAdminToken($username: String!, $password: String!) {
+  generateAdminToken(username: $username, password: $password)
 }
     `;
+export type GenerateAdminTokenMutationFn = Apollo.MutationFunction<GenerateAdminTokenMutation, GenerateAdminTokenMutationVariables>;
 
 /**
- * __useGetStoreNameQuery__
+ * __useGenerateAdminTokenMutation__
  *
- * To run a query within a React component, call `useGetStoreNameQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetStoreNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useGenerateAdminTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGenerateAdminTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useGetStoreNameQuery({
+ * const [generateAdminTokenMutation, { data, loading, error }] = useGenerateAdminTokenMutation({
  *   variables: {
+ *      username: // value for 'username'
+ *      password: // value for 'password'
  *   },
  * });
  */
-export function useGetStoreNameQuery(baseOptions?: Apollo.QueryHookOptions<GetStoreNameQuery, GetStoreNameQueryVariables>) {
+export function useGenerateAdminTokenMutation(baseOptions?: Apollo.MutationHookOptions<GenerateAdminTokenMutation, GenerateAdminTokenMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetStoreNameQuery, GetStoreNameQueryVariables>(GetStoreNameDocument, options);
+        return Apollo.useMutation<GenerateAdminTokenMutation, GenerateAdminTokenMutationVariables>(GenerateAdminTokenDocument, options);
       }
-export function useGetStoreNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetStoreNameQuery, GetStoreNameQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetStoreNameQuery, GetStoreNameQueryVariables>(GetStoreNameDocument, options);
-        }
-export type GetStoreNameQueryHookResult = ReturnType<typeof useGetStoreNameQuery>;
-export type GetStoreNameLazyQueryHookResult = ReturnType<typeof useGetStoreNameLazyQuery>;
-export type GetStoreNameQueryResult = Apollo.QueryResult<GetStoreNameQuery, GetStoreNameQueryVariables>;
+export type GenerateAdminTokenMutationHookResult = ReturnType<typeof useGenerateAdminTokenMutation>;
+export type GenerateAdminTokenMutationResult = Apollo.MutationResult<GenerateAdminTokenMutation>;
+export type GenerateAdminTokenMutationOptions = Apollo.BaseMutationOptions<GenerateAdminTokenMutation, GenerateAdminTokenMutationVariables>;
+export const namedOperations = {
+  Mutation: {
+    generateAdminToken: 'generateAdminToken'
+  }
+}
