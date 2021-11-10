@@ -1,9 +1,10 @@
 import React from "react";
+import {withLayout} from "../Layout/Layout";
 
 const Dashboard = () => {
     return (
-        <h1>Dashboard</h1>
+        <h2>Dashboard</h2>
     )
 };
 
-export default Dashboard;
+export default withLayout(Dashboard);
