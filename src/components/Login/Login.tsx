@@ -15,7 +15,7 @@ const Login = () => {
         const username = data.get('username')?.toString();
         const password = data.get('password')?.toString();
         if (username && password) {
-            login(navigate, dispatch, {username, password});
+            login(dispatch, {username, password}, () => navigate("/dashboard"));
         }
     }
 

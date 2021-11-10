@@ -1,6 +1,5 @@
 import {Dispatch} from "react";
 import {GenerateAdminTokenDocument} from "../types";
-import {NavigateFunction} from "react-router";
 import {client, setClientLink} from "../utils/client";
 
 export enum ActionType {
@@ -16,10 +15,10 @@ export type AuthAction =
     | { type: ActionType.LoginFailed, errorMessage: string }
     | { type: ActionType.LoginRequest };
 
-export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthAction>, loginPayload: {
+export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
     username: string,
     password: string
-}) {
+}, onSuccess = () => {}) {
     dispatch({type: ActionType.LoginRequest});
     client.mutate({
         mutation: GenerateAdminTokenDocument,
@@ -32,7 +31,7 @@ export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthA
         dispatch({type: ActionType.LoginUser, token: token});
         localStorage.setItem('token', token);
         setClientLink(token);
-        navigate("/dashboard");
+        onSuccess();
     }).catch((reason: {message: string}) => {
         dispatch({type: ActionType.LoginFailed, errorMessage: reason.message});
     });
