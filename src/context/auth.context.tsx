@@ -1,7 +1,7 @@
-import {AuthState, initialAuthState} from "./state";
+import {AuthState, initialAuthState} from "../state/auth.state";
 import {createContext, Dispatch, FunctionComponent, useContext, useReducer} from "react";
-import {AuthAction} from "./actions";
-import {authReducer} from "./reducer";
+import {AuthAction} from "../actions/auth.actions";
+import {authReducer} from "../reducers/auth.reducers";
 
 export const AuthStateContext = createContext<{ state: AuthState }>({
     state: initialAuthState

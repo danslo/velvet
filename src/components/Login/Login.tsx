@@ -1,6 +1,6 @@
 import React, {FormEvent} from "react";
-import {useAuthDispatch, useAuthState} from "../../state/context";
-import {login} from "../../state/actions";
+import {useAuthDispatch, useAuthState} from "../../context/auth.context";
+import {login} from "../../actions/auth.actions";
 import {Alert, Box, Button, TextField, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
