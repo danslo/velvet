@@ -28,7 +28,9 @@ export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthA
             password: loginPayload.password
         }
     }).then((result: any) => { // todo: type the result. GenerateAdminTokenMutationResult does not work?
-        dispatch({type: ActionType.LoginUser, token: result.data.generateAdminToken});
+        const token = result.data.generateAdminToken;
+        dispatch({type: ActionType.LoginUser, token: token});
+        localStorage.setItem('token', token);
         navigate("/dashboard");
     }).catch((reason: {message: string}) => {
         dispatch({type: ActionType.LoginFailed, errorMessage: reason.message});
@@ -37,4 +39,5 @@ export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthA
 
 export async function logout(dispatch: Dispatch<AuthAction>) {
     dispatch({type: ActionType.LogoutUser});
+    localStorage.removeItem('token');
 }

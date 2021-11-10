@@ -2,7 +2,7 @@ import React, {FormEvent} from "react";
 import {useAuthDispatch, useAuthState} from "../../context/auth.context";
 import {login} from "../../actions/auth.actions";
 import {Alert, Box, Button, Container, CssBaseline, TextField, Typography} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Navigate} from "react-router-dom";
 
 const Login = () => {
     const {dispatch} = useAuthDispatch();
@@ -17,6 +17,10 @@ const Login = () => {
         if (username && password) {
             login(navigate, dispatch, {username, password});
         }
+    }
+
+    if (state.token) {
+        return <Navigate to="/dashboard" />;
     }
 
     return (
