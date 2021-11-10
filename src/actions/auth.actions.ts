@@ -1,8 +1,7 @@
 import {Dispatch} from "react";
 import {GenerateAdminTokenDocument} from "../types";
-import {client, httpLink} from "../index";
+import {client, setClientAuthLink} from "../index";
 import {NavigateFunction} from "react-router";
-import { setContext } from '@apollo/client/link/context';
 
 export enum ActionType {
     LoginUser,
@@ -16,17 +15,6 @@ export type AuthAction =
     | { type: ActionType.LogoutUser }
     | { type: ActionType.LoginFailed, errorMessage: string }
     | { type: ActionType.LoginRequest };
-
-const setClientAuthLink = (token: string) => {
-    client.setLink(httpLink.concat(setContext((_, { headers }) => {
-        return {
-            headers: {
-                ...headers,
-                authorization: token ? `Bearer ${token}` : "",
-            }
-        }
-    })));
-}
 
 export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthAction>, loginPayload: {
     username: string,
