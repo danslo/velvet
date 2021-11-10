@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './components/App/App';
 import {ApolloClient, ApolloProvider, HttpLink, InMemoryCache} from "@apollo/client";
 
-const link = new HttpLink({uri: "https://magento24.test/graphql"});
-const cache = new InMemoryCache({});
-export const client = new ApolloClient({link, cache}); // todo: hmmmm
+// todo: do we really want to export this?
+export const httpLink = new HttpLink({uri: "https://magento24.test/graphql"});
+export const client = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache({})
+});
 
 ReactDOM.render(
   <React.StrictMode>
