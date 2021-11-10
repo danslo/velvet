@@ -3,11 +3,11 @@ import {createContext, Dispatch, FunctionComponent, useContext, useReducer} from
 import {AuthAction} from "../actions/auth.actions";
 import {authReducer} from "../reducers/auth.reducers";
 
-export const AuthStateContext = createContext<{ state: AuthState }>({
+const AuthStateContext = createContext<{ state: AuthState }>({
     state: initialAuthState
 })
 
-export const AuthDispatchContext = createContext<{ dispatch: Dispatch<AuthAction> }>({
+const AuthDispatchContext = createContext<{ dispatch: Dispatch<AuthAction> }>({
     dispatch: () => undefined
 })
 
