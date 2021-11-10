@@ -1,8 +1,8 @@
 import React, {FormEvent} from "react";
 import {useAuthDispatch, useAuthState} from "../../context/auth.context";
 import {login} from "../../actions/auth.actions";
-import {Alert, Box, Button, Container, CssBaseline, TextField, Typography} from "@mui/material";
-import {useNavigate, Navigate} from "react-router-dom";
+import {Alert, Box, Button, Container, TextField, Typography} from "@mui/material";
+import {Navigate, useNavigate} from "react-router-dom";
 
 const Login = () => {
     const {dispatch} = useAuthDispatch();
@@ -25,7 +25,6 @@ const Login = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
             <Box sx={{marginTop: 8}}>
                 {state.errorMessage && <Alert severity="error">{state.errorMessage}</Alert>}
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
