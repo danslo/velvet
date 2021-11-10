@@ -1,7 +1,7 @@
 import {Dispatch} from "react";
 import {GenerateAdminTokenDocument} from "../types";
-import {client, setClientAuthLink} from "../index";
 import {NavigateFunction} from "react-router";
+import {client, setClientLink} from "../utils/client";
 
 export enum ActionType {
     LoginUser,
@@ -31,7 +31,7 @@ export async function login(navigate: NavigateFunction, dispatch: Dispatch<AuthA
         const token = result.data.generateAdminToken;
         dispatch({type: ActionType.LoginUser, token: token});
         localStorage.setItem('token', token);
-        setClientAuthLink(token);
+        setClientLink(token);
         navigate("/dashboard");
     }).catch((reason: {message: string}) => {
         dispatch({type: ActionType.LoginFailed, errorMessage: reason.message});
