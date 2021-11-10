@@ -1,8 +1,12 @@
+import {CssBaseline} from "@mui/material";
+import Navbar from "../Navbar/Navbar";
+
 export function withLayout<P>(WrappedComponent: React.ComponentType<P>) {
     return (props: P) => {
         return (
             <>
-                <h1>Velvet</h1>
+                <CssBaseline />
+                <Navbar />
                 <WrappedComponent {...props} />
             </>
         );
