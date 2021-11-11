@@ -19,7 +19,7 @@ export type AuthAction =
 export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
     username: string,
     password: string
-}, onSuccess = () => {}) {
+}) {
     dispatch({type: ActionType.LoginRequest});
     client.mutate({
         mutation: GenerateAdminTokenDocument,
@@ -32,7 +32,6 @@ export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
         dispatch({type: ActionType.LoginUser, token: token});
         localStorage.setItem('token', token);
         setClientLink(token);
-        onSuccess();
     }).catch((reason: {message: string}) => {
         dispatch({type: ActionType.LoginFailed, errorMessage: reason.message});
     });
