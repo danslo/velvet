@@ -16,19 +16,18 @@ export type AuthAction =
     | { type: ActionType.LoginFailed, errorMessage: string }
     | { type: ActionType.LoginRequest };
 
-export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
+type LoginPayload = {
     username: string,
     password: string
-}) {
+};
+
+export async function login(dispatch: Dispatch<AuthAction>, loginPayload: LoginPayload) {
     dispatch({type: ActionType.LoginRequest});
     client.mutate({
         mutation: GenerateAdminTokenDocument,
-        variables: {
-            username: loginPayload.username,
-            password: loginPayload.password
-        }
+        variables: loginPayload
     }).then((result: FetchResult<GenerateAdminTokenMutation>) => {
-        const token = result!.data!.generateAdminToken;
+        const token = result.data!.generateAdminToken;
         dispatch({type: ActionType.LoginUser, token: token});
         localStorage.setItem('token', token);
         setClientLink(token);
