@@ -1,6 +1,8 @@
 import {Dispatch} from "react";
-import {GenerateAdminTokenDocument} from "../types";
+import {GenerateAdminTokenDocument, GenerateAdminTokenMutation, GenerateAdminTokenMutationResult} from "../types";
 import {client, setClientLink} from "../utils/client";
+import {MutationResult} from "@apollo/client/react/types/types";
+import {FetchResult} from "@apollo/client";
 
 export enum ActionType {
     LoginUser,
@@ -26,8 +28,8 @@ export async function login(dispatch: Dispatch<AuthAction>, loginPayload: {
             username: loginPayload.username,
             password: loginPayload.password
         }
-    }).then((result: any) => { // todo: type the result. GenerateAdminTokenMutationResult does not work?
-        const token = result.data.generateAdminToken;
+    }).then((result: FetchResult<GenerateAdminTokenMutation>) => {
+        const token = result!.data!.generateAdminToken;
         dispatch({type: ActionType.LoginUser, token: token});
         localStorage.setItem('token', token);
         setClientLink(token);

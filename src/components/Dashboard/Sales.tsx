@@ -2,7 +2,12 @@ import {Table, TableBody, TableCell, TableRow} from "@mui/material";
 import React from "react";
 import {DashboardSales} from "../../types";
 
-const Sales = (sales: DashboardSales, caption: string) => (
+type SalesProps = {
+    sales: DashboardSales;
+    caption: string;
+}
+
+const Sales = ({sales, caption}: SalesProps) => (
     <Table sx={{width: 1/4}}>
         <caption>{caption}</caption>
         <TableBody>

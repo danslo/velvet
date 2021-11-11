@@ -1,8 +1,13 @@
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import React from "react";
-import {DashboardSearchTerm} from "../../types";
+import {DashboardSearchTerm, Maybe} from "../../types";
 
-const SearchTerms = (searchTerms: Array<DashboardSearchTerm>, caption: string) => (
+type SearchTermsProps = {
+    searchTerms:  Array<Maybe<DashboardSearchTerm>|undefined>;
+    caption: string;
+}
+
+const SearchTerms = ({caption, searchTerms}: SearchTermsProps) => (
     <Table sx={{width: 1/4}}>
         <caption>{caption}</caption>
         <TableHead>
@@ -13,11 +18,11 @@ const SearchTerms = (searchTerms: Array<DashboardSearchTerm>, caption: string) =
             </TableRow>
         </TableHead>
         <TableBody>
-            {searchTerms.map(search_term => (
+            {searchTerms.map(searchTerm => (
                 <TableRow>
-                    <TableCell>{search_term?.search_term}</TableCell>
-                    <TableCell>{search_term?.results}</TableCell>
-                    <TableCell>{search_term?.uses}</TableCell>
+                    <TableCell>{searchTerm!.search_term}</TableCell>
+                    <TableCell>{searchTerm!.results}</TableCell>
+                    <TableCell>{searchTerm!.uses}</TableCell>
                 </TableRow>
             ))}
         </TableBody>
