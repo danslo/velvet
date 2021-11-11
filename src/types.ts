@@ -1,6 +1,5 @@
+import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-import {gql} from '@apollo/client';
-
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -29,6 +28,8 @@ export type Query = {
   category?: Maybe<CategoryTree>;
   /** Returns an array of categories based on the specified filters. */
   categoryList?: Maybe<Array<Maybe<CategoryTree>>>;
+  /** Retrieves an array of configuration data for the chat widget. */
+  chatData?: Maybe<ChatData>;
   /** The Checkout Agreements information */
   checkoutAgreements?: Maybe<Array<Maybe<CheckoutAgreement>>>;
   /** The CMS block query returns information about CMS blocks */
@@ -55,20 +56,34 @@ export type Query = {
   customerOrders?: Maybe<CustomerOrders>;
   /** Return a list of customer payment tokens */
   customerPaymentTokens?: Maybe<CustomerPaymentTokens>;
+  dashboard: Dashboard;
+  /** Returns status of Easy Email Capture for Checkout. */
+  emailCaptureCheckout?: Maybe<IsConfigSettingEnabledOutput>;
+  /** Returns status of Easy Email Capture for Newsletter. */
+  emailCaptureNewsletter?: Maybe<IsConfigSettingEnabledOutput>;
   /** Retrieve secure PayPal url for Payments Pro Hosted Solution transaction. */
   getHostedProUrl?: Maybe<HostedProUrl>;
   /** Retrieve payment credentials for transaction. Use this query for Payflow Link and Payments Advanced payment methods. */
   getPayflowLinkToken?: Maybe<PayflowLinkToken>;
   isEmailAvailable?: Maybe<IsEmailAvailableOutput>;
+  /** Retrieves information about an order by order id. */
+  orderData?: Maybe<Order>;
   /** The pickup locations query searches for locations that match the search request requirements. */
   pickupLocations?: Maybe<PickupLocations>;
   /** Retrieves metadata required by clients to render the Reviews section. */
   productReviewRatingsMetadata: ProductReviewRatingsMetadata;
   /** The products query searches for products that match the criteria specified in the search and filter attributes. */
   products?: Maybe<Products>;
+  /** Return the full details for a specified product, category, or CMS page given the specified url_key, appended by the url_suffix, if one exists */
+  route?: Maybe<RoutableInterface>;
   /** The store config query */
   storeConfig?: Maybe<StoreConfig>;
-  /** The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists */
+  /** Retrieves an array of configuration data for different types of tracking. */
+  trackingData?: Maybe<TrackingData>;
+  /**
+   * The urlResolver query returns the relative URL for a specified product, category or CMS page, using as input a url_key appended by the url_suffix, if one exists
+   * @deprecated Use the 'route' query instead
+   */
   urlResolver?: Maybe<EntityUrl>;
   /**
    * The wishlist query returns the contents of a customer's wish list
@@ -146,6 +161,11 @@ export type QueryIsEmailAvailableArgs = {
 };
 
 
+export type QueryOrderDataArgs = {
+  orderId: Scalars['String'];
+};
+
+
 export type QueryPickupLocationsArgs = {
   area?: Maybe<AreaInput>;
   currentPage?: Maybe<Scalars['Int']>;
@@ -162,6 +182,11 @@ export type QueryProductsArgs = {
   pageSize?: Maybe<Scalars['Int']>;
   search?: Maybe<Scalars['String']>;
   sort?: Maybe<ProductAttributeSortInput>;
+};
+
+
+export type QueryRouteArgs = {
+  url: Scalars['String'];
 };
 
 
@@ -457,6 +482,8 @@ export type CartItemPrices = {
   __typename?: 'CartItemPrices';
   /** An array of discounts to be applied to the cart item */
   discounts?: Maybe<Array<Maybe<Discount>>>;
+  /** Applied FPT to the cart item. */
+  fixed_product_taxes?: Maybe<Array<Maybe<FixedProductTax>>>;
   price: Money;
   row_total: Money;
   row_total_including_tax: Money;
@@ -655,6 +682,15 @@ export enum CurrencyEnum {
   Zmk = 'ZMK',
   Zwd = 'ZWD'
 }
+
+/** A single FPT that can be applied to a product price. */
+export type FixedProductTax = {
+  __typename?: 'FixedProductTax';
+  /** Amount of the FPT as a money object. */
+  amount?: Maybe<Money>;
+  /** The label assigned to the FPT to be displayed on the frontend. */
+  label?: Maybe<Scalars['String']>;
+};
 
 /** The ProductInterface contains attributes that are common to all types of products. Note that descriptions may not be available for custom and EAV attributes. */
 export type ProductInterface = {
@@ -1150,15 +1186,6 @@ export type ProductDiscount = {
   percent_off?: Maybe<Scalars['Float']>;
 };
 
-/** A single FPT that can be applied to a product price. */
-export type FixedProductTax = {
-  __typename?: 'FixedProductTax';
-  /** Amount of the FPT as a money object. */
-  amount?: Maybe<Money>;
-  /** The label assigned to the FPT to be displayed on the frontend. */
-  label?: Maybe<Scalars['String']>;
-};
-
 /** A price based on the quantity purchased. */
 export type TierPrice = {
   __typename?: 'TierPrice';
@@ -1444,8 +1471,8 @@ export type CategoryResult = {
   total_count?: Maybe<Scalars['Int']>;
 };
 
-/** Category Tree implementation. */
-export type CategoryTree = CategoryInterface & {
+/** Category tree implementation */
+export type CategoryTree = CategoryInterface & RoutableInterface & {
   __typename?: 'CategoryTree';
   available_sort_by?: Maybe<Array<Maybe<Scalars['String']>>>;
   /** Breadcrumbs, parent categories info. */
@@ -1495,6 +1522,12 @@ export type CategoryTree = CategoryInterface & {
   product_count?: Maybe<Scalars['Int']>;
   /** The list of products assigned to the category. */
   products?: Maybe<CategoryProducts>;
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /** The unique ID for a `CategoryInterface` object. */
   uid: Scalars['ID'];
   /**
@@ -1511,11 +1544,38 @@ export type CategoryTree = CategoryInterface & {
 };
 
 
-/** Category Tree implementation. */
+/** Category tree implementation */
 export type CategoryTreeProductsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
   sort?: Maybe<ProductAttributeSortInput>;
+};
+
+/** Routable entities serve as the model for a rendered page */
+export type RoutableInterface = {
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
+};
+
+/** This enumeration defines the entity type. */
+export enum UrlRewriteEntityTypeEnum {
+  Category = 'CATEGORY',
+  CmsPage = 'CMS_PAGE',
+  Product = 'PRODUCT'
+}
+
+export type ChatData = {
+  __typename?: 'ChatData';
+  /** API space id */
+  api_space_id?: Maybe<Scalars['String']>;
+  /** Cookie name */
+  cookie_name?: Maybe<Scalars['String']>;
+  /** Is chat enabled */
+  is_enabled?: Maybe<Scalars['Boolean']>;
 };
 
 /** Defines all Checkout Agreement information */
@@ -1549,7 +1609,7 @@ export type CmsBlocks = {
 };
 
 /** CMS page defines all CMS page information */
-export type CmsPage = {
+export type CmsPage = RoutableInterface & {
   __typename?: 'CmsPage';
   /** CMS page content */
   content?: Maybe<Scalars['String']>;
@@ -1565,8 +1625,14 @@ export type CmsPage = {
   meta_title?: Maybe<Scalars['String']>;
   /** CMS page content heading */
   page_layout?: Maybe<Scalars['String']>;
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
   /** CMS page title */
   title?: Maybe<Scalars['String']>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /** URL key of CMS page */
   url_key?: Maybe<Scalars['String']>;
 };
@@ -1676,6 +1742,8 @@ export type Attribute = {
   entity_type?: Maybe<Scalars['String']>;
   /** The frontend input type of the attribute */
   input_type?: Maybe<Scalars['String']>;
+  /** Contains details about the storefront properties configured for the attribute */
+  storefront_properties?: Maybe<StorefrontProperties>;
 };
 
 /** Attribute option. */
@@ -1686,6 +1754,26 @@ export type AttributeOption = {
   /** Attribute option value. */
   value?: Maybe<Scalars['String']>;
 };
+
+export type StorefrontProperties = {
+  __typename?: 'StorefrontProperties';
+  /** The relative position of the attribute in the layered navigation block */
+  position?: Maybe<Scalars['Int']>;
+  /** Indicates whether the attribute is filterable with results, without results, or not at all */
+  use_in_layered_navigation?: Maybe<UseInLayeredNavigationOptions>;
+  /** Indicates whether the attribute is displayed in product listings */
+  use_in_product_listing?: Maybe<Scalars['Boolean']>;
+  /** Indicates whether the attribute can be used in layered navigation on search results pages */
+  use_in_search_results_layered_navigation?: Maybe<Scalars['Boolean']>;
+  /** Indicates whether the attribute is displayed on product pages */
+  visible_on_catalog_pages?: Maybe<Scalars['Boolean']>;
+};
+
+export enum UseInLayeredNavigationOptions {
+  FilterableNoResult = 'FILTERABLE_NO_RESULT',
+  FilterableWithResults = 'FILTERABLE_WITH_RESULTS',
+  No = 'NO'
+}
 
 /** Customer defines the customer name and address and other details */
 export type Customer = {
@@ -2866,6 +2954,40 @@ export enum PaymentTokenTypeEnum {
   Card = 'card'
 }
 
+export type Dashboard = {
+  __typename?: 'Dashboard';
+  last_orders: Array<Maybe<DashboardLastOrder>>;
+  last_search_terms: Array<Maybe<DashboardSearchTerm>>;
+  sales: DashboardSales;
+  top_search_terms: Array<Maybe<DashboardSearchTerm>>;
+};
+
+export type DashboardLastOrder = {
+  __typename?: 'DashboardLastOrder';
+  customer_name: Scalars['String'];
+  num_items: Scalars['Int'];
+  total: Scalars['String'];
+};
+
+export type DashboardSearchTerm = {
+  __typename?: 'DashboardSearchTerm';
+  results: Scalars['Int'];
+  search_term: Scalars['String'];
+  uses: Scalars['Int'];
+};
+
+export type DashboardSales = {
+  __typename?: 'DashboardSales';
+  average_order: Scalars['String'];
+  lifetime_sales: Scalars['String'];
+};
+
+export type IsConfigSettingEnabledOutput = {
+  __typename?: 'IsConfigSettingEnabledOutput';
+  /** Is config setting enabled */
+  is_enabled?: Maybe<Scalars['Boolean']>;
+};
+
 /** The required input to request the secure URL for Payments Pro Hosted Solution payment. */
 export type HostedProUrlInput = {
   /** The unique ID that identifies the customer's cart */
@@ -2908,6 +3030,19 @@ export type IsEmailAvailableOutput = {
   __typename?: 'IsEmailAvailableOutput';
   /** Is email availabel value */
   is_email_available?: Maybe<Scalars['Boolean']>;
+};
+
+/** Contains details about the requested order */
+export type Order = {
+  __typename?: 'Order';
+  /** An array containing the items purchased in this order */
+  items?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** @deprecated The order_id field is deprecated, use order_number instead. */
+  order_id?: Maybe<Scalars['String']>;
+  /** The unique ID for a `Order` object. */
+  order_number: Scalars['String'];
+  /** Contains the calculated total for this order */
+  total?: Maybe<Scalars['String']>;
 };
 
 /** AreaInput defines the parameters which will be used for filter by specified location. */
@@ -3169,6 +3304,8 @@ export type Aggregation = {
   label?: Maybe<Scalars['String']>;
   /** Array of options for the aggregation. */
   options?: Maybe<Array<Maybe<AggregationOption>>>;
+  /** The relative position of the attribute in a layered navigation block */
+  position?: Maybe<Scalars['Int']>;
 };
 
 export type AggregationOption = AggregationOptionInterface & {
@@ -3249,6 +3386,18 @@ export type SortField = {
   value?: Maybe<Scalars['String']>;
 };
 
+export type TrackingData = {
+  __typename?: 'TrackingData';
+  /** Is Page Tracking enabled */
+  page_tracking_enabled?: Maybe<Scalars['Boolean']>;
+  /** dotdigital region prefix */
+  region_prefix?: Maybe<Scalars['String']>;
+  /** Is ROI Tracking enabled */
+  roi_tracking_enabled?: Maybe<Scalars['Boolean']>;
+  /** Web Behaviour Tracking profile ID */
+  wbt_profile_id?: Maybe<Scalars['String']>;
+};
+
 /** EntityUrl is an output object containing the `id`, `relative_url`, and `type` attributes */
 export type EntityUrl = {
   __typename?: 'EntityUrl';
@@ -3268,13 +3417,6 @@ export type EntityUrl = {
   /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
   type?: Maybe<UrlRewriteEntityTypeEnum>;
 };
-
-/** This enumeration defines the entity type. */
-export enum UrlRewriteEntityTypeEnum {
-  Category = 'CATEGORY',
-  CmsPage = 'CMS_PAGE',
-  Product = 'PRODUCT'
-}
 
 /** Deprecated: `Wishlist` type should be used instead */
 export type WishlistOutput = {
@@ -3319,6 +3461,8 @@ export type Mutation = {
   addProductsToWishlist?: Maybe<AddProductsToWishlistOutput>;
   addSimpleProductsToCart?: Maybe<AddSimpleProductsToCartOutput>;
   addVirtualProductsToCart?: Maybe<AddVirtualProductsToCartOutput>;
+  /** Add items in the specified wishlist to the customer's cart */
+  addWishlistItemsToCart?: Maybe<AddWishlistItemsToCartOutput>;
   applyCouponToCart?: Maybe<ApplyCouponToCartOutput>;
   /** Assign the specified compare list to the logged in customer */
   assignCompareListToCustomer?: Maybe<AssignCompareListToCustomerOutput>;
@@ -3386,6 +3530,8 @@ export type Mutation = {
   /** Subscribes the specified email to a newsletter */
   subscribeEmailToNewsletter?: Maybe<SubscribeEmailToNewsletterOutput>;
   updateCartItems?: Maybe<UpdateCartItemsOutput>;
+  /** Sends chat profile data to Engagement Cloud. */
+  updateChatProfile?: Maybe<Scalars['Boolean']>;
   /** Deprecated. Use UpdateCustomerV2 instead. */
   updateCustomer?: Maybe<CustomerOutput>;
   /** Update customer address */
@@ -3395,6 +3541,8 @@ export type Mutation = {
   updateCustomerV2?: Maybe<CustomerOutput>;
   /** Updates one or more products in the specified wish list */
   updateProductsInWishlist?: Maybe<UpdateProductsInWishlistOutput>;
+  /** Updates the email address of a quote. */
+  updateQuoteEmail?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -3437,6 +3585,12 @@ export type MutationAddSimpleProductsToCartArgs = {
 
 export type MutationAddVirtualProductsToCartArgs = {
   input?: Maybe<AddVirtualProductsToCartInput>;
+};
+
+
+export type MutationAddWishlistItemsToCartArgs = {
+  wishlistId: Scalars['ID'];
+  wishlistItemIds?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -3632,6 +3786,14 @@ export type MutationUpdateCartItemsArgs = {
 };
 
 
+export type MutationUpdateChatProfileArgs = {
+  email?: Maybe<Scalars['String']>;
+  firstname?: Maybe<Scalars['String']>;
+  lastname?: Maybe<Scalars['String']>;
+  profileId: Scalars['String'];
+};
+
+
 export type MutationUpdateCustomerArgs = {
   input: CustomerInput;
 };
@@ -3657,6 +3819,12 @@ export type MutationUpdateCustomerV2Args = {
 export type MutationUpdateProductsInWishlistArgs = {
   wishlistId: Scalars['ID'];
   wishlistItems: Array<WishlistItemUpdateInput>;
+};
+
+
+export type MutationUpdateQuoteEmailArgs = {
+  cartId: Scalars['String'];
+  email: Scalars['String'];
 };
 
 export type AddBundleProductsToCartInput = {
@@ -3843,6 +4011,35 @@ export type AddVirtualProductsToCartOutput = {
   __typename?: 'AddVirtualProductsToCartOutput';
   cart: Cart;
 };
+
+export type AddWishlistItemsToCartOutput = {
+  __typename?: 'AddWishlistItemsToCartOutput';
+  /** An array of errors encountered while adding products to the customer's cart */
+  add_wishlist_items_to_cart_user_errors: Array<Maybe<WishlistCartUserInputError>>;
+  /** Indicates whether the attempt to add items to the customer's cart was successful */
+  status: Scalars['Boolean'];
+  /** Contains the wish list with all items that were successfully added */
+  wishlist: Wishlist;
+};
+
+export type WishlistCartUserInputError = {
+  __typename?: 'WishlistCartUserInputError';
+  /** An error code that describes the error encountered */
+  code: WishlistCartUserInputErrorType;
+  /** A localized error message */
+  message: Scalars['String'];
+  /** The unique ID of the `Wishlist` object containing an error */
+  wishlistId: Scalars['ID'];
+  /** The unique ID of the wish list item containing an error */
+  wishlistItemId: Scalars['ID'];
+};
+
+export enum WishlistCartUserInputErrorType {
+  InsufficientStock = 'INSUFFICIENT_STOCK',
+  NotSalable = 'NOT_SALABLE',
+  ProductNotFound = 'PRODUCT_NOT_FOUND',
+  Undefined = 'UNDEFINED'
+}
 
 export type ApplyCouponToCartInput = {
   cart_id: Scalars['String'];
@@ -4162,14 +4359,6 @@ export type PlaceOrderInput = {
 export type PlaceOrderOutput = {
   __typename?: 'PlaceOrderOutput';
   order: Order;
-};
-
-export type Order = {
-  __typename?: 'Order';
-  /** @deprecated The order_id field is deprecated, use order_number instead. */
-  order_id?: Maybe<Scalars['String']>;
-  /** The unique ID for a `Order` object. */
-  order_number: Scalars['String'];
 };
 
 export type RemoveCouponFromCartInput = {
@@ -4771,8 +4960,8 @@ export type BundleOrderItem = OrderItemInterface & {
   status?: Maybe<Scalars['String']>;
 };
 
-/** BundleProduct defines basic features of a bundle product and contains multiple BundleItems. */
-export type BundleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & {
+/** Defines basic features of a bundle product and contains multiple BundleItems */
+export type BundleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'BundleProduct';
   activity?: Maybe<Scalars['String']>;
   /**
@@ -4873,8 +5062,12 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
@@ -4919,6 +5112,8 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -4951,7 +5146,7 @@ export type BundleProduct = CustomizableProductInterface & PhysicalProductInterf
 };
 
 
-/** BundleProduct defines basic features of a bundle product and contains multiple BundleItems. */
+/** Defines basic features of a bundle product and contains multiple BundleItems */
 export type BundleProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -5061,6 +5256,8 @@ export type ConfigurableAttributeOption = {
 export type ConfigurableCartItem = CartItemInterface & {
   __typename?: 'ConfigurableCartItem';
   configurable_options: Array<Maybe<SelectedConfigurableOption>>;
+  /** Product details of the cart item */
+  configured_variant: ProductInterface;
   customizable_options?: Maybe<Array<Maybe<SelectedCustomizableOption>>>;
   /** The entered gift message for the cart item */
   gift_message?: Maybe<GiftMessage>;
@@ -5097,7 +5294,7 @@ export type ConfigurableOptionAvailableForSelection = {
 };
 
 /** ConfigurableProduct defines basic features of a configurable product and its simple product variants */
-export type ConfigurableProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & {
+export type ConfigurableProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'ConfigurableProduct';
   activity?: Maybe<Scalars['String']>;
   /**
@@ -5115,7 +5312,7 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   color?: Maybe<Scalars['Int']>;
   /** An array of linked simple product items */
   configurable_options?: Maybe<Array<Maybe<ConfigurableProductOptions>>>;
-  /** Metadata for the specified configurable options selection */
+  /** Specified configurable product options selection */
   configurable_product_options_selection?: Maybe<ConfigurableProductOptionsSelection>;
   /** The product's country of origin. */
   country_of_manufacture?: Maybe<Scalars['String']>;
@@ -5192,8 +5389,12 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
@@ -5236,6 +5437,8 @@ export type ConfigurableProduct = CustomizableProductInterface & PhysicalProduct
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -5346,6 +5549,8 @@ export type ConfigurableProductOptionsValues = {
 /** Metadata corresponding to the configurable options selection. */
 export type ConfigurableProductOptionsSelection = {
   __typename?: 'ConfigurableProductOptionsSelection';
+  /** Configurable options available for further selection based on current selection. */
+  configurable_options?: Maybe<Array<Maybe<ConfigurableProductOption>>>;
   /** Product images and videos corresponding to the specified configurable options selection. */
   media_gallery?: Maybe<Array<Maybe<MediaGalleryInterface>>>;
   /** Configurable options available for further selection based on current selection. */
@@ -5354,8 +5559,25 @@ export type ConfigurableProductOptionsSelection = {
   variant?: Maybe<SimpleProduct>;
 };
 
-/** A simple product is tangible and are usually sold as single units or in fixed quantities. */
-export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & {
+export type ConfigurableProductOption = {
+  __typename?: 'ConfigurableProductOption';
+  attribute_code: Scalars['String'];
+  label: Scalars['String'];
+  uid: Scalars['ID'];
+  values?: Maybe<Array<Maybe<ConfigurableProductOptionValue>>>;
+};
+
+export type ConfigurableProductOptionValue = {
+  __typename?: 'ConfigurableProductOptionValue';
+  is_available: Scalars['Boolean'];
+  is_use_default: Scalars['Boolean'];
+  label: Scalars['String'];
+  swatch?: Maybe<SwatchDataInterface>;
+  uid: Scalars['ID'];
+};
+
+/** A simple product is tangible and is usually sold in single units or in fixed quantities */
+export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'SimpleProduct';
   activity?: Maybe<Scalars['String']>;
   /**
@@ -5446,8 +5668,12 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
@@ -5490,6 +5716,8 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -5522,7 +5750,7 @@ export type SimpleProduct = CustomizableProductInterface & PhysicalProductInterf
 };
 
 
-/** A simple product is tangible and are usually sold as single units or in fixed quantities. */
+/** A simple product is tangible and is usually sold in single units or in fixed quantities */
 export type SimpleProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -5681,9 +5909,18 @@ export type CustomizableDateValue = {
   price_type?: Maybe<PriceTypeEnum>;
   /** The Stock Keeping Unit for this option. */
   sku?: Maybe<Scalars['String']>;
+  /** DATE, DATE_TIME or TIME */
+  type?: Maybe<CustomizableDateTypeEnum>;
   /** The unique ID for a `CustomizableDateValue` object. */
   uid: Scalars['ID'];
 };
+
+/** This enumeration customizable date type. */
+export enum CustomizableDateTypeEnum {
+  Date = 'DATE',
+  DateTime = 'DATE_TIME',
+  Time = 'TIME'
+}
 
 /** CustomizableDropDownOption contains information about a drop down menu that is defined as part of a customizable option. */
 export type CustomizableDropDownOption = CustomizableOptionInterface & {
@@ -6035,8 +6272,8 @@ export type DownloadableOrderItem = OrderItemInterface & {
   status?: Maybe<Scalars['String']>;
 };
 
-/** DownloadableProduct defines a product that the customer downloads */
-export type DownloadableProduct = CustomizableProductInterface & ProductInterface & {
+/** DownloadableProduct defines a product that the shopper downloads */
+export type DownloadableProduct = CustomizableProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'DownloadableProduct';
   activity?: Maybe<Scalars['String']>;
   /**
@@ -6135,8 +6372,12 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
@@ -6179,6 +6420,8 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -6209,7 +6452,7 @@ export type DownloadableProduct = CustomizableProductInterface & ProductInterfac
 };
 
 
-/** DownloadableProduct defines a product that the customer downloads */
+/** DownloadableProduct defines a product that the shopper downloads */
 export type DownloadableProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -6236,8 +6479,8 @@ export type DownloadableWishlistItem = WishlistItemInterface & {
   samples?: Maybe<Array<Maybe<DownloadableProductSamples>>>;
 };
 
-/** GroupedProduct defines a grouped product */
-export type GroupedProduct = PhysicalProductInterface & ProductInterface & {
+/** A grouped product consists of simple standalone products that are presented as a group */
+export type GroupedProduct = PhysicalProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'GroupedProduct';
   activity?: Maybe<Scalars['String']>;
   /**
@@ -6328,8 +6571,12 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & {
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
@@ -6372,6 +6619,8 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & {
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -6404,7 +6653,7 @@ export type GroupedProduct = PhysicalProductInterface & ProductInterface & {
 };
 
 
-/** GroupedProduct defines a grouped product */
+/** A grouped product consists of simple standalone products that are presented as a group */
 export type GroupedProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -6831,8 +7080,8 @@ export type VirtualCartItem = CartItemInterface & {
   uid: Scalars['ID'];
 };
 
-/** A virtual product is non-tangible product that does not require shipping and is not kept in inventory. */
-export type VirtualProduct = CustomizableProductInterface & ProductInterface & {
+/** A virtual product is a non-tangible product that does not require shipping and is not kept in inventory */
+export type VirtualProduct = CustomizableProductInterface & ProductInterface & RoutableInterface & {
   __typename?: 'VirtualProduct';
   activity?: Maybe<Scalars['String']>;
   /**
@@ -6923,8 +7172,12 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & {
   product_links?: Maybe<Array<Maybe<ProductLinksInterface>>>;
   /** The average of all the ratings given to the product. */
   rating_summary: Scalars['Float'];
+  /** Contains 0 when there is no redirect error. A value of 301 indicates the URL of the requested resource has been changed permanently, while a value of 302 indicates a temporary redirect */
+  redirect_code: Scalars['Int'];
   /** Related Products */
   related_products?: Maybe<Array<Maybe<ProductInterface>>>;
+  /** The internal relative URL. If the specified URL is a redirect, the query returns the redirected URL, not the original */
+  relative_url?: Maybe<Scalars['String']>;
   /** The total count of all the reviews given to the product. */
   review_count: Scalars['Int'];
   /** The list of products reviews. */
@@ -6967,6 +7220,8 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & {
    * @deprecated Use price_tiers for product tier price information.
    */
   tier_prices?: Maybe<Array<Maybe<ProductTierPrices>>>;
+  /** One of PRODUCT, CATEGORY, or CMS_PAGE. */
+  type?: Maybe<UrlRewriteEntityTypeEnum>;
   /**
    * One of simple, virtual, bundle, downloadable, grouped, or configurable.
    * @deprecated Use __typename instead.
@@ -6997,7 +7252,7 @@ export type VirtualProduct = CustomizableProductInterface & ProductInterface & {
 };
 
 
-/** A virtual product is non-tangible product that does not require shipping and is not kept in inventory. */
+/** A virtual product is a non-tangible product that does not require shipping and is not kept in inventory */
 export type VirtualProductReviewsArgs = {
   currentPage?: Maybe<Scalars['Int']>;
   pageSize?: Maybe<Scalars['Int']>;
@@ -7020,6 +7275,11 @@ export type VirtualWishlistItem = WishlistItemInterface & {
   quantity: Scalars['Float'];
 };
 
+export type GetDashboardDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDashboardDataQuery = { __typename?: 'Query', dashboard: { __typename?: 'Dashboard', last_orders: Array<{ __typename?: 'DashboardLastOrder', customer_name: string, num_items: number, total: string } | null | undefined>, last_search_terms: Array<{ __typename?: 'DashboardSearchTerm', results: number, search_term: string, uses: number } | null | undefined>, sales: { __typename?: 'DashboardSales', average_order: string, lifetime_sales: string }, top_search_terms: Array<{ __typename?: 'DashboardSearchTerm', results: number, search_term: string, uses: number } | null | undefined> } };
+
 export type GenerateAdminTokenMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
@@ -7029,6 +7289,58 @@ export type GenerateAdminTokenMutationVariables = Exact<{
 export type GenerateAdminTokenMutation = { __typename?: 'Mutation', generateAdminToken: string };
 
 
+export const GetDashboardDataDocument = gql`
+    query getDashboardData {
+  dashboard {
+    last_orders {
+      customer_name
+      num_items
+      total
+    }
+    last_search_terms {
+      results
+      search_term
+      uses
+    }
+    sales {
+      average_order
+      lifetime_sales
+    }
+    top_search_terms {
+      results
+      search_term
+      uses
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetDashboardDataQuery__
+ *
+ * To run a query within a React component, call `useGetDashboardDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDashboardDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDashboardDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDashboardDataQuery(baseOptions?: Apollo.QueryHookOptions<GetDashboardDataQuery, GetDashboardDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDashboardDataQuery, GetDashboardDataQueryVariables>(GetDashboardDataDocument, options);
+      }
+export function useGetDashboardDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDashboardDataQuery, GetDashboardDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDashboardDataQuery, GetDashboardDataQueryVariables>(GetDashboardDataDocument, options);
+        }
+export type GetDashboardDataQueryHookResult = ReturnType<typeof useGetDashboardDataQuery>;
+export type GetDashboardDataLazyQueryHookResult = ReturnType<typeof useGetDashboardDataLazyQuery>;
+export type GetDashboardDataQueryResult = Apollo.QueryResult<GetDashboardDataQuery, GetDashboardDataQueryVariables>;
 export const GenerateAdminTokenDocument = gql`
     mutation generateAdminToken($username: String!, $password: String!) {
   generateAdminToken(username: $username, password: $password)
@@ -7062,6 +7374,9 @@ export type GenerateAdminTokenMutationHookResult = ReturnType<typeof useGenerate
 export type GenerateAdminTokenMutationResult = Apollo.MutationResult<GenerateAdminTokenMutation>;
 export type GenerateAdminTokenMutationOptions = Apollo.BaseMutationOptions<GenerateAdminTokenMutation, GenerateAdminTokenMutationVariables>;
 export const namedOperations = {
+  Query: {
+    getDashboardData: 'getDashboardData'
+  },
   Mutation: {
     generateAdminToken: 'generateAdminToken'
   }

@@ -1,0 +1,23 @@
+query getDashboardData {
+    dashboard {
+        last_orders {
+            customer_name
+            num_items
+            total
+        }
+        last_search_terms {
+            results
+            search_term
+            uses
+        }
+        sales {
+            average_order
+            lifetime_sales
+        }
+        top_search_terms {
+            results
+            search_term
+            uses
+        }
+    }
+}
