@@ -4,16 +4,22 @@ import {useGetDashboardDataQuery} from "../../types";
 import SearchTerms from "./SearchTerms";
 import Sales from "./Sales";
 import LastOrders from "./LastOrders";
+import {CircularProgress} from "@mui/material";
 
 const Dashboard = () => {
     const { data, loading, error } = useGetDashboardDataQuery();
 
     if (loading) {
-        return <h2>Loading!</h2>
+        return <CircularProgress />
     }
 
     if (error) {
-        return <h2>Failed!</h2>;
+        return (
+            <Fragment>
+                <h2>Error</h2>
+                <p>{error.message}</p>
+            </Fragment>
+        );
     }
 
     if (data) {
