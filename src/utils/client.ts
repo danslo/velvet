@@ -20,4 +20,3 @@ export const setClientLink = (token: string|null) => {
 }
 
 setClientLink(localStorage.getItem('token'));
-
