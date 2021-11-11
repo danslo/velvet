@@ -1,9 +1,9 @@
-import {Table, TableCell, TableHead, TableRow, TableBody} from "@mui/material";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {DashboardLastOrder, Maybe} from "../../types";
 
 type LastOrdersProps = {
-    lastOrders: Array<Maybe<DashboardLastOrder>|undefined>;
+    lastOrders: Array<Maybe<DashboardLastOrder>>;
     caption: string;
 }
 

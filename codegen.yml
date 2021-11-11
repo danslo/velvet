@@ -10,3 +10,8 @@ generates:
       - named-operations-object
     config:
       withHooks: true
+      avoidOptionals:
+        field: true
+        inputValue: true
+        object: true
+        defaultValue: true

@@ -1,7 +1,6 @@
 import {Dispatch} from "react";
-import {GenerateAdminTokenDocument, GenerateAdminTokenMutation, GenerateAdminTokenMutationResult} from "../types";
+import {GenerateAdminTokenDocument, GenerateAdminTokenMutation} from "../types";
 import {client, setClientLink} from "../utils/client";
-import {MutationResult} from "@apollo/client/react/types/types";
 import {FetchResult} from "@apollo/client";
 
 export enum ActionType {

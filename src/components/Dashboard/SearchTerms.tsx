@@ -3,7 +3,7 @@ import React from "react";
 import {DashboardSearchTerm, Maybe} from "../../types";
 
 type SearchTermsProps = {
-    searchTerms:  Array<Maybe<DashboardSearchTerm>|undefined>;
+    searchTerms:  Array<Maybe<DashboardSearchTerm>>;
     caption: string;
 }
 
