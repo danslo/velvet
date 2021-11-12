@@ -3,7 +3,7 @@ import React from "react";
 import {DashboardSales} from "../../types";
 
 type SalesProps = {
-    sales: DashboardSales|undefined;
+    sales: DashboardSales;
     caption: string;
 }
 
@@ -13,11 +13,11 @@ const Sales = ({sales, caption}: SalesProps) => (
         <TableBody>
             <TableRow>
                 <TableCell>Lifetime Sales</TableCell>
-                <TableCell>{sales?.lifetime_sales}</TableCell>
+                <TableCell>{sales.lifetime_sales}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell>Average Order</TableCell>
-                <TableCell>{sales?.average_order}</TableCell>
+                <TableCell>{sales.average_order}</TableCell>
             </TableRow>
         </TableBody>
     </Table>
