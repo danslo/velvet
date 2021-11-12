@@ -3,7 +3,7 @@ import React from "react";
 import {DashboardSearchTerm, Maybe} from "../../types";
 
 type SearchTermsProps = {
-    searchTerms:  Array<Maybe<DashboardSearchTerm>>;
+    searchTerms: Array<Maybe<DashboardSearchTerm>>|undefined;
     caption: string;
 }
 
@@ -18,7 +18,7 @@ const SearchTerms = ({caption, searchTerms}: SearchTermsProps) => (
             </TableRow>
         </TableHead>
         <TableBody>
-            {searchTerms.map(searchTerm => (
+            {searchTerms?.map(searchTerm => (
                 <TableRow>
                     <TableCell>{searchTerm!.search_term}</TableCell>
                     <TableCell>{searchTerm!.results}</TableCell>

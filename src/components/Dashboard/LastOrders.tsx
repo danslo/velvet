@@ -3,7 +3,7 @@ import React from "react";
 import {DashboardLastOrder, Maybe} from "../../types";
 
 type LastOrdersProps = {
-    lastOrders: Array<Maybe<DashboardLastOrder>>;
+    lastOrders: Array<Maybe<DashboardLastOrder>>|undefined;
     caption: string;
 }
 
@@ -18,7 +18,7 @@ const LastOrders = ({lastOrders, caption}: LastOrdersProps) => (
             </TableRow>
         </TableHead>
         <TableBody>
-            {lastOrders.map(order => (
+            {lastOrders?.map(order => (
                 <TableRow>
                     <TableCell>{order!.customer_name}</TableCell>
                     <TableCell>{order!.num_items}</TableCell>
