@@ -9,9 +9,9 @@ const App = () => {
     return (
         <AuthProvider>
             <ThemeProvider theme={createTheme(theme)}>
-                <CssBaseline />
+                <CssBaseline/>
                 <BrowserRouter>
-                    <AppRoutes />
+                    <AppRoutes/>
                 </BrowserRouter>
             </ThemeProvider>
         </AuthProvider>

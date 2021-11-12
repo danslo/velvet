@@ -13,7 +13,7 @@ export const AppRoutes = () => {
                     <Route
                         element={route.component({})}
                         path={route.path}
-                        key={route.path} />
+                        key={route.path}/>
                 )
             }
         </Routes>

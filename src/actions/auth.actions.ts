@@ -31,7 +31,7 @@ export async function login(dispatch: Dispatch<AuthAction>, loginPayload: LoginP
         dispatch({type: ActionType.LoginUser, token: token});
         localStorage.setItem('token', token);
         setClientLink(token);
-    }).catch((reason: {message: string}) => {
+    }).catch((reason: { message: string }) => {
         dispatch({type: ActionType.LoginFailed, errorMessage: reason.message});
     });
 }

@@ -18,7 +18,7 @@ const Navbar = () => {
                     <Link to="/dashboard">Dashboard</Link>
                 </Button>
                 <Button>
-                     <Link to="/" onClick={handleLogout}>Logout</Link>
+                    <Link to="/" onClick={handleLogout}>Logout</Link>
                 </Button>
             </Toolbar>
         </AppBar>

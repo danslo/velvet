@@ -4,9 +4,9 @@ import {CircularProgress} from "@mui/material";
 
 type LoaderProps = PropsWithChildren<Partial<QueryResult>>;
 
-const LoaderHandler = ({children, loading, error}: LoaderProps): JSX.Element|null => {
+const LoaderHandler = ({children, loading, error}: LoaderProps): JSX.Element => {
     if (error) return (<><h2>Error</h2><p>{error.message}</p></>);
-    if (loading) return <CircularProgress />
+    if (loading) return <CircularProgress/>
     return <>{children}</>;
 }
 

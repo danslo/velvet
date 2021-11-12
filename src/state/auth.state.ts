@@ -1,6 +1,6 @@
 export interface AuthState {
-    token: string|null;
-    errorMessage: string|null
+    token: string | null;
+    errorMessage: string | null
 }
 
 export const initialAuthState: AuthState = {
