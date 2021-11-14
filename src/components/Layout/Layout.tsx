@@ -1,5 +1,6 @@
 import Navbar from "../Navbar/Navbar";
 import {Container} from "@mui/material";
+import Footer from "../Footer/Footer";
 
 export function withLayout<P>(WrappedComponent: React.ComponentType<P>) {
     return (props: P) => {
@@ -9,6 +10,7 @@ export function withLayout<P>(WrappedComponent: React.ComponentType<P>) {
                 <Container maxWidth={false} sx={{py: 3}}>
                     <WrappedComponent {...props} />
                 </Container>
+                <Footer/>
             </>
         );
     }
