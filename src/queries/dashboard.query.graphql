@@ -1,4 +1,4 @@
-query getDashboardData {
+query getDashboardData($period: String = "7d") {
     dashboard {
         last_orders {
             customer_name
@@ -18,6 +18,20 @@ query getDashboardData {
             results
             search_term
             uses
+        }
+        orders_chart(period: $period) {
+            label
+            points {
+                x
+                y
+            }
+        }
+        revenue_chart(period: $period) {
+            label
+            points {
+                x
+                y
+            }
         }
     }
 }
