@@ -1,0 +1,26 @@
+query getDashboardSales($period: String = "7d") {
+    dashboard {
+        orders_chart(period: $period) {
+            period
+            label
+            points {
+                x
+                y
+            }
+        }
+        revenue_chart(period: $period) {
+            period
+            label
+            points {
+                x
+                y
+            }
+        }
+        totals(period: $period) {
+            quantity
+            revenue
+            shipping
+            tax
+        }
+    }
+}

@@ -7,8 +7,15 @@ const theme: ThemeOptions = {
         }
     },
     typography: {
-        fontWeightMedium: 700
+        fontWeightMedium: 700,
+        h6: {
+            textTransform: "uppercase",
+            fontSize: "1rem",
+            color: "#1976d2",
+            fontWeight: 700
+        }
     }
 };
+
 
 export default theme;

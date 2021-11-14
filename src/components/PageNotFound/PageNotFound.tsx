@@ -1,4 +1,5 @@
 import React from "react";
+import {withLayout} from "../Layout/Layout";
 
 const PageNotFound = () => {
     return (
@@ -6,4 +7,4 @@ const PageNotFound = () => {
     )
 };
 
-export default PageNotFound;
+export default withLayout(PageNotFound);

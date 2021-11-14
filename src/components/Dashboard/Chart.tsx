@@ -1,18 +1,19 @@
-import {Paper} from "@mui/material";
 import React from "react";
 import {DashboardChart} from "../../types";
+import {ArgumentAxis, BarSeries, Chart as DXChart, ValueAxis} from '@devexpress/dx-react-chart-material-ui';
 
 type ChartProps = {
     chart: DashboardChart
-}
+};
 
 const Chart = ({chart}: ChartProps) => {
-
     return (
-        <Paper sx={{p: 2, mb: 2}}>
-            <h3>{chart.label}</h3>
-        </Paper>
-    )
+        <DXChart data={chart.points}>
+            <ArgumentAxis/>
+            <ValueAxis/>
+            <BarSeries valueField="y" argumentField="x"/>
+        </DXChart>
+    );
 }
 
 export default Chart;
