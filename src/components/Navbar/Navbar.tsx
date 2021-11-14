@@ -17,7 +17,9 @@ import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import ConfigIcon from '@mui/icons-material/Build';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useAuthDispatch} from "../../context/auth.context";
+import {logout} from "../../actions/auth.actions";
 
 const drawerWidth = 240;
 
@@ -50,9 +52,12 @@ const DrawerHeader = styled('div')(({theme}) => ({
     justifyContent: 'flex-end',
 }));
 
-export default function PersistentDrawerLeft() {
+
+export default function Navbar() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const {dispatch} = useAuthDispatch();
+    const navigate = useNavigate();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -61,6 +66,10 @@ export default function PersistentDrawerLeft() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const handleLogout = () => {
+        logout(dispatch).then(() => navigate("/"));
+    }
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -112,7 +121,7 @@ export default function PersistentDrawerLeft() {
                         <ListItemText primary="Configuration"/>
                     </ListItem>
                     <Divider/>
-                    <ListItem component={Link} to="/">
+                    <ListItem component={Link} to="#" onClick={handleLogout}>
                         <ListItemIcon>
                             <LogoutIcon/>
                         </ListItemIcon>
