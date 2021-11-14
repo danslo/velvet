@@ -1,0 +1,16 @@
+query getDashboardTabs {
+    dashboard {
+        customers_most {
+            average
+            name
+            orders
+            total
+        }
+        customers_newest {
+            average
+            name
+            orders
+            total
+        }
+    }
+}

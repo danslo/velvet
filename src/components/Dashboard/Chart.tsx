@@ -9,7 +9,7 @@ type ChartProps = {
 const Chart = ({chart}: ChartProps) => {
     return (
         <DXChart data={chart.points}>
-            <ArgumentAxis/>
+            <ArgumentAxis showGrid/>
             <ValueAxis/>
             <BarSeries valueField="y" argumentField="x"/>
         </DXChart>

@@ -1,20 +1,10 @@
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
-import {
-    Box,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Paper,
-    Select,
-    SelectChangeEvent,
-    Tab,
-    Tabs,
-    Typography
-} from "@mui/material";
+import {Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Tab, Tabs} from "@mui/material";
 import React from "react";
 import {useGetDashboardSalesQuery} from "../../types";
 import Chart from "./Chart";
 import Totals from "./Totals";
+import TabPanel from "./TabPanel";
 
 const Charts = () => {
     const [period, setPeriod] = React.useState('7d');
@@ -34,25 +24,6 @@ const Charts = () => {
         setTab(newTab);
     };
 
-    interface TabPanelProps {
-        children?: React.ReactNode;
-        index: number;
-        value: number;
-    }
-
-    function TabPanel(props: TabPanelProps) {
-        const {children, value, index, ...other} = props;
-        return (
-            <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} {...other}>
-                {value === index && (
-                    <Box sx={{p: 3}}>
-                        <Typography>{children}</Typography>
-                    </Box>
-                )}
-            </div>
-        );
-    }
-
     return (
         <Paper sx={{p: 2, mb: 2}}>
             <LoaderHandler loading={loading} error={error}>
@@ -63,7 +34,7 @@ const Charts = () => {
                             <Tab label="Amounts"/>
                         </Tabs>
                     </Box>
-                    <Box sx={{mb: 2}}>
+                    <Box sx={{mb: 2, mx: 1}}>
                         <FormControl component={Paper}>
                             <InputLabel id="period-label">Period</InputLabel>
                             <Select
@@ -80,17 +51,18 @@ const Charts = () => {
                             </Select>
                         </FormControl>
                     </Box>
-                    <TabPanel value={tab} index={0}>
-                        <Chart chart={data.dashboard.orders_chart}/>
-                    </TabPanel>
-                    <TabPanel value={tab} index={1}>
-                        <Chart chart={data.dashboard.revenue_chart}/>
-                    </TabPanel>
+                    <Box sx={{py: 2}}>
+                        <TabPanel value={tab} index={0}>
+                            <Chart chart={data.dashboard.orders_chart}/>
+                        </TabPanel>
+                        <TabPanel value={tab} index={1}>
+                            <Chart chart={data.dashboard.revenue_chart}/>
+                        </TabPanel>
+                    </Box>
                     <Totals totals={data.dashboard.totals}/>
                 </>)}
             </LoaderHandler>
         </Paper>
-
     );
 }
 
