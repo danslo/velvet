@@ -6,6 +6,7 @@ import Sales from "./Sales";
 import LastOrders from "./LastOrders";
 import SearchTerms from "./SearchTerms";
 import {Grid, Paper} from "@mui/material";
+import Chart from "./Chart";
 
 const Dashboard = () => {
     const {data, loading, error} = useGetDashboardDataQuery();
@@ -20,7 +21,7 @@ const Dashboard = () => {
                         <SearchTerms searchTerms={data.dashboard.top_search_terms} caption="Top Search Terms"/>
                     </Grid>
                     <Grid item xs={12} md={8}>
-                        <Paper sx={{p: 2, mb: 2}}>Graphs!</Paper>
+                        <Chart chart={data.dashboard.orders_chart}/>
                         <Paper sx={{p: 2}}>Store stats!</Paper>
                     </Grid>
                 </Grid>

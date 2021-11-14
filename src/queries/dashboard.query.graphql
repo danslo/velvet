@@ -20,6 +20,7 @@ query getDashboardData($period: String = "7d") {
             uses
         }
         orders_chart(period: $period) {
+            period
             label
             points {
                 x
@@ -27,6 +28,7 @@ query getDashboardData($period: String = "7d") {
             }
         }
         revenue_chart(period: $period) {
+            period
             label
             points {
                 x
