@@ -2,7 +2,7 @@ import React from "react";
 import {Grid} from "@mui/material";
 import {withLayout} from "../Layout/Layout";
 import Summary from "./Summary/Summary";
-import Charts from "./Charts/Charts";
+import ChartContainer from "./ChartContainer/ChartContainer";
 import Tabs from "./Tabs/Tabs";
 
 const Dashboard = () => {
@@ -12,7 +12,7 @@ const Dashboard = () => {
                 <Summary/>
             </Grid>
             <Grid item xs={12} md={8}>
-                <Charts/>
+                <ChartContainer/>
                 <Tabs/>
             </Grid>
         </Grid>

@@ -6,7 +6,7 @@ import Chart from "../Chart/Chart";
 import Totals from "../Totals/Totals";
 import TabPanel from "../TabPanel/TabPanel";
 
-const Charts = () => {
+const ChartContainer = () => {
     const [period, setPeriod] = React.useState('7d');
     const [tab, setTab] = React.useState(0);
 
@@ -66,4 +66,4 @@ const Charts = () => {
     );
 }
 
-export default Charts;
+export default ChartContainer;
