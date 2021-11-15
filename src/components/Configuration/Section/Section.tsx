@@ -4,6 +4,7 @@ import {useGetConfigurationSectionQuery} from "../../../types";
 import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Field from "../Field/Field";
+import React from "react";
 
 const Section = () => {
     const {section = "general"} = useParams();

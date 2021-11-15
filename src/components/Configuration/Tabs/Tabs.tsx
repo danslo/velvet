@@ -1,6 +1,6 @@
 import {useGetConfigurationTabsQuery} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
-import {Accordion, AccordionDetails, AccordionSummary, Divider, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Link} from "react-router-dom";
 
@@ -17,10 +17,10 @@ const Tabs = () => {
                         </AccordionSummary>
                         <AccordionDetails>
                             {tab!.sections.map(section => (
-                                <>
-                                    <Link to={section!.path}>{section!.label}</Link>
-                                    <Divider/>
-                                </>
+                                <Box sx={{mb: 1}}>
+                                    <Link style={{textDecoration: "none", color: "black", fontSize: "0.9rem"}}
+                                          to={section!.path}>{section!.label}</Link>
+                                </Box>
                             ))}
                         </AccordionDetails>
                     </Accordion>
