@@ -1,5 +1,5 @@
-import {useGetConfigurationTabsQuery} from "../../types";
-import LoaderHandler from "../LoaderHandler/LoaderHandler";
+import {useGetConfigurationTabsQuery} from "../../../types";
+import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {Accordion, AccordionDetails, AccordionSummary, Divider, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Link} from "react-router-dom";

@@ -1,4 +1,4 @@
-import {DashboardTotals} from "../../types";
+import {DashboardTotals} from "../../../types";
 import {Grid, Typography} from "@mui/material";
 
 type TotalsProps = {

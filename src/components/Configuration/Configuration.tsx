@@ -1,7 +1,7 @@
 import {withLayout} from "../Layout/Layout";
 import {Grid} from "@mui/material";
 import React from "react";
-import Tabs from "./Tabs";
+import Tabs from "./Tabs/Tabs";
 
 const Configuration = () => (
     <Grid container spacing={2}>

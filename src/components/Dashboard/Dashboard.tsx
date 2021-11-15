@@ -1,9 +1,9 @@
 import React from "react";
 import {Grid} from "@mui/material";
 import {withLayout} from "../Layout/Layout";
-import Summary from "./Summary";
-import Charts from "./Charts";
-import Tabs from "./Tabs";
+import Summary from "./Summary/Summary";
+import Charts from "./Charts/Charts";
+import Tabs from "./Tabs/Tabs";
 
 const Dashboard = () => {
     return (

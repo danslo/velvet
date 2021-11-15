@@ -1,6 +1,6 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import React from "react";
-import {DashboardSales} from "../../types";
+import {DashboardSales} from "../../../types";
 
 type SalesProps = {
     sales: DashboardSales;

@@ -1,4 +1,4 @@
-import {DashboardCustomer, Maybe} from "../../types";
+import {DashboardCustomer, Maybe} from "../../../types";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 

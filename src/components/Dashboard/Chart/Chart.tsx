@@ -1,5 +1,5 @@
 import React from "react";
-import {DashboardChart} from "../../types";
+import {DashboardChart} from "../../../types";
 import {ArgumentAxis, BarSeries, Chart as DXChart, ValueAxis} from '@devexpress/dx-react-chart-material-ui';
 
 type ChartProps = {

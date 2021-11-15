@@ -1,9 +1,9 @@
 import {Box, Paper, Tab, Tabs as MTabs} from "@mui/material";
 import React from "react";
-import LoaderHandler from "../LoaderHandler/LoaderHandler";
-import TabPanel from "./TabPanel";
-import Customers from "./Customers";
-import {useGetDashboardTabsQuery} from "../../types";
+import LoaderHandler from "../../LoaderHandler/LoaderHandler";
+import TabPanel from "../TabPanel/TabPanel";
+import Customers from "../Customers/Customers";
+import {useGetDashboardTabsQuery} from "../../../types";
 
 const Tabs = () => {
     const [tab, setTab] = React.useState(0);

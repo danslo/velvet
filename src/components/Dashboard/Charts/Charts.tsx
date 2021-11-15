@@ -1,10 +1,10 @@
-import LoaderHandler from "../LoaderHandler/LoaderHandler";
+import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Tab, Tabs} from "@mui/material";
 import React from "react";
-import {useGetDashboardSalesQuery} from "../../types";
-import Chart from "./Chart";
-import Totals from "./Totals";
-import TabPanel from "./TabPanel";
+import {useGetDashboardSalesQuery} from "../../../types";
+import Chart from "../Chart/Chart";
+import Totals from "../Totals/Totals";
+import TabPanel from "../TabPanel/TabPanel";
 
 const Charts = () => {
     const [period, setPeriod] = React.useState('7d');

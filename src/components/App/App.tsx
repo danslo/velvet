@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {AuthProvider} from "../../context/auth.context";
-import {AppRoutes} from "./AppRoutes";
+import {Routes} from "./Routes/Routes";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "../../config/theme";
 
@@ -11,7 +11,7 @@ const App = () => {
             <ThemeProvider theme={createTheme(theme)}>
                 <CssBaseline/>
                 <BrowserRouter>
-                    <AppRoutes/>
+                    <Routes/>
                 </BrowserRouter>
             </ThemeProvider>
         </AuthProvider>

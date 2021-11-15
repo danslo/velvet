@@ -1,12 +1,12 @@
-import {useAuthState} from "../../context/auth.context";
-import {Route, Routes} from "react-router-dom";
-import routes from "../../config/routes";
+import {useAuthState} from "../../../context/auth.context";
+import {Route, Routes as DOMRoutes} from "react-router-dom";
+import routes from "../../../config/routes";
 import React from "react";
 
-export const AppRoutes = () => {
+export const Routes = () => {
     const {state} = useAuthState();
     return (
-        <Routes>
+        <DOMRoutes>
             {routes
                 .filter(route => !route.is_private || state.token)
                 .map(route => (
@@ -17,6 +17,6 @@ export const AppRoutes = () => {
                     </Route>
                 ))
             }
-        </Routes>
+        </DOMRoutes>
     );
 }

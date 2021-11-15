@@ -1,8 +1,8 @@
-import {useGetDashboardSummaryQuery} from "../../types";
-import LoaderHandler from "../LoaderHandler/LoaderHandler";
-import Sales from "./Sales";
-import LastOrders from "./LastOrders";
-import SearchTerms from "./SearchTerms";
+import {useGetDashboardSummaryQuery} from "../../../types";
+import LoaderHandler from "../../LoaderHandler/LoaderHandler";
+import Sales from "../Sales/Sales";
+import LastOrders from "../LastOrders/LastOrders";
+import SearchTerms from "../SearchTerms/SearchTerms";
 import React from "react";
 
 const Summary = () => {
