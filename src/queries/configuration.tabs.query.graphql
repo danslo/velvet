@@ -1,0 +1,9 @@
+query getConfigurationTabs {
+    configurationTabs {
+        label
+        sections {
+            label
+            path
+        }
+    }
+}
