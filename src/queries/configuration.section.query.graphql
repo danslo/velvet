@@ -1,0 +1,10 @@
+query getConfigurationSection($section: String!) {
+    configurationSection(section: $section){
+        label
+        fields {
+            label
+            type
+            comment
+        }
+    }
+}
