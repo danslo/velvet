@@ -16,9 +16,8 @@ const FieldTypes: { [type: string]: FunctionComponent<any> } = {
 const Field = ({field}: FieldProps) => (
     <Grid container spacing={2}>
         <Grid item xs={6} sx={{mb: 2, pr: 3, textAlign: "right"}}>
-            <div dangerouslySetInnerHTML={{__html: field!.label}}></div>
-            {field!.comment && (
-                <Box sx={{fontSize: "0.8rem"}} dangerouslySetInnerHTML={{__html: field!.comment}}></Box>)}
+            <div dangerouslySetInnerHTML={{__html: field!.label}}/>
+            {field!.comment && (<Box sx={{fontSize: "0.8rem"}} dangerouslySetInnerHTML={{__html: field!.comment}}/>)}
         </Grid>
         <Grid item xs={6} sx={{mb: 2}}>
             {
