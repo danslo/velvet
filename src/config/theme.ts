@@ -15,6 +15,7 @@ const theme: ThemeOptions = {
             fontWeight: 700
         }
     }
+
 };
 
 
