@@ -8,7 +8,7 @@ export type FieldProps = {
     field: ConfigurationField
 }
 
-const FieldTypes: { [type: string]: FunctionComponent<any> } = {
+const FieldTypes: { [type: string]: FunctionComponent<FieldProps> } = {
     text: Text,
     select: Select
 }
