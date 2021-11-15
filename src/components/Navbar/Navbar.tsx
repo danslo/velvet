@@ -29,18 +29,18 @@ export default function Navbar() {
                 </Typography>
                 <List sx={{display: "flex", flexDirection: "row"}}>
                     <ListItem component={Link} to="/dashboard">
-                        <ListItemIcon sx={{minWidth: "20px"}}>
+                        <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                             <DashboardIcon/>
                         </ListItemIcon>
                     </ListItem>
                     <ListItem component={Link} to="/configuration">
-                        <ListItemIcon sx={{minWidth: "20px"}}>
+                        <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                             <ConfigIcon/>
                         </ListItemIcon>
                     </ListItem>
                     <Divider/>
                     <ListItem component={Link} to="#" onClick={handleLogout}>
-                        <ListItemIcon sx={{minWidth: "20px"}}>
+                        <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                             <LogoutIcon/>
                         </ListItemIcon>
                     </ListItem>
