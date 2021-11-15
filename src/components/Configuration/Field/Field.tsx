@@ -20,7 +20,12 @@ const Field = ({field}: FieldProps) => (
             {field!.comment && (
                 <Box sx={{fontSize: "0.8rem"}} dangerouslySetInnerHTML={{__html: field!.comment}}></Box>)}
         </Grid>
-        {FieldTypes[field!.type] && (<Grid item xs={6} sx={{mb: 2}}>{FieldTypes[field!.type]({field: field})}</Grid>)}
+        <Grid item xs={6} sx={{mb: 2}}>
+            {
+                (FieldTypes[field!.type] && FieldTypes[field!.type]({field: field})) ||
+                <>{field!.type} not implemented</>
+            }
+        </Grid>
     </Grid>
 )
 

@@ -5,6 +5,11 @@ query getConfigurationSection($section: String!) {
             label
             type
             comment
+            options {
+                label
+                value
+            }
+            value
         }
     }
 }
