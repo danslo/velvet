@@ -30,7 +30,7 @@ const routes: Array<route> = [
         is_private: true,
         children: [
             {
-                path: ':tab',
+                path: ':section',
                 component: Configuration,
                 is_private: true,
                 children: []
