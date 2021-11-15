@@ -9,12 +9,13 @@ export const AppRoutes = () => {
         <Routes>
             {routes
                 .filter(route => !route.is_private || state.token)
-                .map(route =>
-                    <Route
-                        element={route.component({})}
-                        path={route.path}
-                        key={route.path}/>
-                )
+                .map(route => (
+                    <Route element={route.component({})} path={route.path} key={route.path}>
+                        {route.children.map(childRoute =>
+                            <Route element={childRoute.component({})} path={childRoute.path} key={childRoute.path}/>
+                        )}
+                    </Route>
+                ))
             }
         </Routes>
     );
