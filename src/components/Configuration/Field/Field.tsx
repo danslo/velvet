@@ -21,7 +21,7 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
 }
 
 const Field = ({field}: FieldProps) => {
-    const [inherit, setInherit] = useState(field.show_inherit && field!.inherit);
+    const [inherit, setInherit] = useState(field!.inherit);
     const [value, setValue] = useState(field!.value);
 
     const handleChangeValue = (value: string | null) => {
