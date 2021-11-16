@@ -9,6 +9,8 @@ query getConfigurationSection($section: String!) {
                 label
                 value
             }
+            inherit
+            show_inherit
             value
         }
     }
