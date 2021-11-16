@@ -9,7 +9,7 @@ type FieldProps = {
     field: ConfigurationField;
 } & WithSnackbarProps;
 
-type FieldComponentProps = {
+export type FieldComponentProps = {
     disabled: boolean;
     value: string | null;
     handleChangeValue: (value: string | null) => void;
