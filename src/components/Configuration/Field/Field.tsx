@@ -3,12 +3,13 @@ import React, {ChangeEvent, FunctionComponent, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {ConfigurationField, ConfigurationOption, Maybe} from "../../../types";
+import {withSnackbar, WithSnackbarProps} from "../../../helpers/SnackbarHOC";
 
 type FieldProps = {
     field: ConfigurationField;
-}
+} & WithSnackbarProps;
 
-export type FieldComponentProps = {
+type FieldComponentProps = {
     disabled: boolean;
     value: string | null;
     handleChangeValue: (value: string | null) => void;
@@ -20,20 +21,22 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
     select: Select
 }
 
-const Field = ({field}: FieldProps) => {
+const Field = ({field, snackbarShowMessage}: FieldProps) => {
     const [inherit, setInherit] = useState(field!.inherit);
     const [value, setValue] = useState(field!.value);
 
     const handleChangeValue = (value: string | null) => {
+        snackbarShowMessage('Configuration saved.');
+
         // todo: debounce and save config value
         setValue(value);
-
-        console.log(value);
     }
 
     const handleInherit = (event: ChangeEvent<HTMLInputElement>) => {
         setInherit(event.target.checked);
         if (event.target.checked) {
+            snackbarShowMessage('System value restored.');
+
             // todo: delete config value
             setValue(field!.value);
         }
@@ -68,4 +71,4 @@ const Field = ({field}: FieldProps) => {
     )
 }
 
-export default Field;
+export default withSnackbar(Field);

@@ -24,9 +24,7 @@ export default function Navbar() {
     return (
         <AppBar position="sticky">
             <Toolbar>
-                <Typography variant="h5" noWrap component="div" sx={{mr: 2}}>
-                    Velvet
-                </Typography>
+                <Typography variant="h5" noWrap component="div" sx={{mr: 2}}>Velvet</Typography>
                 <List sx={{display: "flex", flexDirection: "row"}}>
                     <ListItem component={Link} to="/dashboard">
                         <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
