@@ -9,7 +9,7 @@ export type WithSnackbarProps = {
 
 export const withSnackbar = <P extends WithSnackbarProps>(
     WrappedComponent: React.ComponentType<P>
-): FunctionComponent<Pick<P, Exclude<keyof P, keyof WithSnackbarProps>>> => (props: Pick<P, Exclude<keyof P, keyof WithSnackbarProps>>) => {
+): FunctionComponent<Pick<P, Exclude<keyof P, keyof WithSnackbarProps>>> => (props) => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [duration, setDuration] = useState(2000);
@@ -26,7 +26,7 @@ export const withSnackbar = <P extends WithSnackbarProps>(
 
     return (
         <>
-            <WrappedComponent {...(props as P)} snackbarShowMessage={showMessage} />
+            <WrappedComponent {...(props as P)} snackbarShowMessage={showMessage}/>
             <Snackbar
                 anchorOrigin={{vertical: "top", horizontal: "right"}}
                 autoHideDuration={duration}
