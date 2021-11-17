@@ -12,6 +12,7 @@ query getConfigurationSection($section: String!) {
             inherit
             show_inherit
             value
+            path
         }
     }
 }

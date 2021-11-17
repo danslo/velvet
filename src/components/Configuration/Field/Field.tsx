@@ -2,8 +2,18 @@ import {Box, Checkbox, FormControlLabel, FormGroup, Grid} from "@mui/material";
 import React, {ChangeEvent, FunctionComponent, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
-import {ConfigurationField, ConfigurationOption, Maybe} from "../../../types";
+import {
+    ConfigurationField,
+    ConfigurationOption,
+    Maybe,
+    RestoreConfigurationDocument,
+    RestoreConfigurationMutation,
+    SaveConfigurationDocument,
+    SaveConfigurationMutation
+} from "../../../types";
 import {withSnackbar, WithSnackbarProps} from "../../../helpers/SnackbarHOC";
+import {client} from "../../../utils/client";
+import {FetchResult} from "@apollo/client";
 
 type FieldProps = { field: ConfigurationField } & WithSnackbarProps;
 
@@ -19,6 +29,29 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
     select: Select
 }
 
+const restoreConfiguration = (path: string, snackbarShowMessage: (message: string) => void) => {
+    client.mutate({
+        mutation: RestoreConfigurationDocument,
+        variables: {
+            path: path
+        }
+    }).then((result: FetchResult<RestoreConfigurationMutation>) => {
+        snackbarShowMessage('Restored configuration.');
+    });
+}
+
+const saveConfiguration = (path: string, value: string, snackbarShowMessage: (message: string) => void) => {
+    client.mutate({
+        mutation: SaveConfigurationDocument,
+        variables: {
+            path: path,
+            value: value
+        }
+    }).then((result: FetchResult<SaveConfigurationMutation>) => {
+        snackbarShowMessage('Saved configuration.');
+    });
+}
+
 const Field = ({field, snackbarShowMessage}: FieldProps) => {
     const [inherit, setInherit] = useState(field.inherit);
     const [value, setValue] = useState(field.value);
@@ -26,6 +59,17 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
     const handleInherit = (e: ChangeEvent<HTMLInputElement>) => {
         setInherit(e.target.checked);
         setValue(field.value);
+
+        if (e.target.checked) {
+            restoreConfiguration(field.path, snackbarShowMessage);
+        }
+    }
+
+    const handleValue = (value: string | null) => {
+        setValue(value);
+        if (value !== null) {
+            saveConfiguration(field.path, value, snackbarShowMessage);
+        }
     }
 
     return (
@@ -38,7 +82,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {(FieldComponents[field.type]?.({
                     disabled: inherit,
                     value: value,
-                    setValue: setValue,
+                    setValue: handleValue,
                     options: field.options
                 }))
                 || <>{field.type} not implemented</>}

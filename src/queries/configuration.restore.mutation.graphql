@@ -1,0 +1,3 @@
+mutation restoreConfiguration($path: String!)  {
+    restoreConfiguration(path: $path)
+}

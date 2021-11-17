@@ -4,7 +4,7 @@ import Slide from "@material-ui/core/Slide";
 import {Alert} from "@mui/material";
 
 export type WithSnackbarProps = {
-    snackbarShowMessage: (message: string, duration?: number) => void
+    snackbarShowMessage: (message: string) => void
 }
 
 export const withSnackbar = <P extends WithSnackbarProps>(

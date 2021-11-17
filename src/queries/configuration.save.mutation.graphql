@@ -1,0 +1,3 @@
+mutation saveConfiguration($path: String!, $value: String!) {
+    saveConfiguration(path: $path, value: $value)
+}
