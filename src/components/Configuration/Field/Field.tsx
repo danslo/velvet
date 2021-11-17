@@ -111,7 +111,12 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {field.show_inherit && (
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox checked={inherit} onChange={handleInherit}/>}
+                            control={
+                                <Checkbox
+                                    checked={inherit}
+                                    onChange={handleInherit}
+                                />
+                            }
                             label="Use system value"/>
                     </FormGroup>
                 )}
