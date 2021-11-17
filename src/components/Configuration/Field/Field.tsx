@@ -64,7 +64,9 @@ const saveConfiguration = (
             value: value
         }
     }).then((result: FetchResult<SaveConfigurationMutation>) => {
-        snackbarShowMessage('Saved configuration.');
+        if (result.data?.saveConfiguration) {
+            snackbarShowMessage('Saved configuration.');
+        }
     });
 }
 
