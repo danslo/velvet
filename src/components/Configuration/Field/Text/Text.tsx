@@ -3,7 +3,7 @@ import {FieldComponentProps} from "../Field";
 import {useCallback} from "react";
 import {debounce} from "@mui/material";
 
-const Text = ({disabled, value, setValue}: FieldComponentProps) => {
+const Text = ({disabled, setValue}: FieldComponentProps) => {
     const handleChange = useCallback(debounce((e) => {
         setValue(e.target.value);
     }, 500), []);
