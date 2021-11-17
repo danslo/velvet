@@ -1,5 +1,5 @@
-import {Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {ChangeEvent, Dispatch, FunctionComponent, SetStateAction, useState} from "react";
+import {Box, Checkbox, debounce, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
+import React, {ChangeEvent, Dispatch, FunctionComponent, SetStateAction, useCallback, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {
@@ -83,11 +83,15 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
         }
     }
 
-    const handleValue = (value: string | null) => {
-        setValue(value);
+    const debouncedSaveConfiguration = useCallback(debounce((value) => {
         if (value !== null) {
             saveConfiguration(field.path, value, snackbarShowMessage);
         }
+    }, 500), []);
+
+    const fieldSetValue = (value: string | null) => {
+        setValue(value);
+        debouncedSaveConfiguration(value);
     }
 
     return (
@@ -101,7 +105,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                     {(FieldComponents[field.type]?.({
                         disabled: inherit,
                         value: value,
-                        setValue: handleValue,
+                        setValue: fieldSetValue,
                         options: field.options
                     }))
                     || <>{field.type} not implemented</>}
