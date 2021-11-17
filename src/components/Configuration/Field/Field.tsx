@@ -1,4 +1,4 @@
-import {Box, Checkbox, FormControlLabel, FormGroup, Grid} from "@mui/material";
+import {Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
 import React, {ChangeEvent, FunctionComponent, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
@@ -15,6 +15,7 @@ import {withSnackbar, WithSnackbarProps} from "../../../helpers/SnackbarHOC";
 import {client} from "../../../utils/client";
 import {FetchResult} from "@apollo/client";
 import MultiSelect from "./MultiSelect/MultiSelect";
+import Textarea from "./Textarea/Textarea";
 
 type FieldProps = { field: ConfigurationField } & WithSnackbarProps;
 
@@ -28,7 +29,8 @@ export type FieldComponentProps = {
 const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {
     text: Text,
     select: Select,
-    multiselect: MultiSelect
+    multiselect: MultiSelect,
+    textarea: Textarea
 }
 
 const restoreConfiguration = (path: string, snackbarShowMessage: (message: string) => void) => {
@@ -81,13 +83,15 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {field.comment && (<Box sx={{fontSize: "0.8rem"}} dangerouslySetInnerHTML={{__html: field.comment}}/>)}
             </Grid>
             <Grid item xs={5} sx={{mb: 2}}>
-                {(FieldComponents[field.type]?.({
-                    disabled: inherit,
-                    value: value,
-                    setValue: handleValue,
-                    options: field.options
-                }))
-                || <>{field.type} not implemented</>}
+                <FormControl fullWidth sx={{pr: 4}}>
+                    {(FieldComponents[field.type]?.({
+                        disabled: inherit,
+                        value: value,
+                        setValue: handleValue,
+                        options: field.options
+                    }))
+                    || <>{field.type} not implemented</>}
+                </FormControl>
             </Grid>
             <Grid item xs={2} sx={{mb: 2}}>
                 {field.show_inherit && (
