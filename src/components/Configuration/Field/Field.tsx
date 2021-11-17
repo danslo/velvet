@@ -1,10 +1,9 @@
 import {Box, Checkbox, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {ChangeEvent, FunctionComponent, useEffect, useState} from "react";
+import React, {FunctionComponent, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {ConfigurationField, ConfigurationOption, Maybe} from "../../../types";
 import {withSnackbar, WithSnackbarProps} from "../../../helpers/SnackbarHOC";
-import {useDebounce} from "@react-hook/debounce";
 
 type FieldProps = {
     field: ConfigurationField;
@@ -24,24 +23,7 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
 
 const Field = ({field, snackbarShowMessage}: FieldProps) => {
     const [inherit, setInherit] = useState(field!.inherit);
-    const [value, setValue] = useDebounce(field!.value, 500);
-
-    const handleInherit = (event: ChangeEvent<HTMLInputElement>) => {
-        setInherit(event.target.checked);
-        if (event.target.checked) {
-            snackbarShowMessage('System value restored.');
-
-            // todo: actually delete value
-            setValue(field!.value);
-        }
-    }
-
-    useEffect(() => {
-        if (value) {
-            // todo: actually save value
-            snackbarShowMessage('Configuration saved.');
-        }
-    }, [value]);
+    const [value, setValue] = useState(field!.value);
 
     return (
         <Grid container spacing={2}>
@@ -53,7 +35,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
             <Grid item xs={5} sx={{mb: 2}}>
                 {(FieldComponents[field!.type] && FieldComponents[field!.type]({
                     disabled: inherit,
-                    value: field!.value,
+                    value: value,
                     setValue: setValue,
                     options: field!.options
                 }))
@@ -63,7 +45,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {field!.show_inherit && (
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox checked={inherit} onChange={handleInherit} />}
+                            control={<Checkbox checked={inherit} onChange={(e) => setInherit(e.target.checked)} />}
                             label="Use system value"/>
                     </FormGroup>
                 )}
