@@ -34,7 +34,7 @@ export const withSnackbar = <P extends WithSnackbarProps>(
                 onClose={handleClose}
                 TransitionComponent={Slide}
             >
-                <Alert variant="filled" onClose={handleClose}>
+                <Alert variant="filled" severity="info" onClose={handleClose}>
                     {message}
                 </Alert>
             </Snackbar>

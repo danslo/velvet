@@ -1,9 +1,10 @@
 import {Box, Checkbox, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {ChangeEvent, FunctionComponent, useState} from "react";
+import React, {ChangeEvent, FunctionComponent, useEffect, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {ConfigurationField, ConfigurationOption, Maybe} from "../../../types";
 import {withSnackbar, WithSnackbarProps} from "../../../helpers/SnackbarHOC";
+import {useDebounce} from "@react-hook/debounce";
 
 type FieldProps = {
     field: ConfigurationField;
@@ -23,12 +24,9 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
 
 const Field = ({field, snackbarShowMessage}: FieldProps) => {
     const [inherit, setInherit] = useState(field!.inherit);
-    const [value, setValue] = useState(field!.value);
+    const [value, setValue] = useDebounce(field!.value, 500);
 
     const handleChangeValue = (value: string | null) => {
-        snackbarShowMessage('Configuration saved.');
-
-        // todo: debounce and save config value
         setValue(value);
     }
 
@@ -37,10 +35,17 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
         if (event.target.checked) {
             snackbarShowMessage('System value restored.');
 
-            // todo: delete config value
+            // todo: actually delete value
             setValue(field!.value);
         }
     }
+
+    useEffect(() => {
+        if (value) {
+            // todo: actually save value
+            snackbarShowMessage('Configuration saved.');
+        }
+    }, [value]);
 
     return (
         <Grid container spacing={2}>
@@ -52,7 +57,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
             <Grid item xs={5} sx={{mb: 2}}>
                 {(FieldComponents[field!.type] && FieldComponents[field!.type]({
                     disabled: inherit,
-                    value: value,
+                    value: field!.value,
                     handleChangeValue: handleChangeValue,
                     options: field!.options
                 }))
