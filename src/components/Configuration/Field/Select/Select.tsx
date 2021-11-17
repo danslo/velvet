@@ -1,14 +1,18 @@
 import {MenuItem, TextField} from "@mui/material";
 import {FieldComponentProps} from "../Field";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useState} from "react";
 
-const Select = ({disabled, options, value, handleChangeValue}: FieldComponentProps) => {
+const Select = ({disabled, options, value, setValue}: FieldComponentProps) => {
+    // todo: avoid state duplication, currently needed due to debouncing in handleChangeValue
+    const [selectValue, setSelectValue] = useState(value);
+
     const handleSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
-        handleChangeValue(event.target.value);
+        setValue(event.target.value);
+        setSelectValue(event.target.value);
     }
 
     return (
-        <TextField disabled={disabled} select value={value} onChange={handleSelectChange} variant="standard">
+        <TextField disabled={disabled} select value={selectValue} onChange={handleSelectChange} variant="standard">
             {options?.map(option => (
                 <MenuItem value={option!.value ?? undefined}>{option!.label}</MenuItem>
             ))}

@@ -13,7 +13,7 @@ type FieldProps = {
 export type FieldComponentProps = {
     disabled: boolean;
     value: string | null;
-    handleChangeValue: (value: string | null) => void;
+    setValue: (value: string | null) => void;
     options: Maybe<Array<Maybe<ConfigurationOption>>>;
 }
 
@@ -25,10 +25,6 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
 const Field = ({field, snackbarShowMessage}: FieldProps) => {
     const [inherit, setInherit] = useState(field!.inherit);
     const [value, setValue] = useDebounce(field!.value, 500);
-
-    const handleChangeValue = (value: string | null) => {
-        setValue(value);
-    }
 
     const handleInherit = (event: ChangeEvent<HTMLInputElement>) => {
         setInherit(event.target.checked);
@@ -58,7 +54,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {(FieldComponents[field!.type] && FieldComponents[field!.type]({
                     disabled: inherit,
                     value: field!.value,
-                    handleChangeValue: handleChangeValue,
+                    setValue: setValue,
                     options: field!.options
                 }))
                 || <>{field!.type} not implemented</>}
@@ -67,7 +63,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {field!.show_inherit && (
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox checked={inherit} onChange={handleInherit} defaultChecked={true}/>}
+                            control={<Checkbox checked={inherit} onChange={handleInherit} />}
                             label="Use system value"/>
                     </FormGroup>
                 )}
