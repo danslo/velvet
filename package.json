@@ -26,6 +26,7 @@
     "apollo-language-server": "1.26.3",
     "graphql": "^14.0.0",
     "history": "^5.1.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^17.0.2",
     "react-apollo": "^3.1.5",
     "react-dom": "^17.0.2",
@@ -59,6 +60,7 @@
     "@graphql-codegen/typescript-react-apollo": "3.2.1",
     "@types/graphql": "^14.5.0",
     "@types/history": "^4.7.9",
+    "@types/lodash.debounce": "^4.0.6",
     "graphql-cli": "4.1.0"
   },
   "browserslist": {
