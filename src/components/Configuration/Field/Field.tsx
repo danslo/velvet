@@ -35,7 +35,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {field.comment && (<Box sx={{fontSize: "0.8rem"}} dangerouslySetInnerHTML={{__html: field.comment}}/>)}
             </Grid>
             <Grid item xs={5} sx={{mb: 2}}>
-                {(FieldComponents[field.type] && FieldComponents[field.type]({
+                {(FieldComponents[field.type]?.({
                     disabled: inherit,
                     value: value,
                     setValue: setValue,
@@ -47,7 +47,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {field.show_inherit && (
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox checked={inherit} onChange={handleInherit} />}
+                            control={<Checkbox checked={inherit} onChange={handleInherit}/>}
                             label="Use system value"/>
                     </FormGroup>
                 )}
