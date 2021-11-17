@@ -14,6 +14,7 @@ import {
 import {withSnackbar, WithSnackbarProps} from "../../../helpers/SnackbarHOC";
 import {client} from "../../../utils/client";
 import {FetchResult} from "@apollo/client";
+import MultiSelect from "./MultiSelect/MultiSelect";
 
 type FieldProps = { field: ConfigurationField } & WithSnackbarProps;
 
@@ -26,7 +27,8 @@ export type FieldComponentProps = {
 
 const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {
     text: Text,
-    select: Select
+    select: Select,
+    multiselect: MultiSelect
 }
 
 const restoreConfiguration = (path: string, snackbarShowMessage: (message: string) => void) => {

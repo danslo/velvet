@@ -5,7 +5,8 @@ const Select = ({disabled, options, value, setValue}: FieldComponentProps) => {
     return (
         <TextField
             disabled={disabled}
-            select value={value}
+            select
+            value={value}
             onChange={e => setValue(e.target.value)}
             variant="standard">
             {options?.map(option => (
