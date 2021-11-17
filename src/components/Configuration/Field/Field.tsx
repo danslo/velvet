@@ -1,5 +1,5 @@
 import {Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {ChangeEvent, FunctionComponent, useState} from "react";
+import React, {ChangeEvent, Dispatch, FunctionComponent, SetStateAction, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {
@@ -33,7 +33,11 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
     textarea: Textarea
 }
 
-const restoreConfiguration = (path: string, snackbarShowMessage: (message: string) => void) => {
+const restoreConfiguration = (
+    path: string,
+    setValue: Dispatch<SetStateAction<string | null>>,
+    snackbarShowMessage: (message: string) => void
+) => {
     client.mutate({
         mutation: RestoreConfigurationDocument,
         variables: {
@@ -41,10 +45,18 @@ const restoreConfiguration = (path: string, snackbarShowMessage: (message: strin
         }
     }).then((result: FetchResult<RestoreConfigurationMutation>) => {
         snackbarShowMessage('Restored configuration.');
+        const restoredConfiguration = result.data?.restoreConfiguration;
+        if (restoredConfiguration) {
+            setValue(restoredConfiguration);
+        }
     });
 }
 
-const saveConfiguration = (path: string, value: string, snackbarShowMessage: (message: string) => void) => {
+const saveConfiguration = (
+    path: string,
+    value: string,
+    snackbarShowMessage: (message: string) => void
+) => {
     client.mutate({
         mutation: SaveConfigurationDocument,
         variables: {
@@ -65,7 +77,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
         setValue(field.value);
 
         if (e.target.checked) {
-            restoreConfiguration(field.path, snackbarShowMessage);
+            restoreConfiguration(field.path, setValue, snackbarShowMessage);
         }
     }
 
