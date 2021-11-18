@@ -12,7 +12,7 @@ import {useAuthDispatch} from "../../context/auth.context";
 import {logout} from "../../actions/auth.actions";
 import {AppBar} from "@mui/material";
 import CachedIcon from '@mui/icons-material/Cached';
-import ListIcon from '@mui/icons-material/List';
+import StorageIcon from '@mui/icons-material/Storage';
 
 export default function Navbar() {
     const {dispatch} = useAuthDispatch();
@@ -44,7 +44,7 @@ export default function Navbar() {
                     </ListItem>
                     <ListItem component={Link} to="/indexers">
                         <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
-                            <ListIcon/>
+                            <StorageIcon/>
                         </ListItemIcon>
                     </ListItem>
                     <ListItem component={Link} to="#" onClick={handleLogout}>
