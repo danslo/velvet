@@ -1,5 +1,6 @@
 import Login from "../components/Login/Login";
 import Dashboard from "../components/Dashboard/Dashboard";
+import Cache from "../components/Cache/Cache";
 import PageNotFound from "../components/PageNotFound/PageNotFound";
 import {FunctionComponent} from "react";
 import Configuration from "../components/Configuration/Configuration";
@@ -21,6 +22,12 @@ const routes: Array<route> = [
     {
         path: '/dashboard',
         component: Dashboard,
+        is_private: true,
+        children: []
+    },
+    {
+        path: '/cache',
+        component: Cache,
         is_private: true,
         children: []
     },

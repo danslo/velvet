@@ -1,0 +1,9 @@
+query cacheTypes {
+    cacheTypes {
+        description
+        id
+        status
+        tags
+        cache_type
+    }
+}

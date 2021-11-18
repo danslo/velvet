@@ -2,7 +2,6 @@ import * as React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -12,6 +11,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useAuthDispatch} from "../../context/auth.context";
 import {logout} from "../../actions/auth.actions";
 import {AppBar} from "@mui/material";
+import CachedIcon from '@mui/icons-material/Cached';
 
 export default function Navbar() {
     const {dispatch} = useAuthDispatch();
@@ -36,7 +36,11 @@ export default function Navbar() {
                             <ConfigIcon/>
                         </ListItemIcon>
                     </ListItem>
-                    <Divider/>
+                    <ListItem component={Link} to="/cache">
+                        <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
+                            <CachedIcon/>
+                        </ListItemIcon>
+                    </ListItem>
                     <ListItem component={Link} to="#" onClick={handleLogout}>
                         <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                             <LogoutIcon/>
