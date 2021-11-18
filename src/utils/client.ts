@@ -2,7 +2,12 @@ import {ApolloClient, from, HttpLink, InMemoryCache} from "@apollo/client";
 import {setContext} from "@apollo/client/link/context";
 import {onError} from "@apollo/client/link/error";
 
-export const client = new ApolloClient({cache: new InMemoryCache({})});
+export const client = new ApolloClient({
+    cache: new InMemoryCache({}),
+    defaultOptions: {
+        mutate: {errorPolicy: 'all'},
+    }
+});
 
 const httpLink = new HttpLink({uri: process.env.REACT_APP_BACKEND_URL});
 

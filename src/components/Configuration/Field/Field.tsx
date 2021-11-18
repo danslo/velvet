@@ -1,19 +1,15 @@
 import {Box, Checkbox, debounce, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {ChangeEvent, Dispatch, FunctionComponent, SetStateAction, useCallback, useState} from "react";
+import React, {ChangeEvent, FunctionComponent, useCallback, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {
     ConfigurationField,
     ConfigurationOption,
     Maybe,
-    RestoreConfigurationDocument,
-    RestoreConfigurationMutation,
-    SaveConfigurationDocument,
-    SaveConfigurationMutation
+    useRestoreConfigurationMutation,
+    useSaveConfigurationMutation
 } from "../../../types";
-import {withSnackbar, WithSnackbarProps} from "../../../helpers/SnackbarHOC";
-import {client} from "../../../utils/client";
-import {FetchResult} from "@apollo/client";
+import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
 import MultiSelect from "./MultiSelect/MultiSelect";
 import Textarea from "./Textarea/Textarea";
 
@@ -33,59 +29,39 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
     textarea: Textarea
 }
 
-const restoreConfiguration = (
-    path: string,
-    setValue: Dispatch<SetStateAction<string | null>>,
-    snackbarShowMessage: (message: string) => void
-) => {
-    client.mutate({
-        mutation: RestoreConfigurationDocument,
-        variables: {
-            path: path
-        }
-    }).then((result: FetchResult<RestoreConfigurationMutation>) => {
-        snackbarShowMessage('Restored configuration.');
-        const restoredConfiguration = result.data?.restoreConfiguration;
-        if (restoredConfiguration) {
-            setValue(restoredConfiguration);
-        }
-    });
-}
-
-const saveConfiguration = (
-    path: string,
-    value: string,
-    snackbarShowMessage: (message: string) => void
-) => {
-    client.mutate({
-        mutation: SaveConfigurationDocument,
-        variables: {
-            path: path,
-            value: value
-        }
-    }).then((result: FetchResult<SaveConfigurationMutation>) => {
-        if (result.data?.saveConfiguration) {
-            snackbarShowMessage('Saved configuration.');
-        }
-    });
-}
-
 const Field = ({field, snackbarShowMessage}: FieldProps) => {
     const [inherit, setInherit] = useState(field.inherit);
     const [value, setValue] = useState(field.value);
+    const [restoreConfigurationMutation] = useRestoreConfigurationMutation();
+    const [saveConfigurationMutation] = useSaveConfigurationMutation();
 
     const handleInherit = (e: ChangeEvent<HTMLInputElement>) => {
         setInherit(e.target.checked);
         setValue(field.value);
 
         if (e.target.checked) {
-            restoreConfiguration(field.path, setValue, snackbarShowMessage);
+            restoreConfigurationMutation({
+                variables: {
+                    path: field.path
+                }
+            }).then(result => {
+                snackbarShowMessage('Restored configuration.');
+                const restoredConfiguration = result.data?.restoreConfiguration;
+                if (restoredConfiguration) {
+                    setValue(restoredConfiguration);
+                }
+            });
         }
     }
 
     const debouncedSaveConfiguration = useCallback(debounce((value) => {
         if (value !== null) {
-            saveConfiguration(field.path, value, snackbarShowMessage);
+            saveConfigurationMutation({
+                variables: {
+                    path: field.path,
+                    value: value
+                }
+            }).then(() => snackbarShowMessage('Saved configuration.'));
         }
     }, 500), []);
 

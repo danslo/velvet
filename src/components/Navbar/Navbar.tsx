@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useContext} from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -8,20 +7,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ConfigIcon from '@mui/icons-material/Build';
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {AppBar} from "@mui/material";
 import CachedIcon from '@mui/icons-material/Cached';
 import StorageIcon from '@mui/icons-material/Storage';
-import {AuthStateContext, logout} from "../../utils/auth";
 
 export default function Navbar() {
-    const {setToken} = useContext(AuthStateContext);
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        logout(setToken).then(() => navigate("/"));
-    }
-
     return (
         <AppBar position="sticky">
             <Toolbar>
@@ -47,7 +38,7 @@ export default function Navbar() {
                             <StorageIcon/>
                         </ListItemIcon>
                     </ListItem>
-                    <ListItem component={Link} to="#" onClick={handleLogout}>
+                    <ListItem component={Link} to="#" onClick={() => undefined}>
                         <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                             <LogoutIcon/>
                         </ListItemIcon>
