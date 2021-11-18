@@ -1,4 +1,4 @@
-query cacheTypes {
+query getCacheTypes {
     cacheTypes {
         description
         id

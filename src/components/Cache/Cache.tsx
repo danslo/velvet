@@ -1,11 +1,11 @@
 import {withLayout} from "../Layout/Layout";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
-import {useCacheTypesQuery} from "../../types";
+import {useGetCacheTypesQuery} from "../../types";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
 
 const Cache = () => {
-    const {data, loading, error} = useCacheTypesQuery();
+    const {data, loading, error} = useGetCacheTypesQuery();
 
     return (
         <LoaderHandler loading={loading} error={error}>

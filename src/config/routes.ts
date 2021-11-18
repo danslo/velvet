@@ -4,6 +4,7 @@ import Cache from "../components/Cache/Cache";
 import PageNotFound from "../components/PageNotFound/PageNotFound";
 import {FunctionComponent} from "react";
 import Configuration from "../components/Configuration/Configuration";
+import Indexers from "../components/Indexers/Indexers";
 
 type route = {
     path: string,
@@ -28,6 +29,12 @@ const routes: Array<route> = [
     {
         path: '/cache',
         component: Cache,
+        is_private: true,
+        children: []
+    },
+    {
+        path: '/indexers',
+        component: Indexers,
         is_private: true,
         children: []
     },

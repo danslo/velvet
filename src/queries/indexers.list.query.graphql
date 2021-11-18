@@ -1,0 +1,10 @@
+query getIndexers {
+    indexers {
+        description
+        is_scheduled
+        schedule_status
+        status
+        title
+        updated
+    }
+}
