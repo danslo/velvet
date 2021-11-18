@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -8,18 +9,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ConfigIcon from '@mui/icons-material/Build';
 import {Link, useNavigate} from "react-router-dom";
-import {useAuthDispatch} from "../../context/auth.context";
-import {logout} from "../../actions/auth.actions";
 import {AppBar} from "@mui/material";
 import CachedIcon from '@mui/icons-material/Cached';
 import StorageIcon from '@mui/icons-material/Storage';
+import {AuthStateContext, logout} from "../../utils/auth";
 
 export default function Navbar() {
-    const {dispatch} = useAuthDispatch();
+    const {setToken} = useContext(AuthStateContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        logout(dispatch).then(() => navigate("/"));
+        logout(setToken).then(() => navigate("/"));
     }
 
     return (
