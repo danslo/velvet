@@ -4,11 +4,11 @@ import {GenerateAdminTokenDocument, GenerateAdminTokenMutation} from "../types";
 import {FetchResult} from "@apollo/client";
 
 type token = string | null;
-type setToken = (token: token) => void;
+type setToken = React.Dispatch<React.SetStateAction<token>>;
 
 export const AuthStateContext = createContext<{ token: token, setToken: setToken }>({
     token: null,
-    setToken: (token) => undefined
+    setToken: () => undefined
 });
 
 export const AuthProvider: FunctionComponent<{}> = (props) => {
@@ -35,7 +35,7 @@ export async function login(payload: { username: string, password: string }, set
 }
 
 export async function logout(setToken: setToken) {
-    localStorage.removeItem('token');
     setToken(null);
+    localStorage.removeItem('token');
     await client.clearStore();
 }
