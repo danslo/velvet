@@ -23,10 +23,10 @@ const Cache = () => {
                         <TableBody>
                             {data.cacheTypes.map(cacheType => (
                                 <TableRow>
-                                    <TableCell>{cacheType!.cache_type}</TableCell>
-                                    <TableCell>{cacheType!.description}</TableCell>
-                                    <TableCell>{cacheType!.tags}</TableCell>
-                                    <TableCell>{cacheType!.status}</TableCell>
+                                    <TableCell>{cacheType.cache_type}</TableCell>
+                                    <TableCell>{cacheType.description}</TableCell>
+                                    <TableCell>{cacheType.tags}</TableCell>
+                                    <TableCell>{cacheType.status}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

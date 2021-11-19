@@ -9,8 +9,8 @@ const Select = ({disabled, options, value, setValue}: FieldComponentProps) => {
             value={value}
             onChange={e => setValue(e.target.value)}
             variant="standard">
-            {options?.map(option => (
-                <MenuItem value={option!.value ?? undefined}>{option!.label}</MenuItem>
+            {options.map(option => (
+                <MenuItem value={option.value ?? undefined}>{option.label}</MenuItem>
             ))}
         </TextField>
     );

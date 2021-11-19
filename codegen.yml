@@ -7,9 +7,8 @@ generates:
       - typescript
       - typescript-operations
       - typescript-react-apollo
-      - named-operations-object
     config:
       withHooks: true
       avoidOptionals: true
       skipTypename: true
-
+      maybeValue: T | null

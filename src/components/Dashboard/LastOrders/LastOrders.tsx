@@ -1,9 +1,9 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
-import {DashboardLastOrder, Maybe} from "../../../types";
+import {DashboardLastOrder} from "../../../types";
 
 type LastOrdersProps = {
-    lastOrders: Array<Maybe<DashboardLastOrder>>;
+    lastOrders: Array<DashboardLastOrder>;
     caption: string;
 }
 
@@ -21,9 +21,9 @@ const LastOrders = ({lastOrders, caption}: LastOrdersProps) => (
             <TableBody>
                 {lastOrders.map(order => (
                     <TableRow>
-                        <TableCell>{order!.customer_name}</TableCell>
-                        <TableCell>{order!.num_items}</TableCell>
-                        <TableCell>{order!.total}</TableCell>
+                        <TableCell>{order.customer_name}</TableCell>
+                        <TableCell>{order.num_items}</TableCell>
+                        <TableCell>{order.total}</TableCell>
                     </TableRow>
                 ))}
             </TableBody>

@@ -14,7 +14,9 @@ const Section = () => {
 
     return (
         <LoaderHandler loading={loading} error={error}>
-            {data && data.configurationSection.map(group => (<Group label={group!.label} fields={group!.fields}/>))}
+            {data && data.configurationSection.map(group => (
+                <Group label={group.label} initialFields={group.fields}/>
+            ))}
         </LoaderHandler>
     );
 }

@@ -25,12 +25,12 @@ const Indexers = () => {
                         <TableBody>
                             {data.indexers.map(index => (
                                 <TableRow>
-                                    <TableCell>{index!.title}</TableCell>
-                                    <TableCell>{index!.description}</TableCell>
-                                    <TableCell>{index!.is_scheduled ? "Update on Schedule" : "Update on Save"}</TableCell>
-                                    <TableCell sx={{textTransform: "capitalize"}}>{index!.status}</TableCell>
-                                    <TableCell dangerouslySetInnerHTML={{__html: index!.schedule_status}}></TableCell>
-                                    <TableCell>{index!.updated}</TableCell>
+                                    <TableCell>{index.title}</TableCell>
+                                    <TableCell>{index.description}</TableCell>
+                                    <TableCell>{index.is_scheduled ? "Update on Schedule" : "Update on Save"}</TableCell>
+                                    <TableCell sx={{textTransform: "capitalize"}}>{index.status}</TableCell>
+                                    <TableCell dangerouslySetInnerHTML={{__html: index.schedule_status}}></TableCell>
+                                    <TableCell>{index.updated}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

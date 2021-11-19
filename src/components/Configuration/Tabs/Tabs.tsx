@@ -13,13 +13,15 @@ const Tabs = () => {
                 {data.configurationTabs.map(tab => (
                     <Accordion>
                         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Typography>{tab!.label}</Typography>
+                            <Typography>{tab.label}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            {tab!.sections.map(section => (
+                            {tab.sections.map(section => (
                                 <Box sx={{mb: 1}}>
                                     <Link style={{textDecoration: "none", color: "black", fontSize: "0.9rem"}}
-                                          to={section!.path}>{section!.label}</Link>
+                                          to={section.path}>
+                                        {section.label}
+                                    </Link>
                                 </Box>
                             ))}
                         </AccordionDetails>

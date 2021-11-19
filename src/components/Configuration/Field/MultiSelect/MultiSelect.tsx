@@ -17,7 +17,7 @@ const MultiSelect = ({disabled, options, value, setValue}: FieldComponentProps) 
         }}
     >
         {options?.map(option => (
-            <MenuItem value={option!.value ?? undefined}>{option!.label}</MenuItem>
+            <MenuItem value={option.value ?? undefined}>{option.label}</MenuItem>
         ))}
     </TextField>
 )

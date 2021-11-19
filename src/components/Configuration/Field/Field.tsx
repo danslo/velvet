@@ -1,11 +1,10 @@
-import {Box, Checkbox, debounce, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {ChangeEvent, FunctionComponent, useCallback, useState} from "react";
+import {Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
+import React, {FunctionComponent} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {
     ConfigurationField,
     ConfigurationOption,
-    Maybe,
     useRestoreConfigurationMutation,
     useSaveConfigurationMutation
 } from "../../../types";
@@ -13,13 +12,13 @@ import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
 import MultiSelect from "./MultiSelect/MultiSelect";
 import Textarea from "./Textarea/Textarea";
 
-type FieldProps = { field: ConfigurationField; } & WithSnackbarProps;
+type FieldProps = { field: ConfigurationField } & WithSnackbarProps;
 
 export type FieldComponentProps = {
     disabled: boolean;
     value: string | null;
-    setValue: (value: string | null) => void;
-    options: Maybe<Array<Maybe<ConfigurationOption>>>;
+    setValue: (value: string) => void;
+    options: Array<ConfigurationOption>;
 }
 
 const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {
@@ -29,45 +28,16 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
     textarea: Textarea
 }
 
-const Field = ({field, snackbarShowMessage}: FieldProps) => {
-    const [inherit, setInherit] = useState(field.inherit);
-    const [value, setValue] = useState(field.value);
+const Field = ({field}: FieldProps) => {
     const [restoreConfigurationMutation] = useRestoreConfigurationMutation();
     const [saveConfigurationMutation] = useSaveConfigurationMutation();
 
-    const handleInherit = (e: ChangeEvent<HTMLInputElement>) => {
-        setInherit(e.target.checked);
-        setValue(field.value);
-
-        if (e.target.checked) {
-            restoreConfigurationMutation({
-                variables: {
-                    path: field.path
-                }
-            }).then(result => {
-                snackbarShowMessage('Restored configuration.');
-                const restoredConfiguration = result.data?.restoreConfiguration;
-                if (restoredConfiguration) {
-                    setValue(restoredConfiguration);
-                }
-            });
-        }
+    const setValue = (value: string) => {
+        // dispatch
     }
 
-    const debouncedSaveConfiguration = useCallback(debounce((value) => {
-        if (value !== null) {
-            saveConfigurationMutation({
-                variables: {
-                    path: field.path,
-                    value: value
-                }
-            }).then(() => snackbarShowMessage('Saved configuration.'));
-        }
-    }, 500), []);
-
-    const fieldSetValue = (value: string | null) => {
-        setValue(value);
-        debouncedSaveConfiguration(value);
+    const setInherit = (inherit: string) => {
+        // dispatch
     }
 
     return (
@@ -79,10 +49,10 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
             <Grid item xs={5} sx={{mb: 2}}>
                 <FormControl fullWidth sx={{pr: 4}}>
                     {(FieldComponents[field.type]?.({
-                        disabled: inherit,
-                        value: value,
-                        setValue: fieldSetValue,
-                        options: field.options
+                        disabled: field.inherit,
+                        value: field.value,
+                        setValue: setValue,
+                        options: field.options ?? []
                     }))
                     || <>{field.type} not implemented</>}
                 </FormControl>
@@ -91,12 +61,7 @@ const Field = ({field, snackbarShowMessage}: FieldProps) => {
                 {field.show_inherit && (
                     <FormGroup>
                         <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={inherit}
-                                    onChange={handleInherit}
-                                />
-                            }
+                            control={<Checkbox checked={field.inherit} onChange={e => setInherit(e.target.value)}/>}
                             label="Use system value"/>
                     </FormGroup>
                 )}
