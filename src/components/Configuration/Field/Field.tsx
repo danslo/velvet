@@ -13,7 +13,7 @@ import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
 import MultiSelect from "./MultiSelect/MultiSelect";
 import Textarea from "./Textarea/Textarea";
 
-type FieldProps = { field: ConfigurationField } & WithSnackbarProps;
+type FieldProps = { field: ConfigurationField; } & WithSnackbarProps;
 
 export type FieldComponentProps = {
     disabled: boolean;

@@ -3,10 +3,7 @@ import {setContext} from "@apollo/client/link/context";
 import {onError} from "@apollo/client/link/error";
 
 export const client = new ApolloClient({
-    cache: new InMemoryCache({}),
-    defaultOptions: {
-        mutate: {errorPolicy: 'all'},
-    }
+    cache: new InMemoryCache({})
 });
 
 const httpLink = new HttpLink({uri: process.env.REACT_APP_BACKEND_URL});

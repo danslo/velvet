@@ -1,10 +1,10 @@
 import {Route, Routes as DOMRoutes} from "react-router-dom";
 import routes from "../../../config/routes";
 import React, {useContext} from "react";
-import {AuthStateContext} from "../../../utils/auth";
+import {AuthContext} from "../../../utils/auth";
 
 export const Routes = () => {
-    const {token} = useContext(AuthStateContext);
+    const {token} = useContext(AuthContext);
     return (
         <DOMRoutes>
             {routes
