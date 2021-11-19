@@ -12,8 +12,7 @@ const errorLink = onError(({graphQLErrors, networkError}) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(({extensions}) => {
             if (extensions?.category === 'graphql-authorization') {
-                // todo: somehow handle the redirect without relying on react-router-dom here
-                localStorage.removeItem('token');
+                localStorage.removeItem('token'); // todo: redirect to homepage
             }
         });
     }

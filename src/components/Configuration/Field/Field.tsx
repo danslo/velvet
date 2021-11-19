@@ -1,5 +1,5 @@
 import {Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {FunctionComponent} from "react";
+import React, {Dispatch, FunctionComponent} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import {
@@ -11,8 +11,12 @@ import {
 import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
 import MultiSelect from "./MultiSelect/MultiSelect";
 import Textarea from "./Textarea/Textarea";
+import {ConfigurationAction, updateConfigurationValue} from "../../../actions/configuration.actions";
 
-type FieldProps = { field: ConfigurationField } & WithSnackbarProps;
+type FieldProps = {
+    field: ConfigurationField;
+    dispatch: Dispatch<ConfigurationAction>;
+} & WithSnackbarProps;
 
 export type FieldComponentProps = {
     disabled: boolean;
@@ -28,12 +32,13 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
     textarea: Textarea
 }
 
-const Field = ({field}: FieldProps) => {
+const Field = ({field, dispatch}: FieldProps) => {
     const [restoreConfigurationMutation] = useRestoreConfigurationMutation();
     const [saveConfigurationMutation] = useSaveConfigurationMutation();
 
     const setValue = (value: string) => {
         // dispatch
+        updateConfigurationValue(dispatch, field.path, value);
     }
 
     const setInherit = (inherit: string) => {

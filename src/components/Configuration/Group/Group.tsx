@@ -1,24 +1,23 @@
 import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Field from "../Field/Field";
-import React, {useReducer} from "react";
+import React, {Dispatch} from "react";
 import {ConfigurationField} from "../../../types";
-import {configurationReducer} from "../../../reducers/configuration.reducer";
+import {ConfigurationAction} from "../../../actions/configuration.actions";
 
 type GroupProps = {
     label: string
-    initialFields: Array<ConfigurationField>
+    fields: Array<ConfigurationField>
+    dispatch: Dispatch<ConfigurationAction>
 }
 
-const Group = ({label, initialFields}: GroupProps) => {
-    const [fields, dispatch] = useReducer(configurationReducer, initialFields);
-
+const Group = ({label, fields, dispatch}: GroupProps) => {
     return <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
             <Typography dangerouslySetInnerHTML={{__html: label}}/>
         </AccordionSummary>
         <AccordionDetails>
-            {fields.map(field => (<Field key={field.path} field={field}/>))}
+            {fields.map(field => (<Field key={field.path} field={field} dispatch={dispatch}/>))}
         </AccordionDetails>
     </Accordion>
 }

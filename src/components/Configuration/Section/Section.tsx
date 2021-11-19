@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {useGetConfigurationSectionQuery} from "../../../types";
 import React from "react";
-import Group from "../Group/Group";
+import GroupContainer from "../GroupContainer/GroupContainer";
 
 const Section = () => {
     const {section = "general"} = useParams();
@@ -12,11 +12,11 @@ const Section = () => {
         }
     })
 
+    console.log(data);
+
     return (
         <LoaderHandler loading={loading} error={error}>
-            {data && data.configurationSection.map(group => (
-                <Group label={group.label} initialFields={group.fields}/>
-            ))}
+            {data && <GroupContainer configurationData={data}/>}
         </LoaderHandler>
     );
 }
