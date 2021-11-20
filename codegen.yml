@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://magento24.test/graphql"
+schema: ${REACT_APP_BACKEND_URL}
 documents: "src/**/*.graphql"
 generates:
   ./src/types.ts:
