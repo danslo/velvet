@@ -38,7 +38,12 @@ const Field = ({field, dispatch}: FieldProps) => {
 
     const setValue = (value: string) => {
         // dispatch
-        updateConfigurationValue(dispatch, field.path, value);
+        updateConfigurationValue(
+            dispatch,
+            saveConfigurationMutation,
+            field.path,
+            value
+        );
     }
 
     const setInherit = (inherit: string) => {

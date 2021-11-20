@@ -1,8 +1,9 @@
 import {Dispatch} from "react";
+import {SaveConfigurationMutationFn} from "../types";
 
 export enum ConfigurationActionType {
     UpdateValue,
-    UpdateInherit
+    UpdateInherit,
 }
 
 export type ConfigurationAction =
@@ -11,8 +12,16 @@ export type ConfigurationAction =
 
 export const updateConfigurationValue = async (
     dispatch: Dispatch<ConfigurationAction>,
+    saveConfiguration: SaveConfigurationMutationFn,
     path: string,
     value: string
 ) => {
-    dispatch({type: ConfigurationActionType.UpdateValue, payload: {path: path, value: value}});
+    saveConfiguration({variables: {path: path, value: value}})
+        .then(() => {
+            dispatch({type: ConfigurationActionType.UpdateValue, payload: {path: path, value: value}});
+            // todo: show success mssage
+        })
+        .catch((err) => {
+            // todo: handle errors
+        })
 }
