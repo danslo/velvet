@@ -1,22 +1,16 @@
-import {Box, Checkbox, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {Dispatch, FunctionComponent} from "react";
+import {Box, Checkbox, debounce, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
+import React, {FunctionComponent, useCallback, useState} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
-import {
-    ConfigurationField,
-    ConfigurationOption,
-    useRestoreConfigurationMutation,
-    useSaveConfigurationMutation
-} from "../../../types";
-import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
+import {ConfigurationField, ConfigurationOption} from "../../../types";
 import MultiSelect from "./MultiSelect/MultiSelect";
 import Textarea from "./Textarea/Textarea";
-import {ConfigurationAction, updateConfigurationValue} from "../../../actions/configuration.actions";
 
 type FieldProps = {
     field: ConfigurationField;
-    dispatch: Dispatch<ConfigurationAction>;
-} & WithSnackbarProps;
+    saveConfiguration: (path: string, value: string) => void;
+    restoreConfiguration: (path: string) => void;
+}
 
 export type FieldComponentProps = {
     disabled: boolean;
@@ -32,22 +26,27 @@ const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> 
     textarea: Textarea
 }
 
-const Field = ({field, dispatch}: FieldProps) => {
-    const [restoreConfigurationMutation] = useRestoreConfigurationMutation();
-    const [saveConfigurationMutation] = useSaveConfigurationMutation();
+const Field = ({field, saveConfiguration, restoreConfiguration}: FieldProps) => {
+    const [value, setValue] = useState(field.value);
+    const [inherit, setInherit] = useState(field.inherit);
 
-    const setValue = (value: string) => {
-        // dispatch
-        updateConfigurationValue(
-            dispatch,
-            saveConfigurationMutation,
-            field.path,
-            value
-        );
+    const setFieldValue = (value: string) => {
+        setValue(value);
+        debouncedSaveConfiguration(value);
     }
 
-    const setInherit = (inherit: string) => {
-        // dispatch
+    const debouncedSaveConfiguration = useCallback(debounce((value) => {
+        if (value !== null) {
+            saveConfiguration(field.path, value);
+        }
+    }, 500), []);
+
+    const setInheritValue = (value: boolean) => {
+        setInherit(value);
+        if (value) {
+            setValue(field.value);
+            restoreConfiguration(field.path);
+        }
     }
 
     return (
@@ -59,9 +58,9 @@ const Field = ({field, dispatch}: FieldProps) => {
             <Grid item xs={5} sx={{mb: 2}}>
                 <FormControl fullWidth sx={{pr: 4}}>
                     {(FieldComponents[field.type]?.({
-                        disabled: field.inherit,
-                        value: field.value,
-                        setValue: setValue,
+                        disabled: inherit,
+                        value: value,
+                        setValue: setFieldValue,
                         options: field.options ?? []
                     }))
                     || <>{field.type} not implemented</>}
@@ -71,7 +70,7 @@ const Field = ({field, dispatch}: FieldProps) => {
                 {field.show_inherit && (
                     <FormGroup>
                         <FormControlLabel
-                            control={<Checkbox checked={field.inherit} onChange={e => setInherit(e.target.value)}/>}
+                            control={<Checkbox checked={inherit} onChange={e => setInheritValue(e.target.checked)}/>}
                             label="Use system value"/>
                     </FormGroup>
                 )}
@@ -80,4 +79,4 @@ const Field = ({field, dispatch}: FieldProps) => {
     )
 }
 
-export default withSnackbar(Field);
+export default Field;
