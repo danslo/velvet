@@ -4,11 +4,11 @@ import React, {useReducer} from "react";
 import {configurationReducer} from "../../../reducers/configuration.reducer";
 
 type GroupContainerProps = {
-    configurationData: GetConfigurationSectionQuery
+    data: GetConfigurationSectionQuery
 }
 
-const GroupContainer = ({configurationData}: GroupContainerProps) => {
-    const [groups, dispatch] = useReducer(configurationReducer, configurationData.configurationSection);
+const GroupContainer = ({data}: GroupContainerProps) => {
+    const [groups, dispatch] = useReducer(configurationReducer, data.configurationSection);
 
     return (
         <>

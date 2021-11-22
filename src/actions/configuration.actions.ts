@@ -16,10 +16,11 @@ export const updateConfigurationValue = async (
     path: string,
     value: string
 ) => {
+
     saveConfiguration({variables: {path: path, value: value}})
         .then(() => {
-            dispatch({type: ConfigurationActionType.UpdateValue, payload: {path: path, value: value}});
             // todo: show success mssage
+            dispatch({type: ConfigurationActionType.UpdateValue, payload: {path: path, value: value}});
         })
         .catch((err) => {
             // todo: handle errors

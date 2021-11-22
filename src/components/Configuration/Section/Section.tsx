@@ -7,15 +7,12 @@ import GroupContainer from "../GroupContainer/GroupContainer";
 const Section = () => {
     const {section = "general"} = useParams();
     const {data, loading, error} = useGetConfigurationSectionQuery({
-        fetchPolicy: "network-only",
-        variables: {
-            section: section
-        }
+        variables: {section: section}
     });
 
     return (
         <LoaderHandler loading={loading} error={error}>
-            {data && <GroupContainer configurationData={data}/>}
+            {data && <GroupContainer data={data}/>}
         </LoaderHandler>
     );
 }
