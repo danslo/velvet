@@ -6,14 +6,12 @@ type ChartProps = {
     chart: DashboardChart
 };
 
-const Chart = ({chart}: ChartProps) => {
-    return (
-        <DXChart data={chart.points}>
-            <ArgumentAxis showGrid/>
-            <ValueAxis/>
-            <BarSeries valueField="y" argumentField="x"/>
-        </DXChart>
-    );
-}
+const Chart = ({chart}: ChartProps) => (
+    <DXChart data={chart.points}>
+        <ArgumentAxis showGrid/>
+        <ValueAxis/>
+        <BarSeries valueField="y" argumentField="x"/>
+    </DXChart>
+);
 
 export default Chart;

@@ -7,19 +7,17 @@ import {AuthProvider} from "../../utils/auth";
 import {client} from "../../utils/client";
 import {ApolloProvider} from "@apollo/client";
 
-const App = () => {
-    return (
-        <AuthProvider>
-            <ApolloProvider client={client}>
-                <ThemeProvider theme={createTheme(theme)}>
-                    <CssBaseline/>
-                    <BrowserRouter>
-                        <Routes/>
-                    </BrowserRouter>
-                </ThemeProvider>
-            </ApolloProvider>
-        </AuthProvider>
-    )
-}
+const App = () => (
+    <AuthProvider>
+        <ApolloProvider client={client}>
+            <ThemeProvider theme={createTheme(theme)}>
+                <CssBaseline/>
+                <BrowserRouter>
+                    <Routes/>
+                </BrowserRouter>
+            </ThemeProvider>
+        </ApolloProvider>
+    </AuthProvider>
+)
 
 export default App;

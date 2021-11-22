@@ -6,13 +6,13 @@ type GroupProps = {
     label: string;
 }
 
-const Group: FunctionComponent<GroupProps> = ({label, children}) => {
-    return <Accordion>
+const Group: FunctionComponent<GroupProps> = ({label, children}) => (
+    <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
             <Typography dangerouslySetInnerHTML={{__html: label}}/>
         </AccordionSummary>
         <AccordionDetails>{children}</AccordionDetails>
     </Accordion>
-}
+)
 
 export default Group;
