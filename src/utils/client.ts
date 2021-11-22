@@ -3,7 +3,12 @@ import {setContext} from "@apollo/client/link/context";
 import {onError} from "@apollo/client/link/error";
 
 export const client = new ApolloClient({
-    cache: new InMemoryCache({})
+    cache: new InMemoryCache({}),
+    defaultOptions: {
+        query: {fetchPolicy: "network-only"},
+        watchQuery: {fetchPolicy: "network-only"},
+        mutate: {fetchPolicy: "network-only"}
+    }
 });
 
 const httpLink = new HttpLink({uri: process.env.REACT_APP_BACKEND_URL});
