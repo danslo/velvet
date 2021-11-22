@@ -8,6 +8,7 @@ import {
 import React from "react";
 import Group from "../Group/Group";
 import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
+import Field from "../Field/Field";
 
 const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
     const {section = "general"} = useParams();
@@ -45,13 +46,15 @@ const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
     return (
         <LoaderHandler loading={loading} error={error}>
             {data && data.configurationSection.map(group => (
-                <Group
-                    key={group.label}
-                    label={group.label}
-                    fields={group.fields}
-                    saveConfiguration={saveConfiguration}
-                    restoreConfiguration={restoreConfiguration}
-                />
+                <Group key={group.label} label={group.label}>
+                    {group.fields.map(field => (
+                        <Field
+                            key={field.path}
+                            field={field}
+                            saveConfiguration={saveConfiguration}
+                            restoreConfiguration={restoreConfiguration}/>
+                    ))}
+                </Group>
             ))}
         </LoaderHandler>
     );
