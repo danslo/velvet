@@ -12,3 +12,4 @@ generates:
       avoidOptionals: true
       skipTypename: true
       maybeValue: T | null
+      preResolveTypes: true

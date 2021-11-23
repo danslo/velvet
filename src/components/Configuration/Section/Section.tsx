@@ -9,11 +9,17 @@ import React from "react";
 import Group from "../Group/Group";
 import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
 import Field from "../Field/Field";
+import {useConfigurationScopeContext} from "../../../context/configuration.scope";
 
 const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
+    const {currentScope} = useConfigurationScopeContext();
     const {section = "general"} = useParams();
     const {data, loading, error} = useGetConfigurationSectionQuery({
-        variables: {section: section}
+        variables: {
+            section: section,
+            scope_type: currentScope?.type ?? null,
+            scope_id: currentScope?.scope_id ?? null
+        }
     });
     const [restoreConfigurationMutation] = useRestoreConfigurationMutation();
     const [saveConfigurationMutation] = useSaveConfigurationMutation();

@@ -1,22 +1,22 @@
 query getConfigurationScopes {
     configurationScopes {
         name
-        id
+        scope_id
         disabled
         type
         children {
             name
-            id
+            scope_id
             disabled
             type
             children {
                 name
-                id
+                scope_id
                 disabled
                 type
                 children {
                     name
-                    id
+                    scope_id
                     disabled
                     type
                 }
