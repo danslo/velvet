@@ -1,0 +1,26 @@
+query getConfigurationScopes {
+    configurationScopes {
+        name
+        id
+        disabled
+        type
+        children {
+            name
+            id
+            disabled
+            type
+            children {
+                name
+                id
+                disabled
+                type
+                children {
+                    name
+                    id
+                    disabled
+                    type
+                }
+            }
+        }
+    }
+}
