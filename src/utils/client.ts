@@ -17,7 +17,8 @@ const errorLink = onError(({graphQLErrors, networkError}) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(({extensions}) => {
             if (extensions?.category === 'graphql-authorization') {
-                localStorage.removeItem('token'); // todo: redirect to homepage
+                localStorage.removeItem('token');
+                window.location.href = '/';
             }
         });
     }
