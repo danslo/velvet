@@ -71,7 +71,7 @@ const Field = ({field, saveConfiguration, restoreConfiguration}: FieldProps) => 
                     <FormGroup>
                         <FormControlLabel
                             control={<Checkbox checked={inherit} onChange={e => setInheritValue(e.target.checked)}/>}
-                            label="Use system value"/>
+                            label={field.inherit_label}/>
                     </FormGroup>
                 )}
             </Grid>

@@ -11,6 +11,7 @@ query getConfigurationSection($section: String!, $scope_type: String = null, $sc
             }
             inherit
             show_inherit
+            inherit_label
             value
             path
         }
