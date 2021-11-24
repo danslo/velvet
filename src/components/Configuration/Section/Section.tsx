@@ -28,7 +28,9 @@ const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
         saveConfigurationMutation({
             variables: {
                 path: path,
-                value: value
+                value: value,
+                scope_type: currentScope?.type,
+                scope_id: currentScope?.scope_id
             }
         }).then(() => {
             snackbarShowMessage('Configuration was saved.');
@@ -40,7 +42,9 @@ const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
     const restoreConfiguration = (path: string) => {
         restoreConfigurationMutation({
             variables: {
-                path: path
+                path: path,
+                scope_type: currentScope?.type,
+                scope_id: currentScope?.scope_id
             }
         }).then(() => {
             snackbarShowMessage('Configuration was restored.');
