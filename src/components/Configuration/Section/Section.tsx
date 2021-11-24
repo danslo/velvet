@@ -17,8 +17,8 @@ const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
     const {data, loading, error} = useGetConfigurationSectionQuery({
         variables: {
             section: section,
-            scope_type: currentScope?.type ?? null,
-            scope_id: currentScope?.scope_id ?? null
+            scope_type: currentScope?.type,
+            scope_id: currentScope?.scope_id
         }
     });
     const [restoreConfigurationMutation] = useRestoreConfigurationMutation();
