@@ -1,5 +1,5 @@
-query getConfigurationTabs {
-    configurationTabs {
+query getConfigurationTabs($scope_type: ScopeType = null) {
+    configurationTabs(scope_type: $scope_type) {
         label
         sections {
             label

@@ -1,4 +1,4 @@
-query getConfigurationSection($section: String!, $scope_type: String = null, $scope_id: Int = null) {
+query getConfigurationSection($section: String!, $scope_type: ScopeType = null, $scope_id: Int = null) {
     configurationSection(section: $section, scope_type: $scope_type, scope_id: $scope_id){
         label
         fields {

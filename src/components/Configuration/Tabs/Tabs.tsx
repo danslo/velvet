@@ -3,9 +3,13 @@ import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Link} from "react-router-dom";
+import {useConfigurationScopeContext} from "../../../context/configuration.scope";
 
 const Tabs = () => {
-    const {data, loading, error} = useGetConfigurationTabsQuery();
+    const {currentScope} = useConfigurationScopeContext();
+    const {data, loading, error} = useGetConfigurationTabsQuery({
+        variables: {scope_type: currentScope?.type}
+    });
 
     return (
         <LoaderHandler loading={loading} error={error}>
