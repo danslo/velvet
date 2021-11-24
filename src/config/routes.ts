@@ -5,6 +5,7 @@ import PageNotFound from "../components/PageNotFound/PageNotFound";
 import {FunctionComponent} from "react";
 import Configuration from "../components/Configuration/Configuration";
 import Indexers from "../components/Indexers/Indexers";
+import Orders from "../components/Orders/Orders";
 
 type route = {
     path: string,
@@ -35,6 +36,12 @@ const routes: Array<route> = [
     {
         path: '/indexers',
         component: Indexers,
+        is_private: true,
+        children: []
+    },
+    {
+        path: '/orders',
+        component: Orders,
         is_private: true,
         children: []
     },

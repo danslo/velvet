@@ -14,6 +14,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 import StorageIcon from '@mui/icons-material/Storage';
 import {setClientLink} from "../../utils/client";
 import {AuthContext} from "../../utils/auth";
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 const Navbar = () => {
     const {setToken} = useContext(AuthContext);
@@ -40,6 +41,11 @@ const Navbar = () => {
                     <ListItem component={Link} to="/indexers">
                         <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                             <StorageIcon/>
+                        </ListItemIcon>
+                    </ListItem>
+                    <ListItem component={Link} to="/orders">
+                        <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
+                            <PointOfSaleIcon/>
                         </ListItemIcon>
                     </ListItem>
                     <ListItem component={Link} to="#" onClick={() => {
