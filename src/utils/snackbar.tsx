@@ -1,7 +1,5 @@
 import React, {FunctionComponent, useState} from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import Slide from "@material-ui/core/Slide";
-import {Alert} from "@mui/material";
+import {Alert, Snackbar} from "@mui/material";
 
 export type WithSnackbarProps = {
     snackbarShowMessage: (message: string) => void
@@ -32,7 +30,6 @@ export const withSnackbar = <P extends WithSnackbarProps>(
                 autoHideDuration={duration}
                 open={open}
                 onClose={handleClose}
-                TransitionComponent={Slide}
             >
                 <Alert variant="filled" severity="info" onClose={handleClose}>
                     {message}
