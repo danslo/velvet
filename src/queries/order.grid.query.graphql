@@ -1,0 +1,16 @@
+query getOrderGrid($page_number: Int = 1, $page_size: Int = 20) {
+    orderGrid(input: {page_number: $page_number, page_size: $page_size}) {
+        last_page_number
+        total_orders
+        orders {
+            increment_id
+            store_name
+            created_at
+            billing_name
+            shipping_name
+            grand_total
+            status
+            shipping_address
+        }
+    }
+}
