@@ -8,7 +8,6 @@ import {Link} from "react-router-dom";
 const Orders = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [pageCount, setPageCount] = React.useState(1);
     const {data, loading, error} = useGetOrderGridQuery({
         variables: {
             page_size: rowsPerPage,
