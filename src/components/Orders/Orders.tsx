@@ -1,21 +1,47 @@
 import {withLayout} from "../Layout/Layout";
 import {useGetOrderGridQuery} from "../../types";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
-import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from "@mui/material";
 import React from "react";
 import {Link} from "react-router-dom";
 
 const Orders = () => {
-    const {data, loading, error} = useGetOrderGridQuery();
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [pageCount, setPageCount] = React.useState(1);
+    const {data, loading, error} = useGetOrderGridQuery({
+        variables: {
+            page_size: rowsPerPage,
+            page_number: page + 1
+        }
+    });
+
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     return (
         <LoaderHandler loading={loading} error={error}>
             {data && (
                 <>
-                    <Box component={Paper} sx={{mb: 2}}>
-                        Total orders: {data.orderGrid.total_orders}<br/>
-                        Last page number: {data.orderGrid.last_page_number}
-                    </Box>
+                    <TablePagination
+                        component="div"
+                        count={data.orderGrid.last_page_number}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        rowsPerPage={rowsPerPage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
                     <TableContainer component={Paper} sx={{mb: 2}}>
                         <Table>
                             <TableHead>
