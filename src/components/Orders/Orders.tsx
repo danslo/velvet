@@ -76,7 +76,7 @@ const Orders = () => {
                                             <TableCell>{order.status}</TableCell>
                                             <TableCell>{order.shipping_address}</TableCell>
                                             <TableCell>
-                                                <Link to={"/orders/" + order.increment_id}>View</Link>
+                                                <Link to={"/orders/" + order.entity_id}>View</Link>
                                             </TableCell>
                                         </TableRow>
                                     ))}

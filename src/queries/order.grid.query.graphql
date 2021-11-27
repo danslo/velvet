@@ -3,6 +3,7 @@ query getOrderGrid($page_number: Int = 1, $page_size: Int = 20) {
         last_page_number
         total_orders
         orders {
+            entity_id
             increment_id
             store_name
             created_at
