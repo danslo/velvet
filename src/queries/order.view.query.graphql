@@ -1,0 +1,228 @@
+query getOrderView($id: Int!) {
+    orderView(order_id: $id) {
+        billing_address {
+            city
+            company
+            country_code
+            fax
+            firstname
+            lastname
+            middlename
+            postcode
+            prefix
+            region
+            region_id
+            street
+            suffix
+            telephone
+            vat_id
+        }
+        carrier
+        comments {
+            message
+            timestamp
+        }
+        id
+        invoices {
+            comments {
+                message
+                timestamp
+            }
+            id
+            items {
+                discounts {
+                    amount {
+                        value
+                    }
+                }
+                id
+                order_item {
+                    id
+                }
+                product_name
+                product_sale_price {
+                    value
+                }
+                product_sku
+                quantity_invoiced
+            }
+            number
+            total {
+                base_grand_total {
+                    value
+                }
+                discounts {
+                    amount {
+                        value
+                    }
+                }
+                grand_total {
+                    value
+                }
+                shipping_handling {
+                    total_amount {
+                        value
+                    }
+                }
+                subtotal {
+                    value
+                }
+                taxes {
+                    title
+                    amount {
+                        value
+                    }
+                }
+                total_shipping {
+                    value
+                }
+                total_tax {
+                    value
+                }
+            }
+        }
+        items {
+            discounts {
+                amount {
+                    value
+                }
+                label
+            }
+            entered_options {
+                label
+                value
+            }
+            id
+            product_name
+            product_sale_price {
+                currency
+                value
+            }
+            product_sku
+            product_type
+            product_url_key
+            quantity_canceled
+            quantity_invoiced
+            quantity_ordered
+            quantity_refunded
+            quantity_returned
+            quantity_shipped
+            selected_options {
+                label
+                value
+            }
+            status
+        }
+        number
+        order_date
+        payment_methods {
+            additional_data {
+                name
+                value
+            }
+            name
+            type
+        }
+        shipments {
+            comments {
+                message
+                timestamp
+            }
+            id
+            items {
+                id
+                order_item {
+                    id
+                }
+                product_name
+                product_sale_price {
+                    value
+                }
+                product_sku
+                quantity_shipped
+            }
+            number
+            tracking {
+                carrier
+                number
+                title
+            }
+        }
+        shipping_address {
+            city
+            company
+            country_code
+            fax
+            firstname
+            lastname
+            middlename
+            postcode
+            prefix
+            region
+            region_id
+            street
+            suffix
+            telephone
+            vat_id
+        }
+        shipping_method
+        status
+        total {
+            base_grand_total {
+                currency
+                value
+            }
+            discounts {
+                amount {
+                    value
+                }
+                label
+            }
+            grand_total {
+                currency
+                value
+            }
+            shipping_handling {
+                amount_excluding_tax {
+                    value
+                }
+                amount_including_tax {
+                    value
+                }
+                discounts {
+                    amount {
+                        value
+                    }
+                }
+                taxes {
+                    title
+                    amount {
+                        value
+                    }
+                }
+                total_amount {
+                    value
+                }
+            }
+            subtotal {
+                currency
+                value
+            }
+            taxes {
+                amount {
+                    value
+                }
+                rate
+                title
+            }
+            total_shipping {
+                currency
+                value
+            }
+            total_tax {
+                currency
+                value
+            }
+        }
+    }
+}
