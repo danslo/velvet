@@ -10,11 +10,7 @@ export const Routes = () => {
             {routes
                 .filter(route => !route.is_private || token)
                 .map(route => (
-                    <Route element={route.component({})} path={route.path} key={route.path}>
-                        {route.children.map(childRoute =>
-                            <Route element={childRoute.component({})} path={childRoute.path} key={childRoute.path}/>
-                        )}
-                    </Route>
+                    <Route element={route.component({})} path={route.path} key={route.path}/>
                 ))
             }
         </DOMRoutes>
