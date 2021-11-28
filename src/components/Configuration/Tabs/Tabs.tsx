@@ -23,7 +23,7 @@ const Tabs = () => {
                             {tab.sections.map(section => (
                                 <Box sx={{mb: 1}}>
                                     <Link style={{textDecoration: "none", color: "black", fontSize: "0.9rem"}}
-                                          to={section.path}>
+                                          to={"/configuration/" + section.path}>
                                         {section.label}
                                     </Link>
                                 </Box>
