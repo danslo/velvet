@@ -6,7 +6,7 @@ import {FunctionComponent} from "react";
 import Configuration from "../components/Configuration/Configuration";
 import Indexers from "../components/Indexers/Indexers";
 import Orders from "../components/Orders/Orders";
-import View from "../components/Orders/View/View";
+import Order from "../components/Orders/Order/Order";
 
 type route = {
     path: string,
@@ -37,7 +37,7 @@ const routes: Array<route> = [
     },
     {
         path: '/orders/:orderId',
-        component: View,
+        component: Order,
         is_private: true
     },
     {

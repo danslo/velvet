@@ -1,5 +1,5 @@
-query getOrderView($id: Int!) {
-    orderView(order_id: $id) {
+query getOrder($id: Int!) {
+    order(order_id: $id) {
         billing_address {
             city
             company
