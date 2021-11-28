@@ -1,5 +1,29 @@
 query getOrder($id: Int!) {
     order(order_id: $id) {
+        customer_email
+        customer_is_guest
+        customer_id
+        customer_dob
+        customer_firstname
+        customer_lastname
+        customer_middlename
+        customer_prefix
+        customer_suffix
+        customer_gender
+
+        can_ship
+        can_cancel
+        can_invoice
+        can_hold
+        can_unhold
+
+        id
+        number
+        order_date
+        shipping_method
+        status
+        carrier
+
         billing_address {
             city
             company
@@ -17,87 +41,15 @@ query getOrder($id: Int!) {
             telephone
             vat_id
         }
-        carrier
+
         comments {
             message
             timestamp
         }
-        id
-        invoices {
-            comments {
-                message
-                timestamp
-            }
-            id
-            items {
-                discounts {
-                    amount {
-                        value
-                    }
-                }
-                id
-                order_item {
-                    id
-                }
-                product_name
-                product_sale_price {
-                    value
-                }
-                product_sku
-                quantity_invoiced
-            }
-            number
-            total {
-                base_grand_total {
-                    value
-                }
-                discounts {
-                    amount {
-                        value
-                    }
-                }
-                grand_total {
-                    value
-                }
-                shipping_handling {
-                    total_amount {
-                        value
-                    }
-                }
-                subtotal {
-                    value
-                }
-                taxes {
-                    title
-                    amount {
-                        value
-                    }
-                }
-                total_shipping {
-                    value
-                }
-                total_tax {
-                    value
-                }
-            }
-        }
+
         items {
-            discounts {
-                amount {
-                    value
-                }
-                label
-            }
-            entered_options {
-                label
-                value
-            }
             id
             product_name
-            product_sale_price {
-                currency
-                value
-            }
             product_sku
             product_type
             product_url_key
@@ -107,14 +59,32 @@ query getOrder($id: Int!) {
             quantity_refunded
             quantity_returned
             quantity_shipped
+            status
+
+            discounts {
+                amount {
+                    value
+                    currency
+                }
+                label
+            }
+
+            entered_options {
+                label
+                value
+            }
+
+            product_sale_price {
+                currency
+                value
+            }
+
             selected_options {
                 label
                 value
             }
-            status
         }
-        number
-        order_date
+
         payment_methods {
             additional_data {
                 name
@@ -123,31 +93,7 @@ query getOrder($id: Int!) {
             name
             type
         }
-        shipments {
-            comments {
-                message
-                timestamp
-            }
-            id
-            items {
-                id
-                order_item {
-                    id
-                }
-                product_name
-                product_sale_price {
-                    value
-                }
-                product_sku
-                quantity_shipped
-            }
-            number
-            tracking {
-                carrier
-                number
-                title
-            }
-        }
+
         shipping_address {
             city
             company
@@ -165,8 +111,7 @@ query getOrder($id: Int!) {
             telephone
             vat_id
         }
-        shipping_method
-        status
+
         total {
             base_grand_total {
                 currency
@@ -175,6 +120,7 @@ query getOrder($id: Int!) {
             discounts {
                 amount {
                     value
+                    currency
                 }
                 label
             }
@@ -185,23 +131,29 @@ query getOrder($id: Int!) {
             shipping_handling {
                 amount_excluding_tax {
                     value
+                    currency
                 }
                 amount_including_tax {
                     value
+                    currency
                 }
                 discounts {
                     amount {
                         value
+                        currency
                     }
                 }
                 taxes {
                     title
+                    rate
                     amount {
                         value
+                        currency
                     }
                 }
                 total_amount {
                     value
+                    currency
                 }
             }
             subtotal {
@@ -211,6 +163,7 @@ query getOrder($id: Int!) {
             taxes {
                 amount {
                     value
+                    currency
                 }
                 rate
                 title

@@ -1,17 +1,17 @@
 import {useParams} from "react-router-dom";
-import {withLayout} from "../../Layout/Layout";
 import {useGetOrderQuery} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {Grid} from "@mui/material";
 import React from "react";
-import Account from "./Account/Account";
 import Information from "./Information/Information";
 import Address from "./Address/Address";
 import Payment from "./Payment/Payment";
 import Shipping from "./Shipping/Shipping";
+import Account from "./Account/Account";
 import Items from "./Items/Items";
 import Notes from "./Notes/Notes";
 import Totals from "./Totals/Totals";
+import {withLayout} from "../../Layout/Layout";
 
 const Order = () => {
     const {orderId} = useParams();
@@ -27,22 +27,22 @@ const Order = () => {
             {data && (
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                        <Information/>
+                        <Information caption="Order Information" order={data.order}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Account/>
+                        <Account caption="Account Information" order={data.order}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Address/>
+                        <Address caption="Shipping Address" address={data.order.shipping_address!}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Address/>
+                        <Address caption="Billing Address" address={data.order.billing_address!}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Payment/>
+                        <Payment caption="Payment Information" methods={data.order.payment_methods!}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Shipping/>
+                        <Shipping caption="Shipping Information" shipping_method={data.order.shipping_method!}/>
                     </Grid>
                     <Grid item xs={12}>
                         <Items/>
