@@ -1,4 +1,14 @@
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {
+    List,
+    ListItemText,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@mui/material";
 import React from "react";
 import {Maybe, OrderItemInterface} from "../../../../types";
 
@@ -33,11 +43,11 @@ const Items = ({caption, items}: ItemsProps) => (
                         <TableCell>{item!.quantity_invoiced}</TableCell>
                         <TableCell>{item!.quantity_refunded}</TableCell>
                         <TableCell>{item!.discounts && (
-                            <ul>
+                            <List>
                                 {item!.discounts.map(discount => (
-                                    <li>{discount!.label} - {discount!.amount.value}</li>
+                                    <ListItemText primary={discount!.amount.value} secondary={discount!.label}/>
                                 ))}
-                            </ul>
+                            </List>
                         )}</TableCell>
                         <TableCell>{item!.product_sale_price.value}</TableCell>
                     </TableRow>

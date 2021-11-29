@@ -51,7 +51,7 @@ const Order = () => {
                         <StatusHistory caption="Status History" status_history={data.order.status_history}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Totals/>
+                        <Totals caption="Totals" totals={data.order.total!}/>
                     </Grid>
                 </Grid>
             )}
