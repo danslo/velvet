@@ -45,7 +45,7 @@ const Order = () => {
                         <Shipping caption="Shipping Information" shipping_method={data.order.shipping_method!}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <Items/>
+                        <Items caption="Items" items={data.order.items!}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Notes/>
