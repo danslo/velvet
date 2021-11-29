@@ -16,6 +16,7 @@ query getOrder($id: Int!) {
         can_invoice
         can_hold
         can_unhold
+        can_creditmemo
 
         id
         number

@@ -1,0 +1,3 @@
+mutation refundOrder($order_id: Int!) {
+    refundOrder(order_id: $order_id)
+}

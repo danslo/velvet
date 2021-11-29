@@ -5,6 +5,7 @@ import {
     useCancelOrderMutation,
     useHoldOrderMutation,
     useInvoiceOrderMutation,
+    useRefundOrderMutation,
     useShipOrderMutation,
     useUnholdOrderMutation
 } from "../../../../types";
@@ -21,6 +22,7 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
     const [holdOrderMutation] = useHoldOrderMutation({refetchQueries: ['getOrder']});
     const [unholdOrderMutation] = useUnholdOrderMutation({refetchQueries: ['getOrder']});
     const [invoiceOrderMutation] = useInvoiceOrderMutation({refetchQueries: ['getOrder']});
+    const [refundOrderMutation] = useRefundOrderMutation({refetchQueries: ['getOrder']});
 
     // Beware, intentional duplication.
     // In the future, these mutations will provide different payloads.
@@ -61,6 +63,13 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
             });
     }
 
+    const refundOrder = () => {
+        refundOrderMutation({variables: {order_id: orderId}})
+            .then((result) => {
+                if (result.data?.refundOrder) snackbarShowMessage('Order was refunded.');
+            });
+    }
+
     return (
         <Box sx={{my: 1}}>
             <Button variant="contained" size="large" disabled={!order.can_ship} onClick={shipOrder}>Ship</Button>
@@ -72,6 +81,8 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
                     sx={{ml: 1}}>Hold</Button>
             <Button variant="contained" size="large" disabled={!order.can_unhold} onClick={unholdOrder}
                     sx={{ml: 1}}>Unhold</Button>
+            <Button variant="contained" size="large" disabled={!order.can_creditmemo} onClick={refundOrder}
+                    sx={{ml: 1}}>Refund</Button>
         </Box>
     )
 }
