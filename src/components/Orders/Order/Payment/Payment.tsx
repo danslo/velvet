@@ -1,4 +1,4 @@
-import {Box, Paper, Typography} from "@mui/material";
+import {Box, List, ListItem, ListItemText, Paper, Typography} from "@mui/material";
 import {Maybe, OrderPaymentMethod} from "../../../../types";
 
 type PaymentInformation = {
@@ -10,11 +10,13 @@ const Payment = ({caption, methods}: PaymentInformation) => {
     return (
         <Box component={Paper} sx={{p: 2}}>
             <Typography variant="h6">{caption}</Typography>
-            <ul>
-                {methods.map(method => (
-                    <li>{method!.name}</li>
-                ))}
-            </ul>
+            <List>
+                <ListItem disablePadding>
+                    {methods.map(method => (
+                        <ListItemText sx={{m: 0}} primary={method!.name}/>
+                    ))}
+                </ListItem>
+            </List>
         </Box>
     );
 }

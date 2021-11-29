@@ -48,7 +48,7 @@ const Order = () => {
                         <Items caption="Items" items={data.order.items!}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Notes/>
+                        <Notes caption="Notes" notes={data.order.comments}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Totals/>
