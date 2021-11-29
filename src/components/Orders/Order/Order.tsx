@@ -12,6 +12,7 @@ import Items from "./Items/Items";
 import StatusHistory from "./StatusHistory/StatusHistory";
 import Totals from "./Totals/Totals";
 import {withLayout} from "../../Layout/Layout";
+import Actions from "./Actions/Actions";
 
 const Order = () => {
     const {orderId} = useParams();
@@ -26,6 +27,9 @@ const Order = () => {
         <LoaderHandler loading={loading} error={error}>
             {data && (
                 <Grid container spacing={2}>
+                    <Grid container justifyContent="flex-end">
+                        <Actions order={data.order}/>
+                    </Grid>
                     <Grid item xs={12} md={6}>
                         <Information caption="Order Information" order={data.order}/>
                     </Grid>
