@@ -1,0 +1,3 @@
+mutation shipOrder($order_id: Int!) {
+    shipOrder(order_id: $order_id)
+}

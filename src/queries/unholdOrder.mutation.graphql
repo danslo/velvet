@@ -1,0 +1,3 @@
+mutation unholdOrder($order_id: Int!) {
+    unholdOrder(order_id: $order_id)
+}

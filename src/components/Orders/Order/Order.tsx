@@ -28,7 +28,7 @@ const Order = () => {
             {data && (
                 <Grid container spacing={2}>
                     <Grid container justifyContent="flex-end">
-                        <Actions order={data.order}/>
+                        <Actions orderId={parseInt(orderId!)} order={data.order}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Information caption="Order Information" order={data.order}/>
