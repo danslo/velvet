@@ -9,7 +9,7 @@ import Payment from "./Payment/Payment";
 import Shipping from "./Shipping/Shipping";
 import Account from "./Account/Account";
 import Items from "./Items/Items";
-import Notes from "./Notes/Notes";
+import StatusHistory from "./StatusHistory/StatusHistory";
 import Totals from "./Totals/Totals";
 import {withLayout} from "../../Layout/Layout";
 
@@ -48,7 +48,7 @@ const Order = () => {
                         <Items caption="Items" items={data.order.items!}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Notes caption="Notes" notes={data.order.comments}/>
+                        <StatusHistory caption="Status History" status_history={data.order.status_history}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Totals/>

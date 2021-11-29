@@ -24,6 +24,13 @@ query getOrder($id: Int!) {
         status
         carrier
 
+        status_history {
+            comment
+            status
+            created_at
+            customer_notified
+        }
+
         billing_address {
             city
             company
