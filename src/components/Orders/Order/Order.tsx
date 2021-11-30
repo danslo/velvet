@@ -20,7 +20,7 @@ const Order = () => {
         }
     });
 
-    const renderTab = (tab: string, order: Partial<OrderViewOrder>) => {
+    const renderTab = (tab: string, order: OrderViewOrder) => {
         switch (tab) {
             case 'invoices':
                 return <Invoices invoices={order.invoices!}/>
