@@ -1,6 +1,6 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import React from "react";
-import {OrderViewOrder} from "../../../../types";
+import {OrderViewOrder} from "../../../../../types";
 
 type InformationProps = {
     caption: string

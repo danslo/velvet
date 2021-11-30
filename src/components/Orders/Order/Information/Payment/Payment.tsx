@@ -1,5 +1,5 @@
 import {Box, List, ListItem, ListItemText, Paper, Typography} from "@mui/material";
-import {Maybe, OrderPaymentMethod} from "../../../../types";
+import {Maybe, OrderPaymentMethod} from "../../../../../types";
 
 type PaymentInformation = {
     caption: string

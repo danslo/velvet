@@ -10,9 +10,17 @@ export const Routes = () => {
             {routes
                 .filter(route => !route.is_private || token)
                 .map(route => (
-                    <Route element={route.component({})} path={route.path} key={route.path}>
-                        {route.children.map(child => (
-                            <Route element={child.component({})} path={child.path} key={child.path}/>
+                    <Route element={route.component ? route.component({}) : undefined} path={route.path}
+                           key={route.path}>
+                        {route.children?.map(child => (
+                            <Route element={child.component ? child.component({}) : undefined} path={child.path}
+                                   key={child.path}>
+                                {child.children?.map(grandchild => (
+                                    <Route element={grandchild.component ? grandchild.component({}) : undefined}
+                                           path={grandchild.path}
+                                           key={grandchild.path}/>
+                                ))}
+                            </Route>
                         ))}
                     </Route>
                 ))

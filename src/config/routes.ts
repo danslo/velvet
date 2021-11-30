@@ -10,67 +10,75 @@ import Order from "../components/Orders/Order/Order";
 
 type route = {
     path: string,
-    component: FunctionComponent,
+    component?: FunctionComponent,
     is_private: boolean,
-    children: Array<route>
+    children?: Array<route>
 };
 
 const routes: Array<route> = [
     {
         path: '/',
         component: Login,
-        is_private: false,
-        children: []
+        is_private: false
     },
     {
         path: 'dashboard',
         component: Dashboard,
-        is_private: true,
-        children: []
+        is_private: true
     },
     {
         path: 'cache',
         component: Cache,
-        is_private: true,
-        children: []
+        is_private: true
     },
     {
         path: 'indexers',
         component: Indexers,
-        is_private: true,
-        children: []
+        is_private: true
     },
     {
         path: 'orders',
-        component: Orders,
         is_private: true,
         children: [
             {
                 path: ':orderId',
                 component: Order,
                 is_private: true,
-                children: []
+                children: [
+                    {
+                        path: ':tab',
+                        component: Order,
+                        is_private: true
+                    }
+                ]
+            },
+            {
+                path: '',
+                component: Orders,
+                is_private: true
             }
         ]
     },
     {
         path: 'configuration',
-        component: Configuration,
         is_private: true,
         children: [
             {
                 path: ':section',
                 component: Configuration,
-                is_private: true,
-                children: []
+                is_private: true
+            },
+            {
+                path: '',
+                component: Configuration,
+                is_private: true
             }
         ]
     },
     {
         path: '*',
         component: PageNotFound,
-        is_private: false,
-        children: []
+        is_private: false
     }
 ];
 

@@ -1,4 +1,4 @@
-import {OrderTotal} from "../../../../types";
+import {OrderTotal} from "../../../../../types";
 import {
     List,
     ListItem,

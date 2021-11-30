@@ -25,6 +25,315 @@ query getOrder($id: Int!) {
         status
         carrier
 
+        shipments {
+            comments {
+                message
+                timestamp
+            }
+            id
+            items {
+                id
+                order_item {
+                    discounts {
+                        label
+                        amount {
+                            value
+                            currency
+                        }
+                    }
+                    entered_options {
+                        label
+                        value
+                    }
+                    id
+                    product_name
+                    product_sale_price {
+                        value
+                        currency
+                    }
+                    product_sku
+                    product_type
+                    product_url_key
+                    quantity_canceled
+                    quantity_invoiced
+                    quantity_ordered
+                    quantity_refunded
+                    quantity_returned
+                    quantity_shipped
+                    selected_options {
+                        label
+                        value
+                    }
+                    status
+                }
+                product_name
+                product_sale_price {
+                    currency
+                    value
+                }
+                product_sku
+                quantity_shipped
+            }
+            number
+            tracking {
+                carrier
+                number
+                title
+            }
+        }
+
+        invoices {
+            comments {
+                message
+                timestamp
+            }
+            id
+            items {
+                discounts {
+                    amount {
+                        value
+                        currency
+                    }
+                    label
+                }
+                id
+                order_item {
+                    discounts {
+                        label
+                        amount {
+                            value
+                            currency
+                        }
+                    }
+                    entered_options {
+                        value
+                        label
+                    }
+                    id
+                    product_name
+                    product_sale_price {
+                        value
+                        currency
+                    }
+                    product_sku
+                    product_type
+                    product_url_key
+                    quantity_canceled
+                    quantity_invoiced
+                    quantity_ordered
+                    quantity_refunded
+                    quantity_returned
+                    quantity_shipped
+                    selected_options {
+                        value
+                        label
+                    }
+                    status
+                }
+                product_name
+                product_sale_price {
+                    currency
+                    value
+                }
+                product_sku
+                quantity_invoiced
+            }
+            number
+            total {
+                base_grand_total {
+                    currency
+                    value
+                }
+                discounts {
+                    amount {
+                        value
+                        currency
+                    }
+                    label
+                }
+                grand_total {
+                    currency
+                    value
+                }
+                shipping_handling {
+                    amount_excluding_tax {
+                        value
+                        currency
+                    }
+                    amount_including_tax {
+                        value
+                        currency
+                    }
+                    discounts {
+                        amount {
+                            value
+                            currency
+                        }
+                    }
+                    taxes {
+                        rate
+                        title
+                        amount {
+                            value
+                            currency
+                        }
+                    }
+                    total_amount {
+                        currency
+                        value
+                    }
+                }
+                subtotal {
+                    currency
+                    value
+                }
+                taxes {
+                    amount {
+                        value
+                        currency
+                    }
+                    rate
+                    title
+                }
+                total_shipping {
+                    currency
+                    value
+                }
+                total_tax {
+                    currency
+                    value
+                }
+            }
+        }
+
+        credit_memos {
+            comments {
+                message
+                timestamp
+            }
+            id
+            items {
+                discounts {
+                    amount {
+                        value
+                        currency
+                    }
+                    label
+                }
+                id
+                order_item {
+                    discounts {
+                        label
+                        amount {
+                            value
+                            currency
+                        }
+                    }
+                    entered_options {
+                        value
+                        label
+                    }
+                    id
+                    product_name
+                    product_sale_price {
+                        value
+                        currency
+                    }
+                    product_sku
+                    product_type
+                    product_url_key
+                    quantity_canceled
+                    quantity_invoiced
+                    quantity_ordered
+                    quantity_refunded
+                    quantity_returned
+                    quantity_shipped
+                    selected_options {
+                        value
+                        label
+                    }
+                    status
+                }
+                product_name
+                product_sale_price {
+                    currency
+                    value
+                }
+                product_sku
+                quantity_refunded
+            }
+            number
+            total {
+                adjustment {
+                    currency
+                    value
+                }
+                base_grand_total {
+                    currency
+                    value
+                }
+                discounts {
+                    amount {
+                        value
+                        currency
+                    }
+                    label
+                }
+                grand_total {
+                    currency
+                    value
+                }
+                shipping_handling {
+                    amount_excluding_tax {
+                        value
+                        currency
+                    }
+                    amount_including_tax {
+                        value
+                        currency
+                    }
+                    discounts {
+                        amount {
+                            value
+                            currency
+                        }
+                    }
+                    taxes {
+                        rate
+                        title
+                        amount {
+                            value
+                            currency
+                        }
+                    }
+                    total_amount {
+                        value
+                        currency
+                    }
+                }
+                subtotal {
+                    currency
+                    value
+                }
+                taxes {
+                    amount {
+                        value
+                        currency
+                    }
+                    rate
+                    title
+                }
+                total_shipping {
+                    currency
+                    value
+                }
+                total_tax {
+                    currency
+                    value
+                }
+            }
+        }
+
         status_history {
             comment
             status

@@ -1,5 +1,5 @@
 import {Box, Divider, List, ListItemText, Paper, Typography} from "@mui/material";
-import {OrderStatus} from "../../../../types";
+import {OrderStatus} from "../../../../../types";
 
 type NotesProps = {
     caption: string

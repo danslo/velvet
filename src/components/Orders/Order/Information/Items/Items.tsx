@@ -10,7 +10,7 @@ import {
     TableRow
 } from "@mui/material";
 import React from "react";
-import {Maybe, OrderItemInterface} from "../../../../types";
+import {Maybe, OrderItemInterface} from "../../../../../types";
 
 type ItemsProps = {
     caption: string

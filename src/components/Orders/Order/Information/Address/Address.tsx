@@ -1,6 +1,6 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import React from "react";
-import {OrderAddress} from "../../../../types";
+import {OrderAddress} from "../../../../../types";
 
 type AddressProps = {
     caption: string
