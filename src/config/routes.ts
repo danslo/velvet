@@ -11,54 +11,66 @@ import Order from "../components/Orders/Order/Order";
 type route = {
     path: string,
     component: FunctionComponent,
-    is_private: boolean
+    is_private: boolean,
+    children: Array<route>
 };
 
 const routes: Array<route> = [
     {
         path: '/',
         component: Login,
-        is_private: false
+        is_private: false,
+        children: []
     },
     {
-        path: '/dashboard',
+        path: 'dashboard',
         component: Dashboard,
-        is_private: true
+        is_private: true,
+        children: []
     },
     {
-        path: '/cache',
+        path: 'cache',
         component: Cache,
-        is_private: true
+        is_private: true,
+        children: []
     },
     {
-        path: '/indexers',
+        path: 'indexers',
         component: Indexers,
-        is_private: true
+        is_private: true,
+        children: []
     },
     {
-        path: '/orders/:orderId',
-        component: Order,
-        is_private: true
-    },
-    {
-        path: '/orders',
+        path: 'orders',
         component: Orders,
-        is_private: true
+        is_private: true,
+        children: [
+            {
+                path: ':orderId',
+                component: Order,
+                is_private: true,
+                children: []
+            }
+        ]
     },
     {
-        path: '/configuration/:section',
+        path: 'configuration',
         component: Configuration,
-        is_private: true
+        is_private: true,
+        children: [
+            {
+                path: ':section',
+                component: Configuration,
+                is_private: true,
+                children: []
+            }
+        ]
     },
     {
-        path: '/configuration',
-        component: Configuration,
-        is_private: true
-    },
-    {
-        path: '/*',
+        path: '*',
         component: PageNotFound,
-        is_private: false
+        is_private: false,
+        children: []
     }
 ];
 
