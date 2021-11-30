@@ -37,7 +37,6 @@ const Totals = ({totals, caption}: TotalsProps) => (
                                 ))}
                             </ListItem>
                         </List>
-
                     </TableCell>
                 </TableRow>
                 <TableRow>
