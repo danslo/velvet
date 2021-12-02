@@ -15,6 +15,8 @@ import StorageIcon from '@mui/icons-material/Storage';
 import {setClientLink} from "../../utils/client";
 import {AuthContext} from "../../utils/auth";
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import ArticleIcon from '@mui/icons-material/Article';
+import GridViewIcon from '@mui/icons-material/GridView';
 
 const Navbar = () => {
     const {setToken} = useContext(AuthContext);
@@ -46,6 +48,16 @@ const Navbar = () => {
                     <ListItem component={Link} to="/orders">
                         <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                             <PointOfSaleIcon/>
+                        </ListItemIcon>
+                    </ListItem>
+                    <ListItem component={Link} to="/pages">
+                        <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
+                            <ArticleIcon/>
+                        </ListItemIcon>
+                    </ListItem>
+                    <ListItem component={Link} to="/blocks">
+                        <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
+                            <GridViewIcon/>
                         </ListItemIcon>
                     </ListItem>
                     <ListItem component={Link} to="#" onClick={() => {
