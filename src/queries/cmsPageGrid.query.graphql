@@ -1,10 +1,12 @@
 query getCmsPageGrid($page_number: Int = 1, $page_size: Int = 20) {
-    cmsPageGrid(input: {page_number: $page_number, page_size: $page_size}) {
+    grid: cmsPageGrid(input: {page_number: $page_number, page_size: $page_size}) {
         last_page_number
-        total_pages
-        pages {
-            identifier
-            title
+        total_items
+        items {
+            ... on CmsPage {
+                identifier
+                title
+            }
         }
     }
 }
