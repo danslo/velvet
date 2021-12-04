@@ -2,7 +2,8 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import React from "react";
 import {Link} from "react-router-dom";
 import {withGrid, WithGridProps} from "../Grid/Grid";
-import {GetOrderGridQuery, useGetOrderGridQuery} from "../../types";
+import {GetOrderGridQuery, GridOrder, useGetOrderGridQuery} from "../../types";
+import {withLayout} from "../Layout/Layout";
 
 const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
     return (
@@ -22,7 +23,7 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.grid.items.map(order => (
+                    {(data.grid.items as Array<GridOrder>).map(order => (
                         <TableRow>
                             <TableCell>{order.increment_id}</TableCell>
                             <TableCell>{order.store_name}</TableCell>
@@ -43,4 +44,4 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
     );
 }
 
-export default withGrid<GetOrderGridQuery>(Orders, useGetOrderGridQuery);
+export default withLayout(withGrid<GetOrderGridQuery>(Orders, useGetOrderGridQuery));
