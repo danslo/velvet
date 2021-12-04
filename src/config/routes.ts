@@ -8,6 +8,7 @@ import Indexers from "../components/Indexers/Indexers";
 import Orders from "../components/Orders/Orders";
 import Order from "../components/Orders/Order/Order";
 import Pages from "../components/Pages/Pages";
+import Blocks from "../components/Blocks/Pages";
 
 type route = {
     path: string,
@@ -80,6 +81,11 @@ const routes: Array<route> = [
         path: 'pages',
         is_private: true,
         component: Pages
+    },
+    {
+        path: 'blocks',
+        is_private: true,
+        component: Blocks
     },
     {
         path: '*',

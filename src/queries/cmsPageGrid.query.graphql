@@ -5,7 +5,14 @@ query getCmsPageGrid($page_number: Int = 1, $page_size: Int = 20) {
         items {
             ... on CmsPage {
                 identifier
+                url_key
                 title
+                content
+                content_heading
+                page_layout
+                meta_title
+                meta_description
+                meta_keywords
             }
         }
     }
