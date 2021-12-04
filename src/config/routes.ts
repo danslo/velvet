@@ -7,6 +7,7 @@ import Configuration from "../components/Configuration/Configuration";
 import Indexers from "../components/Indexers/Indexers";
 import Orders from "../components/Orders/Orders";
 import Order from "../components/Orders/Order/Order";
+import Pages from "../components/Pages/Pages";
 
 type route = {
     path: string,
@@ -74,6 +75,11 @@ const routes: Array<route> = [
                 is_private: true
             }
         ]
+    },
+    {
+        path: 'pages',
+        is_private: true,
+        component: Pages
     },
     {
         path: '*',
