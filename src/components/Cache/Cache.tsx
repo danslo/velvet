@@ -22,7 +22,7 @@ const Cache = () => {
                         </TableHead>
                         <TableBody>
                             {data.cacheTypes.map(cacheType => (
-                                <TableRow>
+                                <TableRow hover={true}>
                                     <TableCell>{cacheType.cache_type}</TableCell>
                                     <TableCell>{cacheType.description}</TableCell>
                                     <TableCell>{cacheType.tags}</TableCell>

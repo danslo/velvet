@@ -8,7 +8,7 @@ import Indexers from "../components/Indexers/Indexers";
 import Orders from "../components/Orders/Orders";
 import Order from "../components/Orders/Order/Order";
 import Pages from "../components/Pages/Pages";
-import Blocks from "../components/Blocks/Pages";
+import Blocks from "../components/Blocks/Blocks";
 
 type route = {
     path: string,

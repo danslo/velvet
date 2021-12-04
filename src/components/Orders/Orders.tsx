@@ -1,11 +1,12 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {withGrid, WithGridProps} from "../Grid/Grid";
 import {GetOrderGridQuery, GridOrder, useGetOrderGridQuery} from "../../types";
 import {withLayout} from "../Layout/Layout";
 
 const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
+    const navigate = useNavigate();
     return (
         <TableContainer component={Paper} sx={{mb: 2}}>
             <Table>
@@ -19,12 +20,11 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
                         <TableCell>Grand Total</TableCell>
                         <TableCell>Status</TableCell>
                         <TableCell>Shipping Address</TableCell>
-                        <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<GridOrder>).map(order => (
-                        <TableRow>
+                        <TableRow hover={true} sx={{cursor: "pointer"}} onClick={() => navigate("/orders/" + order.entity_id)}>
                             <TableCell>{order.increment_id}</TableCell>
                             <TableCell>{order.store_name}</TableCell>
                             <TableCell>{order.created_at}</TableCell>
@@ -33,9 +33,6 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
                             <TableCell>{order.grand_total}</TableCell>
                             <TableCell>{order.status}</TableCell>
                             <TableCell>{order.shipping_address}</TableCell>
-                            <TableCell>
-                                <Link to={"/orders/" + order.entity_id}>View</Link>
-                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
