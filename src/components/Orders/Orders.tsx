@@ -1,10 +1,10 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {Link} from "react-router-dom";
-import {TypedGridOutput, withGrid} from "../Grid/Grid";
-import {GridOrder} from "../../types";
+import {withGrid, WithGridProps} from "../Grid/Grid";
+import {GetOrderGridQuery, useGetOrderGridQuery} from "../../types";
 
-const Orders = (props: TypedGridOutput<GridOrder>) => {
+const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
     return (
         <TableContainer component={Paper} sx={{mb: 2}}>
             <Table>
@@ -22,7 +22,7 @@ const Orders = (props: TypedGridOutput<GridOrder>) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.items.map(order => (
+                    {data.grid.items.map(order => (
                         <TableRow>
                             <TableCell>{order.increment_id}</TableCell>
                             <TableCell>{order.store_name}</TableCell>
@@ -43,4 +43,4 @@ const Orders = (props: TypedGridOutput<GridOrder>) => {
     );
 }
 
-export default withGrid(Orders);
+export default withGrid<GetOrderGridQuery>(Orders, useGetOrderGridQuery);

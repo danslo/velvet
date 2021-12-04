@@ -1,21 +1,23 @@
 import React, {useEffect} from "react";
-import * as Apollo from "@apollo/client";
-import {QueryResult} from "react-apollo";
-import {GridInput, GridOrder, GridOutput, Scalars} from "../../types";
 import {TablePagination} from "@mui/material";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
+import * as Apollo from "@apollo/client";
+import {QueryResult} from "@apollo/client/react/types/types";
+import {GridOutput} from "../../types";
 
-type GridQueryHook<Q, GridInput> =
-    (baseOptions?: Apollo.QueryHookOptions<Q, GridInput>) => QueryResult<Q, GridInput>;
+export type WithGridProps<Query> = {
+    data: Query
+}
 
-export type TypedGridOutput<T> = {
-    items: Array<T>;
-    last_page_number: Scalars['Int'];
-    total_items: Scalars['Int'];
-};
+type RequiredGridFields = {
+    grid: Pick<GridOutput, 'last_page_number' | 'total_items'>
+}
 
-export function withGrid<Q extends GridOutput>(WrappedComponent: React.ComponentType<{output: TypedGridOutput<GridOrder>}>) {
-    return (useGridQuery: GridQueryHook<Q, GridInput>) => {
+export function withGrid<Query extends RequiredGridFields>(
+    WrappedComponent: React.ComponentType<WithGridProps<Query>>,
+    useGridQuery: (baseOptions?: Apollo.QueryHookOptions<Query, any>) => QueryResult<Query, any>
+) {
+    return () => {
         const [page, setPage] = React.useState(0);
         const [rowsPerPage, setRowsPerPage] = React.useState(10);
         const [pageCount, setPageCount] = React.useState(100);
@@ -43,24 +45,16 @@ export function withGrid<Q extends GridOutput>(WrappedComponent: React.Component
 
         useEffect(() => {
             if (data) {
-                setPageCount(data.last_page_number);
+                setPageCount(data.grid.last_page_number);
             }
         }, [data]);
 
         return (
             <>
-                <TablePagination
-                    component="div"
-                    count={pageCount}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    rowsPerPage={rowsPerPage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                <TablePagination component="div" count={pageCount} page={page} onPageChange={handleChangePage}
+                                 rowsPerPage={rowsPerPage} onRowsPerPageChange={handleChangeRowsPerPage}/>
                 <LoaderHandler loading={loading} error={error}>
-                    {data && (
-                        <WrappedComponent data={data} />
-                    )}
+                    {data && (<WrappedComponent data={data}/>)}
                 </LoaderHandler>
             </>
         )
