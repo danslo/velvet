@@ -1,0 +1,3 @@
+mutation cleanCache($cache_id: String!) {
+    cleanCache(cache_id: $cache_id)
+}

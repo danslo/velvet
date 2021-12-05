@@ -1,12 +1,13 @@
 import {withLayout} from "../Layout/Layout";
 import {Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React, {useState} from "react";
-import {useGetCacheTypesQuery, useToggleCacheMutation} from "../../types";
+import {useCleanCacheMutation, useGetCacheTypesQuery, useToggleCacheMutation} from "../../types";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
 import {withSnackbar, WithSnackbarProps} from "../../utils/snackbar";
 
 const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
     const [toggleCacheMutation] = useToggleCacheMutation({refetchQueries: ['getCacheTypes']});
+    const [cleanCacheMutation] = useCleanCacheMutation();
     const {data, loading, error} = useGetCacheTypesQuery();
     const [contextMenu, setContextMenu] = useState<{
         mouseX: number;
@@ -24,11 +25,11 @@ const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
                 cacheId: event.currentTarget.id
             } : null,
         );
-    };
+    }
 
     const handleClose = () => {
         setContextMenu(null);
-    };
+    }
 
     const toggleCache = (enable: boolean) => {
         toggleCacheMutation({
@@ -39,6 +40,19 @@ const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
         }).then((result) => {
             if (result.data?.toggleCache) {
                 snackbarShowMessage("Cache was successfully " + (enable ? "enabled" : "disabled") + ".");
+            }
+        });
+        handleClose();
+    }
+
+    const cleanCache = () => {
+        cleanCacheMutation({
+            variables: {
+                cache_id: contextMenu!.cacheId
+            }
+        }).then((result) => {
+            if (result.data?.cleanCache) {
+                snackbarShowMessage("Cache was successfully cleaned.");
             }
         });
         handleClose();
@@ -77,6 +91,7 @@ const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
                                 } : undefined}>
                                 <MenuItem onClick={() => toggleCache(true)}>Enable</MenuItem>
                                 <MenuItem onClick={() => toggleCache(false)}>Disable</MenuItem>
+                                <MenuItem onClick={cleanCache}>Clean</MenuItem>
                             </Menu>
                         </TableBody>
                     </Table>
