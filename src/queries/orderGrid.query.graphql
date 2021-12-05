@@ -10,7 +10,7 @@ query getOrderGrid($page_number: Int = 1, $page_size: Int = 20) {
                 created_at
                 billing_name
                 shipping_name
-                grand_total
+                formatted_grand_total
                 status
                 shipping_address
             }

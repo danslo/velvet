@@ -31,7 +31,7 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
                             <TableCell>{order.created_at}</TableCell>
                             <TableCell>{order.billing_name}</TableCell>
                             <TableCell>{order.shipping_name}</TableCell>
-                            <TableCell>{order.grand_total}</TableCell>
+                            <TableCell>{order.formatted_grand_total}</TableCell>
                             <TableCell>{order.status}</TableCell>
                             <TableCell>{order.shipping_address}</TableCell>
                         </TableRow>
