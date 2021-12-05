@@ -1,0 +1,3 @@
+mutation toggleCache($cache_id: String!, $enable: Boolean!) {
+    toggleCache(cache_id: $cache_id, enable: $enable)
+}

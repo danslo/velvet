@@ -1,25 +1,27 @@
 import {withLayout} from "../Layout/Layout";
 import {Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import React from "react";
-import {useGetCacheTypesQuery} from "../../types";
+import React, {useState} from "react";
+import {useGetCacheTypesQuery, useToggleCacheMutation} from "../../types";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
+import {withSnackbar, WithSnackbarProps} from "../../utils/snackbar";
 
-const Cache = () => {
+const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
+    const [toggleCacheMutation] = useToggleCacheMutation({refetchQueries: ['getCacheTypes']});
     const {data, loading, error} = useGetCacheTypesQuery();
-    const [contextMenu, setContextMenu] = React.useState<{
+    const [contextMenu, setContextMenu] = useState<{
         mouseX: number;
         mouseY: number;
-        type: string;
+        cacheId: string;
     } | null>(null);
 
-    const handleContextMenu = (event: React.MouseEvent, cacheType: string) => {
+    const handleContextMenu = (event: React.MouseEvent) => {
         event.preventDefault();
 
         setContextMenu(
             contextMenu === null ? {
                 mouseX: event.clientX - 2,
                 mouseY: event.clientY - 4,
-                type: cacheType
+                cacheId: event.currentTarget.id
             } : null,
         );
     };
@@ -27,6 +29,20 @@ const Cache = () => {
     const handleClose = () => {
         setContextMenu(null);
     };
+
+    const toggleCache = (enable: boolean) => {
+        toggleCacheMutation({
+            variables: {
+                cache_id: contextMenu!.cacheId,
+                enable: enable
+            }
+        }).then((result) => {
+            if (result.data?.toggleCache) {
+                snackbarShowMessage("Cache was successfully " + (enable ? "enabled" : "disabled") + ".");
+            }
+        });
+        handleClose();
+    }
 
     return (
         <LoaderHandler loading={loading} error={error}>
@@ -43,7 +59,8 @@ const Cache = () => {
                         </TableHead>
                         <TableBody>
                             {data.cacheTypes.map(cacheType => (
-                                <TableRow hover={true} onClick={(event: React.MouseEvent) => handleContextMenu(event, cacheType.cache_type)} sx={{cursor: "pointer"}}>
+                                <TableRow id={cacheType.id} hover={true} onClick={handleContextMenu}
+                                          sx={{cursor: "pointer"}}>
                                     <TableCell>{cacheType.cache_type}</TableCell>
                                     <TableCell>{cacheType.description}</TableCell>
                                     <TableCell>{cacheType.tags}</TableCell>
@@ -54,9 +71,12 @@ const Cache = () => {
                                 open={contextMenu !== null}
                                 onClose={handleClose}
                                 anchorReference="anchorPosition"
-                                anchorPosition={contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined}>
-                                <MenuItem onClick={handleClose}>Enable</MenuItem>
-                                <MenuItem onClick={handleClose}>Disable</MenuItem>
+                                anchorPosition={contextMenu !== null ? {
+                                    top: contextMenu.mouseY,
+                                    left: contextMenu.mouseX
+                                } : undefined}>
+                                <MenuItem onClick={() => toggleCache(true)}>Enable</MenuItem>
+                                <MenuItem onClick={() => toggleCache(false)}>Disable</MenuItem>
                             </Menu>
                         </TableBody>
                     </Table>
@@ -66,4 +86,4 @@ const Cache = () => {
     );
 }
 
-export default withLayout(Cache);
+export default withSnackbar(withLayout(Cache));
