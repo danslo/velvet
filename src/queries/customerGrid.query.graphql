@@ -1,0 +1,19 @@
+query getCustomerGrid($page_number: Int = 1, $page_size: Int = 20) {
+    grid: customerGrid(input: {page_number: $page_number, page_size: $page_size}) {
+        last_page_number
+        total_items
+        items {
+            ... on GridCustomer {
+                entity_id
+                name
+                email
+                created_at
+                website_id
+                dob
+                gender
+                shipping_full
+                billing_full
+            }
+        }
+    }
+}

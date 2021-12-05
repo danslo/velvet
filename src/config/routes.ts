@@ -9,6 +9,7 @@ import Orders from "../components/Orders/Orders";
 import Order from "../components/Orders/Order/Order";
 import Pages from "../components/Pages/Pages";
 import Blocks from "../components/Blocks/Blocks";
+import Customers from "../components/Customers/Customers";
 
 type route = {
     path: string,
@@ -86,6 +87,11 @@ const routes: Array<route> = [
         path: 'blocks',
         is_private: true,
         component: Blocks
+    },
+    {
+        path: 'customers',
+        is_private: true,
+        component: Customers
     },
     {
         path: '*',
