@@ -13,6 +13,9 @@ query getCmsPageGrid($page_number: Int = 1, $page_size: Int = 20) {
                 meta_title
                 meta_description
                 meta_keywords
+                creation_time
+                update_time
+                is_active
             }
         }
     }
