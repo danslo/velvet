@@ -3,10 +3,10 @@ query getCmsPageGrid($page_number: Int = 1, $page_size: Int = 20) {
         last_page_number
         total_items
         items {
-            ... on CmsPage {
-                identifier
-                url_key
+            ... on GridCmsPage {
+                page_id
                 title
+                identifier
                 content
                 content_heading
                 page_layout

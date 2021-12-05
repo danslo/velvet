@@ -3,10 +3,14 @@ query getCmsBlockGrid($page_number: Int = 1, $page_size: Int = 20) {
         last_page_number
         total_items
         items {
-            ... on CmsBlock {
-                identifier
+            ... on GridCmsBlock {
+                block_id
                 title
+                identifier
                 content
+                creation_time
+                update_time
+                is_active
             }
         }
     }
