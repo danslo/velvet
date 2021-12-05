@@ -7,7 +7,7 @@ import {
 } from "../../../types";
 import React from "react";
 import Group from "../Group/Group";
-import {withSnackbar, WithSnackbarProps} from "../../../utils/snackbar";
+import {withSnackbar, WithSnackbarProps} from "../../../hocs/snackbar";
 import Field from "../Field/Field";
 import {useConfigurationScopeContext} from "../../../context/configuration.scope";
 

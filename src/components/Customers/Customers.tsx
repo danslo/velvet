@@ -1,9 +1,9 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import {withGrid, WithGridProps} from "../Grid/Grid";
+import {withGrid, WithGridProps} from "../../hocs/grid";
 import {GetCustomerGridQuery, GridCustomer, useGetCustomerGridQuery} from "../../types";
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 
 const Pages = ({data}: WithGridProps<GetCustomerGridQuery>) => {
     const navigate = useNavigate();

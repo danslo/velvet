@@ -1,5 +1,5 @@
 import React from "react";
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 
 const PageNotFound = () => (
     <h1>Page Not Found</h1>

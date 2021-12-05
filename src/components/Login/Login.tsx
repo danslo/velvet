@@ -4,7 +4,7 @@ import {Navigate} from "react-router-dom";
 import {useMutation} from "@apollo/client";
 import {GenerateAdminTokenDocument} from "../../types";
 import {setClientLink} from "../../utils/client";
-import {withSnackbar, WithSnackbarProps} from "../../utils/snackbar";
+import {withSnackbar, WithSnackbarProps} from "../../hocs/snackbar";
 import {AuthContext} from "../../utils/auth";
 
 const Login = ({snackbarShowMessage}: WithSnackbarProps) => {

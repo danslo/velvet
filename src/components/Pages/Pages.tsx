@@ -1,9 +1,9 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import {withGrid, WithGridProps} from "../Grid/Grid";
+import {withGrid, WithGridProps} from "../../hocs/grid";
 import {CmsPage, GetCmsPageGridQuery, useGetCmsPageGridQuery} from "../../types";
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 
 const Pages = ({data}: WithGridProps<GetCmsPageGridQuery>) => {
     const navigate = useNavigate();
@@ -18,7 +18,8 @@ const Pages = ({data}: WithGridProps<GetCmsPageGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<CmsPage>).map(page => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}} onClick={() => navigate("/pages/" + page.identifier)}>
+                        <TableRow hover={true} sx={{cursor: "pointer"}}
+                                  onClick={() => navigate("/pages/" + page.identifier)}>
                             <TableCell>{page.title}</TableCell>
                             <TableCell>{page.identifier}</TableCell>
                         </TableRow>

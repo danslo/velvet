@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid} from "@mui/material";
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 import Summary from "./Summary/Summary";
 import ChartContainer from "./ChartContainer/ChartContainer";
 import Tabs from "./Tabs/Tabs";

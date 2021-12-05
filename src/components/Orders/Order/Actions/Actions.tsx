@@ -8,7 +8,7 @@ import {
     useShipOrderMutation,
     useUnholdOrderMutation
 } from "../../../../types";
-import {withSnackbar, WithSnackbarProps} from "../../../../utils/snackbar";
+import {withSnackbar, WithSnackbarProps} from "../../../../hocs/snackbar";
 
 type ActionsProps = {
     order: Partial<OrderViewOrder>

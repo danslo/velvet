@@ -1,9 +1,9 @@
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 import {Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React, {useState} from "react";
 import {useCleanCacheMutation, useGetCacheTypesQuery, useToggleCacheMutation} from "../../types";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
-import {withSnackbar, WithSnackbarProps} from "../../utils/snackbar";
+import {withSnackbar, WithSnackbarProps} from "../../hocs/snackbar";
 
 const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
     const [toggleCacheMutation] = useToggleCacheMutation({refetchQueries: ['getCacheTypes']});

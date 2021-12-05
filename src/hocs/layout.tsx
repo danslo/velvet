@@ -1,6 +1,6 @@
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import {Container} from "@mui/material";
-import Footer from "../Footer/Footer";
+import Footer from "../components/Footer/Footer";
 import React from "react";
 
 export function withLayout<P>(WrappedComponent: React.ComponentType<P>) {

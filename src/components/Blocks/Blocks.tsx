@@ -1,8 +1,8 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
-import {withGrid, WithGridProps} from "../Grid/Grid";
+import {withGrid, WithGridProps} from "../../hocs/grid";
 import {CmsBlock, GetCmsBlockGridQuery, useGetCmsBlockGridQuery} from "../../types";
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 import {useNavigate} from "react-router-dom";
 
 const Blocks = ({data}: WithGridProps<GetCmsBlockGridQuery>) => {
@@ -18,7 +18,8 @@ const Blocks = ({data}: WithGridProps<GetCmsBlockGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<CmsBlock>).map(page => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}} onClick={() => navigate("/blocks/" + page.identifier)}>
+                        <TableRow hover={true} sx={{cursor: "pointer"}}
+                                  onClick={() => navigate("/blocks/" + page.identifier)}>
                             <TableCell>{page.title}</TableCell>
                             <TableCell>{page.identifier}</TableCell>
                         </TableRow>

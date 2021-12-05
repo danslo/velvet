@@ -1,4 +1,4 @@
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {useGetIndexersQuery} from "../../types";

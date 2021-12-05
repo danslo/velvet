@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {TablePagination} from "@mui/material";
-import LoaderHandler from "../LoaderHandler/LoaderHandler";
+import LoaderHandler from "../components/LoaderHandler/LoaderHandler";
 import * as Apollo from "@apollo/client";
 import {QueryResult} from "@apollo/client/react/types/types";
-import {GridOutput} from "../../types";
+import {GridOutput} from "../types";
 
 export type WithGridProps<Query> = {
     data: Query

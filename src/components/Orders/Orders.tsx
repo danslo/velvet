@@ -1,9 +1,9 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import {withGrid, WithGridProps} from "../Grid/Grid";
+import {withGrid, WithGridProps} from "../../hocs/grid";
 import {GetOrderGridQuery, GridOrder, useGetOrderGridQuery} from "../../types";
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 
 const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
     const navigate = useNavigate();
@@ -24,7 +24,8 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<GridOrder>).map(order => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}} onClick={() => navigate("/orders/" + order.entity_id)}>
+                        <TableRow hover={true} sx={{cursor: "pointer"}}
+                                  onClick={() => navigate("/orders/" + order.entity_id)}>
                             <TableCell>{order.increment_id}</TableCell>
                             <TableCell>{order.store_name}</TableCell>
                             <TableCell>{order.created_at}</TableCell>

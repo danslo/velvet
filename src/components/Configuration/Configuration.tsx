@@ -4,7 +4,7 @@ import Switcher from "./Switcher/Switcher";
 import {ConfigurationScopeContext, OptionalScopeWithoutChildren} from "../../context/configuration.scope";
 import Tabs from "./Tabs/Tabs";
 import Section from "./Section/Section";
-import {withLayout} from "../Layout/Layout";
+import {withLayout} from "../../hocs/layout";
 
 const Configuration = () => {
     const [currentScope, setCurrentScope] = useState<OptionalScopeWithoutChildren>(null);

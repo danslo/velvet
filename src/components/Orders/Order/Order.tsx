@@ -3,7 +3,7 @@ import {OrderViewOrder, useGetOrderQuery} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {Grid} from "@mui/material";
 import React from "react";
-import {withLayout} from "../../Layout/Layout";
+import {withLayout} from "../../../hocs/layout";
 import Actions from "./Actions/Actions";
 import Information from "./Information/Information";
 import Tabs from "./Tabs/Tabs";
