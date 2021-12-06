@@ -1,0 +1,11 @@
+query getBlock($block_id: Int!) {
+    block(block_id: $block_id) {
+        block_id
+        title
+        identifier
+        content
+        creation_time
+        update_time
+        is_active
+    }
+}

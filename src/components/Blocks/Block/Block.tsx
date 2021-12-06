@@ -1,42 +1,46 @@
 import {useParams} from "react-router-dom";
-import {FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
+import {Button, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
 import MUIRichTextEditor from "mui-rte";
 import {useForm} from "react-hook-form";
+import {useGetBlockQuery} from "../../../types";
+import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {withLayout} from "../../../hocs/layout";
 
 const Block = () => {
     const {blockId} = useParams();
-    const { register, handleSubmit } = useForm({ shouldUseNativeValidation: true });
-    const onSubmit = async (data: any) => { console.log(data); };
+    const {register, handleSubmit} = useForm({shouldUseNativeValidation: true});
+    const onSubmit = async (data: any) => {
+        console.log(data);
+    };
 
-    /**
-     * +---------------+--------------+------+-----+---------------------+-------------------------------+
-     | Field         | Type         | Null | Key | Default             | Extra                         |
-     +---------------+--------------+------+-----+---------------------+-------------------------------+
-     | block_id      | smallint(6)  | NO   | PRI | NULL                | auto_increment                |
-     | title         | varchar(255) | NO   | MUL | NULL                |                               |
-     | identifier    | varchar(255) | NO   |     | NULL                |                               |
-     | content       | mediumtext   | YES  |     | NULL                |                               |
-     | creation_time | timestamp    | NO   |     | current_timestamp() |                               |
-     | update_time   | timestamp    | NO   |     | current_timestamp() | on update current_timestamp() |
-     | is_active     | smallint(6)  | NO   |     | 1                   |                               |
-     +---------------+--------------+------+-----+---------------------+-------------------------------+
-
-     */
+    const {data, loading, error} = useGetBlockQuery({
+        variables: {
+            block_id: parseInt(blockId!)
+        }
+    });
 
     return (
         <Paper sx={{p: 3}}>
-            <Typography variant="h6" />
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField {...register('title')} helperText="Title" />
-                <br />
-                <TextField {...register('identifier')} helperText="Identifier" />
-                <br />
-                <FormControlLabel control={<Switch {...register('is_active')} defaultChecked/>} label="Active"/>
-                <MUIRichTextEditor label="Start typing..." />
-                <br /><br />
-                <input type="submit" />
-            </form>
+            <LoaderHandler loading={loading} error={error}>
+                {data && (
+                    <>
+                        <Typography variant="h6"/>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <TextField {...register('title')} value={data.block.title} helperText="Title"/>
+                            <br/>
+                            <TextField {...register('identifier')} value={data.block.identifier}
+                                       helperText="Identifier"/>
+                            <br/>
+                            <FormControlLabel value={data.block.is_active}
+                                              control={<Switch {...register('is_active')} defaultChecked/>}
+                                              label="Active"/>
+                            <MUIRichTextEditor label="Start typing..." value={data.block.content}/>
+                            <br/><br/><br/><br/>
+                            <Button variant="contained" size="large">Save</Button>
+                        </form>
+                    </>
+                )}
+            </LoaderHandler>
         </Paper>
     )
 }
