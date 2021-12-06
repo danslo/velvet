@@ -9,9 +9,6 @@ import {withLayout} from "../../../hocs/layout";
 const Block = () => {
     const {blockId} = useParams();
     const {register, handleSubmit} = useForm({shouldUseNativeValidation: true});
-    const onSubmit = async (data: any) => {
-        console.log(data);
-    };
 
     const {data, loading, error} = useGetBlockQuery({
         variables: {
@@ -19,24 +16,28 @@ const Block = () => {
         }
     });
 
+    const onSubmit = async (stuff: any) => {
+        console.log({...data?.block, ...stuff})
+    };
+
     return (
         <Paper sx={{p: 3}}>
             <LoaderHandler loading={loading} error={error}>
                 {data && (
                     <>
                         <Typography variant="h6"/>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <TextField {...register('title')} value={data.block.title} helperText="Title"/>
+                        <form>
+                            <TextField {...register('title')} defaultValue={data.block.title} helperText="Title"/>
                             <br/>
-                            <TextField {...register('identifier')} value={data.block.identifier}
+                            <TextField {...register('identifier')} defaultValue={data.block.identifier}
                                        helperText="Identifier"/>
                             <br/>
-                            <FormControlLabel value={data.block.is_active}
-                                              control={<Switch {...register('is_active')} defaultChecked/>}
+                            <FormControlLabel defaultValue={data.block.is_active}
+                                              control={<Switch {...register('is_active')} />}
                                               label="Active"/>
-                            <MUIRichTextEditor label="Start typing..." value={data.block.content}/>
+                            <MUIRichTextEditor label="Start typing..." defaultValue={data.block.content}/>
                             <br/><br/><br/><br/>
-                            <Button variant="contained" size="large">Save</Button>
+                            <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save</Button>
                         </form>
                     </>
                 )}
