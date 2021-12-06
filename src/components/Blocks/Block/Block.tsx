@@ -1,6 +1,7 @@
 import {withLayout} from "../../../hocs/layout";
 import {useParams} from "react-router-dom";
 import {FormControl, FormControlLabel, FormGroup, Input, InputLabel, Switch} from "@mui/material";
+import MUIRichTextEditor from "mui-rte";
 
 const Block = () => {
     const {blockId} = useParams();
@@ -33,8 +34,7 @@ const Block = () => {
             </FormControl>
             <br/><br/>
             <FormControl>
-                <InputLabel htmlFor="content">Content</InputLabel>
-                <Input id="content"/>
+                <MUIRichTextEditor id="content"  label="Start typing..." />
             </FormControl>
             <br/><br/>
             <FormControl>
