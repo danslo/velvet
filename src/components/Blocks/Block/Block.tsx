@@ -1,10 +1,13 @@
-import {withLayout} from "../../../hocs/layout";
 import {useParams} from "react-router-dom";
-import {FormControl, FormControlLabel, FormGroup, Input, InputLabel, Switch} from "@mui/material";
+import {FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
 import MUIRichTextEditor from "mui-rte";
+import {useForm} from "react-hook-form";
+import {withLayout} from "../../../hocs/layout";
 
 const Block = () => {
     const {blockId} = useParams();
+    const { register, handleSubmit } = useForm({ shouldUseNativeValidation: true });
+    const onSubmit = async (data: any) => { console.log(data); };
 
     /**
      * +---------------+--------------+------+-----+---------------------+-------------------------------+
@@ -22,27 +25,19 @@ const Block = () => {
      */
 
     return (
-        <div>
-            <FormControl>
-                <InputLabel htmlFor="title">Title</InputLabel>
-                <Input id="title"/>
-            </FormControl>
-            <br/><br/>
-            <FormControl>
-                <InputLabel htmlFor="identifier">Identifier</InputLabel>
-                <Input id="identifier"/>
-            </FormControl>
-            <br/><br/>
-            <FormControl>
-                <MUIRichTextEditor id="content"  label="Start typing..." />
-            </FormControl>
-            <br/><br/>
-            <FormControl>
-                <FormGroup>
-                    <FormControlLabel control={<Switch defaultChecked/>} label="Active"/>
-                </FormGroup>
-            </FormControl>
-        </div>
+        <Paper sx={{p: 3}}>
+            <Typography variant="h6" />
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <TextField {...register('title')} helperText="Title" />
+                <br />
+                <TextField {...register('identifier')} helperText="Identifier" />
+                <br />
+                <FormControlLabel control={<Switch {...register('is_active')} defaultChecked/>} label="Active"/>
+                <MUIRichTextEditor label="Start typing..." />
+                <br /><br />
+                <input type="submit" />
+            </form>
+        </Paper>
     )
 }
 
