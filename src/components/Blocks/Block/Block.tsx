@@ -2,13 +2,15 @@ import {useParams} from "react-router-dom";
 import {Button, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
 import MUIRichTextEditor from "mui-rte";
 import {useForm} from "react-hook-form";
-import {useGetBlockQuery} from "../../../types";
+import {useGetBlockQuery, useSaveBlockMutation} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {withLayout} from "../../../hocs/layout";
+import {withSnackbar, WithSnackbarProps} from "../../../hocs/snackbar";
 
-const Block = () => {
+const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
     const {blockId} = useParams();
     const {register, handleSubmit} = useForm({shouldUseNativeValidation: true});
+    const [saveBlockMutation] = useSaveBlockMutation();
 
     const {data, loading, error} = useGetBlockQuery({
         variables: {
@@ -17,7 +19,13 @@ const Block = () => {
     });
 
     const onSubmit = async (stuff: any) => {
-        console.log({...data?.block, ...stuff})
+        saveBlockMutation({
+            variables: {
+                input: stuff
+            }
+        }).then(result => {
+            snackbarShowMessage('Block was successfully saved.');
+        })
     };
 
     return (
@@ -27,14 +35,17 @@ const Block = () => {
                     <>
                         <Typography variant="h6"/>
                         <form>
+                            <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
+
                             <TextField {...register('title')} defaultValue={data.block.title} helperText="Title"/>
                             <br/>
                             <TextField {...register('identifier')} defaultValue={data.block.identifier}
                                        helperText="Identifier"/>
                             <br/>
-                            <FormControlLabel defaultValue={data.block.is_active}
-                                              control={<Switch {...register('is_active')} />}
-                                              label="Active"/>
+                            <FormControlLabel
+                                control={<Switch {...register('is_active')}
+                                                 defaultChecked={!!data.block.is_active}/>}
+                                label="Active"/>
                             <MUIRichTextEditor label="Start typing..." defaultValue={data.block.content}/>
                             <br/><br/><br/><br/>
                             <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save</Button>
@@ -46,4 +57,4 @@ const Block = () => {
     )
 }
 
-export default withLayout(Block);
+export default withSnackbar(withLayout(Block));

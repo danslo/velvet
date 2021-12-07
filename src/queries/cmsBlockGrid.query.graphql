@@ -3,7 +3,7 @@ query getCmsBlockGrid($page_number: Int = 1, $page_size: Int = 20) {
         last_page_number
         total_items
         items {
-            ... on GridCmsBlock {
+            ... on VelvetCmsBlock {
                 block_id
                 title
                 identifier

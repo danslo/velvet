@@ -2,7 +2,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {withGrid, WithGridProps} from "../../hocs/grid";
-import {GetCmsPageGridQuery, GridCmsPage, useGetCmsPageGridQuery} from "../../types";
+import {GetCmsPageGridQuery, VelvetCmsPage, useGetCmsPageGridQuery} from "../../types";
 import {withLayout} from "../../hocs/layout";
 
 const Pages = ({data}: WithGridProps<GetCmsPageGridQuery>) => {
@@ -21,7 +21,7 @@ const Pages = ({data}: WithGridProps<GetCmsPageGridQuery>) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(data.grid.items as Array<GridCmsPage>).map(page => (
+                    {(data.grid.items as Array<VelvetCmsPage>).map(page => (
                         <TableRow hover={true} sx={{cursor: "pointer"}}
                                   onClick={() => navigate("/pages/" + page.page_id)}>
                             <TableCell>{page.page_id}</TableCell>

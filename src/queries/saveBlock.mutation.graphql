@@ -1,0 +1,9 @@
+mutation saveBlock($input: VelvetCmsBlockInput!) {
+    saveBlock(input: $input) {
+        block_id
+        title
+        identifier
+        content
+        is_active
+    }
+}

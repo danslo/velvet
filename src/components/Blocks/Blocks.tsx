@@ -1,7 +1,7 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {withGrid, WithGridProps} from "../../hocs/grid";
-import {GetCmsBlockGridQuery, GridCmsBlock, useGetCmsBlockGridQuery} from "../../types";
+import {GetCmsBlockGridQuery, VelvetCmsBlock, useGetCmsBlockGridQuery} from "../../types";
 import {withLayout} from "../../hocs/layout";
 import {useNavigate} from "react-router-dom";
 
@@ -21,7 +21,7 @@ const Blocks = ({data}: WithGridProps<GetCmsBlockGridQuery>) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(data.grid.items as Array<GridCmsBlock>).map(block => (
+                    {(data.grid.items as Array<VelvetCmsBlock>).map(block => (
                         <TableRow hover={true} sx={{cursor: "pointer"}}
                                   onClick={() => navigate("/blocks/" + block.block_id)}>
                             <TableCell>{block.block_id}</TableCell>
