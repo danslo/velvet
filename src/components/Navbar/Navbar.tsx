@@ -15,7 +15,7 @@ import menu from "../../config/menu";
 const Navbar = () => {
     const {setToken} = useContext(AuthContext);
     return (
-        <AppBar position="sticky">
+        <AppBar position="sticky" sx={{overflowX: "scroll"}}>
             <Toolbar>
                 <Typography variant="h5" noWrap component="div" sx={{mr: 2}}>Velvet</Typography>
                 <List sx={{display: "flex", flexDirection: "row"}}>
