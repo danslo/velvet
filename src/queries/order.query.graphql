@@ -18,7 +18,6 @@ query getOrder($id: Int!) {
         can_unhold
         can_creditmemo
 
-        id
         number
         order_date
         shipping_method
