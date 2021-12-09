@@ -1,10 +1,10 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import React from "react";
-import {OrderViewOrder} from "../../../../../types";
+import {VelvetOrder} from "../../../../../types";
 
 type InformationProps = {
     caption: string
-    order: Partial<OrderViewOrder>
+    order: Partial<VelvetOrder>
 }
 
 const Summary = ({caption, order}: InformationProps) => (

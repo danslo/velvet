@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {OrderViewOrder, useGetOrderQuery} from "../../../types";
+import {useGetOrderQuery, VelvetOrder} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {Grid} from "@mui/material";
 import React from "react";
@@ -20,7 +20,7 @@ const Order = () => {
         }
     });
 
-    const renderTab = (tab: string, order: OrderViewOrder) => {
+    const renderTab = (tab: string, order: VelvetOrder) => {
         switch (tab) {
             case 'invoices':
                 return <Invoices invoices={order.invoices!}/>

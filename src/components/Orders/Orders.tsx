@@ -2,7 +2,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {withGrid, WithGridProps} from "../../hocs/grid";
-import {GetOrderGridQuery, GridOrder, useGetOrderGridQuery} from "../../types";
+import {GetOrderGridQuery, useGetOrderGridQuery, VelvetGridOrder} from "../../types";
 import {withLayout} from "../../hocs/layout";
 
 const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
@@ -23,7 +23,7 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(data.grid.items as Array<GridOrder>).map(order => (
+                    {(data.grid.items as Array<VelvetGridOrder>).map(order => (
                         <TableRow hover={true} sx={{cursor: "pointer"}}
                                   onClick={() => navigate("/orders/" + order.entity_id)}>
                             <TableCell>{order.increment_id}</TableCell>

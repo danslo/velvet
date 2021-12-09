@@ -1,10 +1,10 @@
-import {OrderViewOrder} from "../../../../../types";
+import {VelvetOrder} from "../../../../../types";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import React from "react";
 
 type AccountProps = {
     caption: string
-    order: Partial<OrderViewOrder>
+    order: Partial<VelvetOrder>
 }
 
 const Account = ({caption, order}: AccountProps) => (

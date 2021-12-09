@@ -1,17 +1,17 @@
 import {Box, Button} from "@mui/material";
 import {
-    OrderViewOrder,
     useCancelOrderMutation,
     useHoldOrderMutation,
     useInvoiceOrderMutation,
     useRefundOrderMutation,
     useShipOrderMutation,
-    useUnholdOrderMutation
+    useUnholdOrderMutation,
+    VelvetOrder
 } from "../../../../types";
 import {withSnackbar, WithSnackbarProps} from "../../../../hocs/snackbar";
 
 type ActionsProps = {
-    order: Partial<OrderViewOrder>
+    order: Partial<VelvetOrder>
     orderId: number
 } & WithSnackbarProps;
 

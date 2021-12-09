@@ -1,9 +1,9 @@
 import {Box, Divider, List, ListItemText, Paper, Typography} from "@mui/material";
-import {OrderStatus} from "../../../../../types";
+import {VelvetOrderStatus} from "../../../../../types";
 
 type NotesProps = {
     caption: string
-    status_history: Array<OrderStatus>
+    status_history: Array<VelvetOrderStatus>
 }
 
 const StatusHistory = ({caption, status_history}: NotesProps) => (

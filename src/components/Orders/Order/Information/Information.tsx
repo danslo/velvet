@@ -8,10 +8,10 @@ import Items from "./Items/Items";
 import StatusHistory from "./StatusHistory/StatusHistory";
 import Totals from "./Totals/Totals";
 import React from "react";
-import {OrderViewOrder} from "../../../../types";
+import {VelvetOrder} from "../../../../types";
 
 type InformationProps = {
-    order: Partial<OrderViewOrder>
+    order: Partial<VelvetOrder>
 }
 
 const Information = ({order}: InformationProps) => (

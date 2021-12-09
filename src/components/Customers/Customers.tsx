@@ -2,7 +2,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {withGrid, WithGridProps} from "../../hocs/grid";
-import {GetCustomerGridQuery, GridCustomer, useGetCustomerGridQuery} from "../../types";
+import {GetCustomerGridQuery, useGetCustomerGridQuery, VelvetGridCustomer} from "../../types";
 import {withLayout} from "../../hocs/layout";
 
 const Pages = ({data}: WithGridProps<GetCustomerGridQuery>) => {
@@ -23,7 +23,7 @@ const Pages = ({data}: WithGridProps<GetCustomerGridQuery>) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(data.grid.items as Array<GridCustomer>).map(customer => (
+                    {(data.grid.items as Array<VelvetGridCustomer>).map(customer => (
                         <TableRow hover={true} sx={{cursor: "pointer"}}
                                   onClick={() => navigate("/customers/" + customer.entity_id)}>
                             <TableCell>{customer.entity_id}</TableCell>
