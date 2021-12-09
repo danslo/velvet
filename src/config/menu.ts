@@ -7,6 +7,7 @@ import CachedIcon from '@mui/icons-material/Cached';
 import StorageIcon from '@mui/icons-material/Storage';
 import ConfigIcon from '@mui/icons-material/Build';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 
 type menuItem = {
     to: string
@@ -22,6 +23,7 @@ const menu: Array<menuItem> = [
     {to: "/pages", icon: ArticleIcon},
     {to: "/blocks", icon: GridViewIcon},
     {to: "/customers", icon: PeopleAltIcon},
+    {to: "/products", icon: Inventory2Icon},
 ];
 
 export default menu;

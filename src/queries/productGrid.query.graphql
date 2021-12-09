@@ -1,0 +1,18 @@
+query getProductGrid($page_number: Int = 1, $page_size: Int = 20) {
+    grid: productGrid(input: {page_number: $page_number, page_size: $page_size}) {
+        last_page_number
+        total_items
+        items {
+            ... on VelvetGridProduct {
+                entity_id
+                name
+                sku
+                type_id
+                price
+                quantity
+                visibility
+                status
+            }
+        }
+    }
+}
