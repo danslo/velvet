@@ -9,9 +9,12 @@ const Select = (props: FieldComponentProps) => (
         select
         value={props.value ?? ''}
         onChange={e => props.onChange(e.target.value)}
+        SelectProps={{
+            displayEmpty: true
+        }}
         variant="standard">
         {props.options.map(option => (
-            <MenuItem value={option.value ?? undefined}>{option.label}</MenuItem>
+            <MenuItem value={option.value ?? ''}>{option.label}</MenuItem>
         ))}
     </TextField>
 );

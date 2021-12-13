@@ -10,7 +10,7 @@ type AttributeProps = {
 }
 
 const rulesFromAttribute = (attribute: VelvetAttribute) => {
-    if (attribute.required) {
+    if (attribute.required && attribute.type !== 'boolean') {
         return {
             required: attribute.label + " is required."
         }
