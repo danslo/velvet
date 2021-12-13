@@ -4,6 +4,8 @@ import React, {FunctionComponent} from "react";
 import {Control, Controller} from "react-hook-form";
 import {FieldComponents} from "../../../FieldComponents/FieldComponents";
 import Price from "./Price/Price";
+import Stock from "./Stock/Stock";
+import Categories from "./Categories/Categories";
 
 export type AttributeProps = {
     attribute: VelvetAttribute,
@@ -12,7 +14,9 @@ export type AttributeProps = {
 }
 
 const AttributeComponents: {[code: string]: FunctionComponent<AttributeProps>} = {
-    price: Price
+    price: Price,
+    quantity_and_stock_status: Stock,
+    category_ids: Categories
 }
 
 const rulesFromAttribute = (attribute: VelvetAttribute) => {

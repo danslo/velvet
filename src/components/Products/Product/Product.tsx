@@ -20,7 +20,8 @@ const Product = () => {
         <LoaderHandler loading={loading} error={error}>
             {data && (
                 <form onSubmit={handleSubmit(data => console.log(data))}>
-                    <Button type="submit" variant="contained" color="primary">Save</Button>
+                    <Button type="submit" variant="contained" color="primary" sx={{position: "fixed", right: 0, mr: 3, zIndex: 10000}}>Save Product</Button>
+
                     <Typography variant="h6" sx={{mb: 2}}>{data.productView.sku}</Typography>
                     {data.productView.attribute_groups.map(group => (
                         <Accordion defaultExpanded={group.label === 'Product Details'}>
