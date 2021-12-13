@@ -11,6 +11,7 @@ import Pages from "../components/Pages/Pages";
 import Blocks from "../components/Blocks/Blocks";
 import Customers from "../components/Customers/Customers";
 import Block from "../components/Blocks/Block/Block";
+import Product from "../components/Products/Product/Product";
 import Products from "../components/Products/Products";
 
 type route = {
@@ -100,7 +101,6 @@ const routes: Array<route> = [
                 is_private: true
             }
         ]
-
     },
     {
         path: 'customers',
@@ -110,7 +110,18 @@ const routes: Array<route> = [
     {
         path: 'products',
         is_private: true,
-        component: Products
+        children: [
+            {
+                path: ':productId',
+                component: Product,
+                is_private: true
+            },
+            {
+                path: '',
+                component: Products,
+                is_private: true
+            }
+        ]
     },
     {
         path: '*',
