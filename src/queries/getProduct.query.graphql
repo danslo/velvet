@@ -1,0 +1,19 @@
+query getProduct($product_id: Int!) {
+    productView(product_id: $product_id) {
+        entity_id
+        sku
+        attribute_set_id
+        type_id
+        attribute_groups {
+            attributes {
+                code
+                label
+                options {
+                    value
+                    label
+                }
+                value
+            }
+        }
+    }
+}
