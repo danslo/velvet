@@ -10,14 +10,17 @@ export type FieldComponentProps = {
     disabled: boolean;
     value: string | null;
     setValue: (value: string) => void;
-    options: Array<{label: string, value: string | null}>;
+    options: Array<{ label: string, value: string | null }>;
 }
 
-export const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps>} = {
+export const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {
     text: Text,
     select: Select,
     multiselect: MultiSelect,
     textarea: Textarea,
     boolean: Boolean,
-    date: Date
+    date: Date,
+
+    weight: Text, // todo
+    price: Text,  // todo
 }
