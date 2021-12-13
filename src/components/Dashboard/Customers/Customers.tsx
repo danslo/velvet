@@ -19,7 +19,7 @@ const Customers = ({customers}: CustomersProps) => (
             </TableHead>
             <TableBody>
                 {customers.map(customer => (
-                    <TableRow>
+                    <TableRow key={customer.customer_id}>
                         <TableCell>{customer.name}</TableCell>
                         <TableCell>{customer.orders}</TableCell>
                         <TableCell>{customer.average}</TableCell>

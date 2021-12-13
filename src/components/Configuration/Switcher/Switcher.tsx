@@ -31,19 +31,34 @@ const Switcher = () => {
                     <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
                         {data.configurationScopes.map(def => (
                             <div>
-                                <MenuItem onClick={() => handleClose(null)}>{def.name}</MenuItem>
+                                <MenuItem
+                                    key={def.scope_id}
+                                    onClick={() => handleClose(null)}>
+                                    {def.name}
+                                </MenuItem>
                                 {def.children.map(website => (
                                     <div>
-                                        <MenuItem onClick={() => handleClose(website)}
-                                                  disabled={website.disabled}>&nbsp;{website.name}</MenuItem>
+                                        <MenuItem
+                                            key={website.scope_id}
+                                            onClick={() => handleClose(website)}
+                                            disabled={website.disabled}>
+                                            &nbsp;{website.name}
+                                        </MenuItem>
                                         {website.children.map(group => (
                                             <div>
-                                                <MenuItem onClick={() => handleClose(group)}
-                                                          disabled={group.disabled}>&nbsp;&nbsp;{group.name}</MenuItem>
+                                                <MenuItem
+                                                    key={group.scope_id}
+                                                    onClick={() => handleClose(group)}
+                                                    disabled={group.disabled}>
+                                                    &nbsp;&nbsp;{group.name}
+                                                </MenuItem>
                                                 {group.children.map(store => (
                                                     <MenuItem
+                                                        key={group.scope_id}
                                                         onClick={() => handleClose(store)}
-                                                        disabled={store.disabled}>&nbsp;&nbsp;&nbsp;{store.name}</MenuItem>
+                                                        disabled={store.disabled}>
+                                                        &nbsp;&nbsp;&nbsp;{store.name}
+                                                    </MenuItem>
                                                 ))}
                                             </div>
                                         ))}

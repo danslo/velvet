@@ -22,8 +22,10 @@ const Blocks = ({data}: WithGridProps<GetCmsBlockGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<VelvetCmsBlock>).map(block => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}}
-                                  onClick={() => navigate("/blocks/" + block.block_id)}>
+                        <TableRow
+                            key={block.block_id}
+                            hover={true} sx={{cursor: "pointer"}}
+                            onClick={() => navigate("/blocks/" + block.block_id)}>
                             <TableCell>{block.block_id}</TableCell>
                             <TableCell>{block.title}</TableCell>
                             <TableCell>{block.identifier}</TableCell>

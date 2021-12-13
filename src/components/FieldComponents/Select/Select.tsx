@@ -14,7 +14,7 @@ const Select = (props: FieldComponentProps) => (
         }}
         variant="standard">
         {props.options.map(option => (
-            <MenuItem value={option.value ?? ''}>{option.label}</MenuItem>
+            <MenuItem key={option.label} value={option.value ?? ''}>{option.label}</MenuItem>
         ))}
     </TextField>
 );

@@ -20,7 +20,7 @@ const Navbar = () => {
                 <Typography variant="h5" noWrap component="div" sx={{mr: 2}}>Velvet</Typography>
                 <List sx={{display: "flex", flexDirection: "row"}}>
                     {menu.map(menuItem => (
-                        <ListItem component={Link} to={menuItem.to}>
+                        <ListItem key={menuItem.to} component={Link} to={menuItem.to}>
                             <ListItemIcon sx={{minWidth: "20px", color: "white"}}>
                                 <SvgIcon component={menuItem.icon}/>
                             </ListItemIcon>

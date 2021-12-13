@@ -24,8 +24,11 @@ const Orders = ({data}: WithGridProps<GetOrderGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<VelvetGridOrder>).map(order => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}}
-                                  onClick={() => navigate("/orders/" + order.entity_id)}>
+                        <TableRow
+                            key={order.entity_id}
+                            hover={true}
+                            sx={{cursor: "pointer"}}
+                            onClick={() => navigate("/orders/" + order.entity_id)}>
                             <TableCell>{order.increment_id}</TableCell>
                             <TableCell>{order.store_name}</TableCell>
                             <TableCell>{order.created_at}</TableCell>

@@ -1,12 +1,14 @@
 query getDashboardTabs {
     dashboard {
         customers_most {
+            customer_id
             average
             name
             orders
             total
         }
         customers_newest {
+            customer_id
             average
             name
             orders

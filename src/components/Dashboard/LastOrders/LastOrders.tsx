@@ -20,7 +20,7 @@ const LastOrders = ({lastOrders, caption}: LastOrdersProps) => (
             </TableHead>
             <TableBody>
                 {lastOrders.map(order => (
-                    <TableRow>
+                    <TableRow key={order.increment_id}>
                         <TableCell>{order.customer_name}</TableCell>
                         <TableCell>{order.num_items}</TableCell>
                         <TableCell>{order.total}</TableCell>

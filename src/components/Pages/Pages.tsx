@@ -22,8 +22,11 @@ const Pages = ({data}: WithGridProps<GetCmsPageGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<VelvetCmsPage>).map(page => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}}
-                                  onClick={() => navigate("/pages/" + page.page_id)}>
+                        <TableRow
+                            key={page.page_id}
+                            hover={true}
+                            sx={{cursor: "pointer"}}
+                            onClick={() => navigate("/pages/" + page.page_id)}>
                             <TableCell>{page.page_id}</TableCell>
                             <TableCell>{page.title}</TableCell>
                             <TableCell>{page.identifier}</TableCell>

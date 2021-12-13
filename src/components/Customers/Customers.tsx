@@ -24,8 +24,11 @@ const Pages = ({data}: WithGridProps<GetCustomerGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<VelvetGridCustomer>).map(customer => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}}
-                                  onClick={() => navigate("/customers/" + customer.entity_id)}>
+                        <TableRow
+                            key={customer.entity_id}
+                            hover={true}
+                            sx={{cursor: "pointer"}}
+                            onClick={() => navigate("/customers/" + customer.entity_id)}>
                             <TableCell>{customer.entity_id}</TableCell>
                             <TableCell>{customer.name}</TableCell>
                             <TableCell>{customer.email}</TableCell>
