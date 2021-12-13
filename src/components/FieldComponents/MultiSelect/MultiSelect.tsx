@@ -1,22 +1,23 @@
 import {MenuItem, TextField} from "@mui/material";
 import {FieldComponentProps} from "../FieldComponents";
 
-const MultiSelect = ({disabled, options, value, setValue}: FieldComponentProps) => (
+const MultiSelect = (props: FieldComponentProps) => (
     <TextField
         select
-        disabled={disabled}
+        disabled={props.disabled}
         variant="standard"
+        required={props.required}
         onChange={e => {
             // @ts-ignore
             setValue(e.target.value.join(','))
         }}
         SelectProps={{
             multiple: true,
-            value: value?.split(','),
+            value: props.value?.split(','),
             autoWidth: true
         }}
     >
-        {options?.map(option => (
+        {props.options?.map(option => (
             <MenuItem value={option.value ?? undefined}>{option.label}</MenuItem>
         ))}
     </TextField>

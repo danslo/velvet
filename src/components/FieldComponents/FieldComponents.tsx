@@ -8,6 +8,7 @@ import Date from "./Date/Date";
 
 export type FieldComponentProps = {
     disabled: boolean;
+    required: boolean,
     value: string | null;
     setValue: (value: string) => void;
     options: Array<{ label: string, value: string | null }>;

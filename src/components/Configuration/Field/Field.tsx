@@ -44,7 +44,8 @@ const Field = ({field, saveConfiguration, restoreConfiguration}: FieldProps) => 
                         disabled: inherit,
                         value: value,
                         setValue: setFieldValue,
-                        options: field.options ?? []
+                        options: field.options ?? [],
+                        required: false
                     }))
                     || <>{field.type} not implemented</>}
                 </FormControl>

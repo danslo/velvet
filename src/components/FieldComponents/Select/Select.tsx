@@ -1,14 +1,15 @@
 import {MenuItem, TextField} from "@mui/material";
 import {FieldComponentProps} from "../FieldComponents";
 
-const Select = ({disabled, options, value, setValue}: FieldComponentProps) => (
+const Select = (props: FieldComponentProps) => (
     <TextField
-        disabled={disabled}
+        disabled={props.disabled}
         select
-        value={value}
-        onChange={e => setValue(e.target.value)}
+        value={props.value}
+        onChange={e => props.setValue(e.target.value)}
+        required={props.required}
         variant="standard">
-        {options.map(option => (
+        {props.options.map(option => (
             <MenuItem value={option.value ?? undefined}>{option.label}</MenuItem>
         ))}
     </TextField>

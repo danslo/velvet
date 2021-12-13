@@ -1,13 +1,14 @@
 import TextField from '@mui/material/TextField';
 import {FieldComponentProps} from "../FieldComponents";
 
-const Textarea = ({disabled, value, setValue}: FieldComponentProps) => (
+const Textarea = (props: FieldComponentProps) => (
     <TextField
-        disabled={disabled}
+        disabled={props.disabled}
         multiline
         rows={4}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={props.value}
+        required={props.required}
+        onChange={(e) => props.setValue(e.target.value)}
         variant="standard"/>
 )
 

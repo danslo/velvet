@@ -27,7 +27,8 @@ const Product = () => {
                                 <Grid container spacing={2}>
                                     {group.attributes.map(attribute => (
                                         <>
-                                            <Grid item xs={5} sx={{mb: 2, pr: 3, textAlign: "right"}}>{attribute.label}</Grid>
+                                            <Grid item xs={5}
+                                                  sx={{mb: 2, pr: 3, textAlign: "right"}}>{attribute.label}</Grid>
                                             <Grid item xs={5} sx={{mb: 2}}>
                                                 <FormControl fullWidth sx={{pr: 4}}>
                                                     {(FieldComponents[attribute.type]?.({
@@ -35,7 +36,8 @@ const Product = () => {
                                                         value: attribute.value,
                                                         setValue: (value) => {
                                                         },
-                                                        options: attribute.options ?? []
+                                                        options: attribute.options ?? [],
+                                                        required: attribute.required
                                                     }))
                                                     || <>{attribute.type} not implemented</>}
                                                 </FormControl>

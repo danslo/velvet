@@ -1,13 +1,14 @@
 import {FieldComponentProps} from "../FieldComponents";
 import {TextField} from "@mui/material";
 
-const Date = ({disabled, value, setValue}: FieldComponentProps) => (
+const Date = (props: FieldComponentProps) => (
     <TextField
         type="date"
-        defaultValue={value}
-        sx={{ width: 220 }}
-        disabled={disabled}
-        onChange={e => setValue(e.target.value)}
+        defaultValue={props.value}
+        required={props.required}
+        sx={{width: 220}}
+        disabled={props.disabled}
+        onChange={e => props.setValue(e.target.value)}
         InputLabelProps={{shrink: true}}
     />
 )
