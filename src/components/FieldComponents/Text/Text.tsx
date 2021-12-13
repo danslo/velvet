@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import {FieldComponentProps} from "../Field";
+import {FieldComponentProps} from "../FieldComponents";
 
 const Text = ({disabled, value, setValue}: FieldComponentProps) => {
     return <TextField

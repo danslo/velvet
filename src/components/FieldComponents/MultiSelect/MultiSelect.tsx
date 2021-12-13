@@ -1,5 +1,5 @@
 import {MenuItem, TextField} from "@mui/material";
-import {FieldComponentProps} from "../Field";
+import {FieldComponentProps} from "../FieldComponents";
 
 const MultiSelect = ({disabled, options, value, setValue}: FieldComponentProps) => (
     <TextField

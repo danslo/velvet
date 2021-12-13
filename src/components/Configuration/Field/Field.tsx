@@ -1,29 +1,12 @@
 import {Box, Checkbox, debounce, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {FunctionComponent, useCallback, useState} from "react";
-import Text from "./Text/Text";
-import Select from "./Select/Select";
-import {ConfigurationField, ConfigurationOption} from "../../../types";
-import MultiSelect from "./MultiSelect/MultiSelect";
-import Textarea from "./Textarea/Textarea";
+import React, {useCallback, useState} from "react";
+import {ConfigurationField} from "../../../types";
+import {FieldComponents} from "../../FieldComponents/FieldComponents";
 
 type FieldProps = {
     field: ConfigurationField;
     saveConfiguration: (path: string, value: string) => void;
     restoreConfiguration: (path: string) => void;
-}
-
-export type FieldComponentProps = {
-    disabled: boolean;
-    value: string | null;
-    setValue: (value: string) => void;
-    options: Array<ConfigurationOption>;
-}
-
-const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {
-    text: Text,
-    select: Select,
-    multiselect: MultiSelect,
-    textarea: Textarea
 }
 
 const Field = ({field, saveConfiguration, restoreConfiguration}: FieldProps) => {
