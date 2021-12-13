@@ -5,6 +5,7 @@ query getProduct($product_id: Int!) {
         attribute_set_id
         type_id
         attribute_groups {
+            label
             attributes {
                 code
                 label
@@ -13,6 +14,8 @@ query getProduct($product_id: Int!) {
                     label
                 }
                 value
+                required
+                type
             }
         }
     }
