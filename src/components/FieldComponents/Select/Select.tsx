@@ -7,7 +7,7 @@ const Select = (props: FieldComponentProps) => (
         error={!!props.error}
         helperText={props.error ? props.error.message : null}
         select
-        value={props.value}
+        value={props.value ?? ''}
         onChange={e => props.onChange(e.target.value)}
         variant="standard">
         {props.options.map(option => (

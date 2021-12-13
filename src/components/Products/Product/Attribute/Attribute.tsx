@@ -10,9 +10,12 @@ type AttributeProps = {
 }
 
 const rulesFromAttribute = (attribute: VelvetAttribute) => {
-    return {
-        required: attribute.label + " is required."
+    if (attribute.required) {
+        return {
+            required: attribute.label + " is required."
+        }
     }
+    return {}; // todo
 }
 
 const Attribute = (props: AttributeProps) => {

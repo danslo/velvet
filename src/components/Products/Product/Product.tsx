@@ -28,7 +28,7 @@ const Product = () => {
                             <AccordionDetails>
                                 <Grid container spacing={2}>
                                     {group.attributes.map(attribute => (
-                                        <Attribute attribute={attribute} control={control}/>
+                                        <Attribute key={attribute.code} attribute={attribute} control={control}/>
                                     ))}
                                 </Grid>
                             </AccordionDetails>

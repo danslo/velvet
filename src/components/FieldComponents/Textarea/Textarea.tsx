@@ -8,7 +8,7 @@ const Textarea = (props: FieldComponentProps) => (
         helperText={props.error ? props.error.message : null}
         multiline
         rows={4}
-        value={props.value}
+        value={props.value ?? ''}
         onChange={(e) => props.onChange(e.target.value)}
         variant="standard"/>
 )

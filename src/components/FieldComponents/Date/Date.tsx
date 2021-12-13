@@ -6,7 +6,7 @@ const Date = (props: FieldComponentProps) => (
         error={!!props.error}
         helperText={props.error ? props.error.message : null}
         type="date"
-        defaultValue={props.value}
+        value={props.value ?? ''}
         sx={{width: 220}}
         disabled={props.disabled}
         onChange={e => props.onChange(e.target.value)}

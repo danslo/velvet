@@ -7,7 +7,7 @@ const Text = (props: FieldComponentProps) => (
         error={!!props.error}
         helperText={props.error ? props.error.message : null}
         onChange={(e) => props.onChange(e.target.value)}
-        value={props.value}
+        value={props.value ?? ''}
         variant="standard"/>
 );
 
