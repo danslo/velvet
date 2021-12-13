@@ -1,27 +1,44 @@
 import {VelvetAttribute} from "../../../../types";
 import {FormControl, Grid} from "@mui/material";
+import React from "react";
+import {Control, Controller} from "react-hook-form";
 import {FieldComponents} from "../../../FieldComponents/FieldComponents";
-import React, {useState} from "react";
 
 type AttributeProps = {
-    attribute: VelvetAttribute
+    attribute: VelvetAttribute,
+    control: Control
 }
 
-const Attribute = ({attribute}: AttributeProps) => {
-    const [value, setValue] = useState(attribute.value);
+const rulesFromAttribute = (attribute: VelvetAttribute) => {
+    return {
+        required: attribute.label + " is required."
+    }
+}
+
+const Attribute = (props: AttributeProps) => {
+    const Component = FieldComponents[props.attribute.type];
     return (
         <>
-            <Grid item xs={5} sx={{mb: 2, pr: 3, textAlign: "right"}}>{attribute.label}</Grid>
+            <Grid item xs={5} sx={{mb: 2, pr: 3, textAlign: "right"}}>{props.attribute.label}</Grid>
             <Grid item xs={5} sx={{mb: 2}}>
-                <FormControl fullWidth sx={{pr: 4}}>
-                    {(FieldComponents[attribute.type]?.({
-                        disabled: false,
-                        value: value,
-                        setValue: setValue,
-                        options: attribute.options ?? [],
-                        required: attribute.required
-                    }))
-                    || <>{attribute.type} not implemented</>}
+                <FormControl fullWidth>
+                    <Controller
+                        control={props.control}
+                        defaultValue={props.attribute.value}
+                        render={({field: {onChange, value}, fieldState: {error}}) => {
+                            return Component ? (
+                                <Component
+                                    disabled={false}
+                                    value={value}
+                                    onChange={onChange}
+                                    options={props.attribute.options ?? []}
+                                    error={error}/>
+                            ) : (
+                                <>{props.attribute.type} not implemented</>
+                            )
+                        }}
+                        name={props.attribute.code}
+                        rules={rulesFromAttribute(props.attribute)}/>
                 </FormControl>
             </Grid>
         </>

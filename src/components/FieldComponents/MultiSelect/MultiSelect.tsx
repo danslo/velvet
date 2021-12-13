@@ -6,10 +6,11 @@ const MultiSelect = (props: FieldComponentProps) => (
         select
         disabled={props.disabled}
         variant="standard"
-        required={props.required}
+        error={!!props.error}
+        helperText={props.error ? props.error.message : null}
         onChange={e => {
             // @ts-ignore
-            setValue(e.target.value.join(','))
+            props.onChange(e.target.value.join(','))
         }}
         SelectProps={{
             multiple: true,

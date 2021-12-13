@@ -5,13 +5,14 @@ import MultiSelect from "./MultiSelect/MultiSelect";
 import Textarea from "./Textarea/Textarea";
 import Boolean from "./Boolean/Boolean";
 import Date from "./Date/Date";
+import {FieldError} from "react-hook-form";
 
 export type FieldComponentProps = {
     disabled: boolean;
-    required: boolean,
     value: string | null;
-    setValue: (value: string) => void;
+    onChange: (value: string) => void;
     options: Array<{ label: string, value: string | null }>;
+    error: FieldError | undefined;
 }
 
 export const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {

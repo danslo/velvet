@@ -4,9 +4,10 @@ import {FieldComponentProps} from "../FieldComponents";
 const Text = (props: FieldComponentProps) => (
     <TextField
         disabled={props.disabled}
-        onChange={(e) => props.setValue(e.target.value)}
+        error={!!props.error}
+        helperText={props.error ? props.error.message : null}
+        onChange={(e) => props.onChange(e.target.value)}
         value={props.value}
-        required={props.required}
         variant="standard"/>
 );
 

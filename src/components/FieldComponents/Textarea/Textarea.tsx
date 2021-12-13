@@ -4,11 +4,12 @@ import {FieldComponentProps} from "../FieldComponents";
 const Textarea = (props: FieldComponentProps) => (
     <TextField
         disabled={props.disabled}
+        error={!!props.error}
+        helperText={props.error ? props.error.message : null}
         multiline
         rows={4}
         value={props.value}
-        required={props.required}
-        onChange={(e) => props.setValue(e.target.value)}
+        onChange={(e) => props.onChange(e.target.value)}
         variant="standard"/>
 )
 

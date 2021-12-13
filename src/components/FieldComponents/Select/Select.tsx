@@ -4,10 +4,11 @@ import {FieldComponentProps} from "../FieldComponents";
 const Select = (props: FieldComponentProps) => (
     <TextField
         disabled={props.disabled}
+        error={!!props.error}
+        helperText={props.error ? props.error.message : null}
         select
         value={props.value}
-        onChange={e => props.setValue(e.target.value)}
-        required={props.required}
+        onChange={e => props.onChange(e.target.value)}
         variant="standard">
         {props.options.map(option => (
             <MenuItem value={option.value ?? undefined}>{option.label}</MenuItem>

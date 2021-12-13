@@ -5,8 +5,7 @@ const Boolean = (props: FieldComponentProps) => (
     <Switch
         value={props.value}
         disabled={props.disabled}
-        onChange={e => props.setValue(e.target.value)}
-        required={props.required}
+        onChange={e => props.onChange(e.target.value)}
     />
 )
 
