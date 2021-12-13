@@ -3,6 +3,7 @@ import Text from "./Text/Text";
 import Select from "./Select/Select";
 import MultiSelect from "./MultiSelect/MultiSelect";
 import Textarea from "./Textarea/Textarea";
+import Boolean from "./Boolean/Boolean";
 
 export type FieldComponentProps = {
     disabled: boolean;
@@ -15,5 +16,6 @@ export const FieldComponents: { [type: string]: FunctionComponent<FieldComponent
     text: Text,
     select: Select,
     multiselect: MultiSelect,
-    textarea: Textarea
+    textarea: Textarea,
+    boolean: Boolean
 }
