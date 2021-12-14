@@ -1,5 +1,25 @@
+fragment CategoryData on CategoryTree {
+    id
+    name
+}
+
 query getProduct($product_id: Int!) {
     productView(product_id: $product_id) {
+        categories {
+            ... CategoryData
+            children {
+                ... CategoryData
+                children {
+                    ... CategoryData
+                    children {
+                        ... CategoryData
+                        children {
+                            ... CategoryData
+                        }
+                    }
+                }
+            }
+        }
         entity_id
         sku
         attribute_set_id
