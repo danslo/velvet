@@ -6,14 +6,16 @@ import {FieldComponents} from "../../../FieldComponents/FieldComponents";
 import Price from "./Price/Price";
 import Stock from "./Stock/Stock";
 import Categories from "./Categories/Categories";
+import {UseFormSetValue} from "react-hook-form/dist/types/form";
 
 export type AttributeProps = {
     attribute: VelvetAttribute,
     control: Control,
-    product: Partial<VelvetProduct>
+    product: VelvetProduct,
+    setValue: UseFormSetValue<any>
 }
 
-const AttributeComponents: {[code: string]: FunctionComponent<AttributeProps>} = {
+const AttributeComponents: { [code: string]: FunctionComponent<AttributeProps> } = {
     price: Price,
     quantity_and_stock_status: Stock,
     category_ids: Categories
@@ -56,7 +58,7 @@ const Attribute = (props: AttributeProps) => {
                             }}
                             name={props.attribute.code}
                             rules={rulesFromAttribute(props.attribute)}/>
-                        )}
+                    )}
                 </FormControl>
             </Grid>
         </>

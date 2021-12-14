@@ -1,11 +1,10 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, useEffect} from "react";
 import {AttributeProps} from "../Attribute";
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Category from "./Category/Category";
 import {Controller} from "react-hook-form";
-import {TextField} from "@mui/material";
 
 const Categories: FunctionComponent<AttributeProps> = props => {
     const defaultCategories = props.product.category_ids!.map(id => id!.toString());
@@ -31,14 +30,16 @@ const Categories: FunctionComponent<AttributeProps> = props => {
         }
     };
 
+    useEffect(() => {
+        props.setValue('category_ids', selected);
+    }, [props, selected]);
+
     return (
         <>
             <Controller
                 name="category_ids"
                 control={props.control}
-                render={({field: {onChange}}) => (
-                    <TextField value={selected} onChange={e => console.log(e)}/>
-                )}/>
+                render={() => (<input type="hidden" value={selected}/>)}/>
             <TreeView
                 onNodeToggle={handleToggle}
                 onNodeSelect={handleSelect}
