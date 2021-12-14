@@ -5,7 +5,6 @@ fragment CategoryData on CategoryTree {
 
 query getProduct($product_id: Int!) {
     productView(product_id: $product_id) {
-        category_ids
         categories {
             ... CategoryData
             children {
@@ -35,6 +34,9 @@ query getProduct($product_id: Int!) {
                     label
                 }
                 value {
+                    ... on VelvetCategoryIdsAttributeValue {
+                        category_ids
+                    }
                     ... on VelvetStringAttributeValue {
                         value
                     }

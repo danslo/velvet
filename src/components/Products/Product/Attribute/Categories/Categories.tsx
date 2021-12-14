@@ -5,9 +5,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Category from "./Category/Category";
 import {Controller} from "react-hook-form";
+import {VelvetCategoryIdsAttributeValue} from "../../../../../types";
 
 const Categories: FunctionComponent<AttributeProps> = props => {
-    const defaultCategories = props.product.category_ids!.map(id => id!.toString());
+    const defaultCategories = (props.attribute.value as VelvetCategoryIdsAttributeValue).category_ids!
+        .map(id => id!.toString());
 
     const [expanded, setExpanded] = React.useState<string[]>(
         [props.product.categories![0].id!.toString()]
