@@ -4,7 +4,6 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Category from "./Category/Category";
-import {Controller} from "react-hook-form";
 import {VelvetCategoryIdsAttributeValue} from "../../../../../types";
 
 const Categories: FunctionComponent<AttributeProps> = props => {
@@ -37,25 +36,19 @@ const Categories: FunctionComponent<AttributeProps> = props => {
     }, [props, selected]);
 
     return (
-        <>
-            <Controller
-                name="category_ids"
-                control={props.control}
-                render={() => (<input type="hidden" value={selected}/>)}/>
-            <TreeView
-                onNodeToggle={handleToggle}
-                onNodeSelect={handleSelect}
-                expanded={expanded}
-                selected={selected}
-                multiSelect
-                defaultCollapseIcon={<ExpandMoreIcon/>}
-                defaultExpandIcon={<ChevronRightIcon/>}
-                sx={{flexGrow: 1, maxWidth: 400, overflowY: 'auto'}}>
-                {props.product.categories?.map(category => (
-                    <Category category={category}/>
-                ))}
-            </TreeView>
-        </>
+        <TreeView
+            onNodeToggle={handleToggle}
+            onNodeSelect={handleSelect}
+            expanded={expanded}
+            selected={selected}
+            multiSelect
+            defaultCollapseIcon={<ExpandMoreIcon/>}
+            defaultExpandIcon={<ChevronRightIcon/>}
+            sx={{flexGrow: 1, maxWidth: 400, overflowY: 'auto'}}>
+            {props.product.categories?.map(category => (
+                <Category category={category}/>
+            ))}
+        </TreeView>
     );
 }
 
