@@ -1,6 +1,7 @@
 query getDashboardSummary {
     dashboard {
         last_orders {
+            increment_id
             customer_name
             num_items
             total

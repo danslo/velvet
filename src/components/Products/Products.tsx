@@ -24,8 +24,11 @@ const Products = ({data}: WithGridProps<GetProductGridQuery>) => {
                 </TableHead>
                 <TableBody>
                     {(data.grid.items as Array<VelvetGridProduct>).map(product => (
-                        <TableRow hover={true} sx={{cursor: "pointer"}}
-                                  onClick={() => navigate("/products/" + product.entity_id)}>
+                        <TableRow
+                            key={product.entity_id}
+                            hover={true}
+                            sx={{cursor: "pointer"}}
+                            onClick={() => navigate("/products/" + product.entity_id)}>
                             <TableCell>{product.entity_id}</TableCell>
                             <TableCell>{product.name}</TableCell>
                             <TableCell>{product.sku}</TableCell>

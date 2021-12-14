@@ -20,7 +20,7 @@ const SearchTerms = ({caption, searchTerms}: SearchTermsProps) => (
             </TableHead>
             <TableBody>
                 {searchTerms.map(searchTerm => (
-                    <TableRow>
+                    <TableRow key={searchTerm.search_term}>
                         <TableCell>{searchTerm.search_term}</TableCell>
                         <TableCell>{searchTerm.results}</TableCell>
                         <TableCell>{searchTerm.uses}</TableCell>

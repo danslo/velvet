@@ -1,5 +1,5 @@
 import {Box, Checkbox, debounce, FormControl, FormControlLabel, FormGroup, Grid} from "@mui/material";
-import React, {useCallback, useState} from "react";
+import React, {useState} from "react";
 import {ConfigurationField} from "../../../types";
 import {FieldComponents} from "../../FieldComponents/FieldComponents";
 
@@ -18,11 +18,11 @@ const Field = ({field, saveConfiguration, restoreConfiguration}: FieldProps) => 
         debouncedSaveConfiguration(value);
     }
 
-    const debouncedSaveConfiguration = useCallback(debounce((value) => {
+    const debouncedSaveConfiguration = debounce((value) => {
         if (value !== null) {
             saveConfiguration(field.path, value);
         }
-    }, 500), []);
+    }, 500);
 
     const setInheritValue = (value: boolean) => {
         setInherit(value);

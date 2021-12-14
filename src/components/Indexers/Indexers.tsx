@@ -24,7 +24,7 @@ const Indexers = () => {
                         </TableHead>
                         <TableBody>
                             {data.indexers.map(index => (
-                                <TableRow hover={true}>
+                                <TableRow hover={true} key={index.title}>
                                     <TableCell>{index.title}</TableCell>
                                     <TableCell>{index.description}</TableCell>
                                     <TableCell>{index.is_scheduled ? "Update on Schedule" : "Update on Save"}</TableCell>

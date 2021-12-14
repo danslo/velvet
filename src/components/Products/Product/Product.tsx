@@ -24,7 +24,7 @@ const Product = () => {
 
                     <Typography variant="h6" sx={{mb: 2}}>{data.productView.sku}</Typography>
                     {data.productView.attribute_groups.map(group => (
-                        <Accordion defaultExpanded={group.label === 'Product Details'}>
+                        <Accordion key={group.label} defaultExpanded={group.label === 'Product Details'}>
                             <AccordionSummary>{group.label}</AccordionSummary>
                             <AccordionDetails>
                                 <Grid container spacing={2}>

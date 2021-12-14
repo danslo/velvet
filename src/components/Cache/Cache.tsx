@@ -73,8 +73,12 @@ const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
                         </TableHead>
                         <TableBody>
                             {data.cacheTypes.map(cacheType => (
-                                <TableRow id={cacheType.id} hover={true} onClick={handleContextMenu}
-                                          sx={{cursor: "pointer"}}>
+                                <TableRow
+                                    key={cacheType.id}
+                                    id={cacheType.id}
+                                    hover={true}
+                                    onClick={handleContextMenu}
+                                    sx={{cursor: "pointer"}}>
                                     <TableCell>{cacheType.cache_type}</TableCell>
                                     <TableCell>{cacheType.description}</TableCell>
                                     <TableCell>{cacheType.tags}</TableCell>
