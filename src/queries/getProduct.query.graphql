@@ -5,6 +5,7 @@ fragment CategoryData on CategoryTree {
 
 query getProduct($product_id: Int!) {
     productView(product_id: $product_id) {
+        category_ids
         categories {
             ... CategoryData
             children {

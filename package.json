@@ -11,6 +11,7 @@
     "@emotion/styled": "^11.3.0",
     "@graphql-codegen/named-operations-object": "^2.2.0",
     "@mui/icons-material": "^5.1.0",
+    "@mui/lab": "^5.0.0-alpha.60",
     "@mui/material": "^5.1.0",
     "@mui/styles": "^5.1.0",
     "@react-hook/debounce": "^4.0.0",
