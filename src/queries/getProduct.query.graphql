@@ -34,7 +34,25 @@ query getProduct($product_id: Int!) {
                     value
                     label
                 }
-                value
+                value {
+                    ... on VelvetStringAttributeValue {
+                        value
+                    }
+                    ... on VelvetStockAttributeValue {
+                        is_in_stock
+                        qty
+                    }
+                    ... on VelvetGalleryAttributeValue {
+                        images {
+                            value_id
+                        }
+                    }
+                    ... on VelvetTierPriceAttributeValue {
+                        prices {
+                            price_id
+                        }
+                    }
+                }
                 required
                 type
             }

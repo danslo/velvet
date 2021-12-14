@@ -1,4 +1,4 @@
-import {VelvetAttribute, VelvetProduct} from "../../../../types";
+import {VelvetAttribute, VelvetProduct, VelvetStringAttributeValue} from "../../../../types";
 import {FormControl, Grid} from "@mui/material";
 import React, {FunctionComponent} from "react";
 import {Control, Controller} from "react-hook-form";
@@ -43,7 +43,7 @@ const Attribute = (props: AttributeProps) => {
                     ) : (
                         <Controller
                             control={props.control}
-                            defaultValue={props.attribute.value}
+                            defaultValue={(props.attribute.value as VelvetStringAttributeValue).value}
                             render={({field: {onChange, value}, fieldState: {error}}) => {
                                 return FieldComponent ? (
                                     <FieldComponent

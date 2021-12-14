@@ -32,6 +32,7 @@ const Product = () => {
                                     {group.attributes.map(attribute => (
                                         <Attribute
                                             key={attribute.code}
+                                            // @ts-ignore
                                             attribute={attribute}
                                             control={control}
                                             setValue={setValue}
