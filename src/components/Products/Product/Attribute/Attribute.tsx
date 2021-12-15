@@ -21,8 +21,12 @@ const AttributeComponents: { [code: string]: FunctionComponent<AttributeProps> }
     category_ids: Categories
 }
 
+const attributeIsRequired = (attribute: VelvetAttribute) => {
+    return attribute.required && attribute.type !== 'boolean';
+}
+
 const rulesFromAttribute = (attribute: VelvetAttribute) => {
-    if (attribute.required && attribute.type !== 'boolean') {
+    if (attributeIsRequired(attribute)) {
         return {
             required: attribute.label + " is required."
         }
@@ -35,7 +39,9 @@ const Attribute = (props: AttributeProps) => {
     const FieldComponent = FieldComponents[props.attribute.type];
     return (
         <>
-            <Grid item xs={5} sx={{mb: 2, pr: 3, textAlign: "right"}}>{props.attribute.label}</Grid>
+            <Grid item xs={5} sx={{mb: 2, pr: 3, textAlign: "right"}}>
+                {props.attribute.label + (attributeIsRequired(props.attribute) ? "*" : "")}
+            </Grid>
             <Grid item xs={5} sx={{mb: 2}}>
                 <FormControl fullWidth>
                     {AttributeComponent ? (
