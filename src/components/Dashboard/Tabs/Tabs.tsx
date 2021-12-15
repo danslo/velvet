@@ -14,24 +14,23 @@ const Tabs = () => {
     };
 
     return (
-        <Paper sx={{p: 2, mb: 2}}>
-            <LoaderHandler loading={loading} error={error}>
-                {data && (<>
-                    <Box sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
-                        <MTabs value={tab} onChange={handleChangeTab}>
-                            <Tab label="New Customers"/>
-                            <Tab label="Profitable Customers"/>
-                        </MTabs>
-                    </Box>
-                    <TabPanel value={tab} index={0}>
-                        <Customers customers={data.dashboard.customers_newest}/>
-                    </TabPanel>
-                    <TabPanel value={tab} index={1}>
-                        <Customers customers={data.dashboard.customers_most}/>
-                    </TabPanel>
-                </>)}
-            </LoaderHandler>
-        </Paper>
+        <LoaderHandler loading={loading} error={error}>
+            {data && (<Paper sx={{p: 2, mb: 2}}>
+
+                <Box sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
+                    <MTabs value={tab} onChange={handleChangeTab}>
+                        <Tab label="New Customers"/>
+                        <Tab label="Profitable Customers"/>
+                    </MTabs>
+                </Box>
+                <TabPanel value={tab} index={0}>
+                    <Customers customers={data.dashboard.customers_newest}/>
+                </TabPanel>
+                <TabPanel value={tab} index={1}>
+                    <Customers customers={data.dashboard.customers_most}/>
+                </TabPanel>
+            </Paper>)}
+        </LoaderHandler>
     );
 }
 

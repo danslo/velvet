@@ -29,31 +29,30 @@ const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
     };
 
     return (
-        <Paper sx={{p: 3}}>
-            <LoaderHandler loading={loading} error={error}>
-                {data && (
-                    <>
-                        <Typography variant="h6"/>
-                        <form>
-                            <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
+        <LoaderHandler loading={loading} error={error}>
+            {data && (
+                <Paper sx={{p: 3}}>
 
-                            <TextField {...register('title')} defaultValue={data.block.title} helperText="Title"/>
-                            <br/>
-                            <TextField {...register('identifier')} defaultValue={data.block.identifier}
-                                       helperText="Identifier"/>
-                            <br/>
-                            <FormControlLabel
-                                control={<Switch {...register('is_active')}
-                                                 defaultChecked={!!data.block.is_active}/>}
-                                label="Active"/>
-                            <MUIRichTextEditor label="Start typing..." defaultValue={data.block.content}/>
-                            <br/><br/><br/><br/>
-                            <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save</Button>
-                        </form>
-                    </>
-                )}
-            </LoaderHandler>
-        </Paper>
+                    <Typography variant="h6"/>
+                    <form>
+                        <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
+
+                        <TextField {...register('title')} defaultValue={data.block.title} helperText="Title"/>
+                        <br/>
+                        <TextField {...register('identifier')} defaultValue={data.block.identifier}
+                                   helperText="Identifier"/>
+                        <br/>
+                        <FormControlLabel
+                            control={<Switch {...register('is_active')}
+                                             defaultChecked={!!data.block.is_active}/>}
+                            label="Active"/>
+                        <MUIRichTextEditor label="Start typing..." defaultValue={data.block.content}/>
+                        <br/><br/><br/><br/>
+                        <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save</Button>
+                    </form>
+                </Paper>
+            )}
+        </LoaderHandler>
     )
 }
 

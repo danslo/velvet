@@ -5,7 +5,15 @@ import {LoaderContext} from "../../context/loader";
 type LoaderProps = PropsWithChildren<Partial<QueryResult>>;
 
 const LoaderHandler = ({children, loading, error}: LoaderProps): JSX.Element => {
-    const {push, pop} = useContext(LoaderContext);
+    const {push, pop, clear} = useContext(LoaderContext);
+
+    useEffect(() => {
+        return () => {
+            if (loading) {
+                clear();
+            }
+        }
+    }, [])
 
     useEffect(() => {
         if (loading) {
@@ -13,7 +21,7 @@ const LoaderHandler = ({children, loading, error}: LoaderProps): JSX.Element => 
         } else {
             pop();
         }
-    }, [push, pop, loading]);
+    }, [loading]);
 
     if (error) return (<><h2>Error</h2><p>{error.message}</p></>);
     return <>{children}</>;
