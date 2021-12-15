@@ -5,7 +5,7 @@ import {useMutation} from "@apollo/client";
 import {GenerateAdminTokenDocument} from "../../types";
 import {setClientLink} from "../../utils/client";
 import {withSnackbar, WithSnackbarProps} from "../../hocs/snackbar";
-import {AuthContext} from "../../utils/auth";
+import {AuthContext} from "../../context/auth";
 
 const Login = ({snackbarShowMessage}: WithSnackbarProps) => {
     const {token, setToken} = useContext(AuthContext);

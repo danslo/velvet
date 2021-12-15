@@ -9,7 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import {Link} from "react-router-dom";
 import {AppBar, SvgIcon} from "@mui/material";
 import {setClientLink} from "../../utils/client";
-import {AuthContext} from "../../utils/auth";
+import {AuthContext} from "../../context/auth";
 import menu from "../../config/menu";
 
 const Navbar = () => {

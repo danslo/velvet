@@ -3,7 +3,7 @@ import {createContext, useContext} from "react";
 
 export type OptionalScopeWithoutChildren = Omit<Scope, "children"> | null;
 
-export type ConfigurationScopeContextType = {
+type ConfigurationScopeContextType = {
     currentScope: OptionalScopeWithoutChildren;
     setCurrentScope: (scope: OptionalScopeWithoutChildren) => void;
 }
