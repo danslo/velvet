@@ -37,7 +37,6 @@ const rulesFromAttribute = (attribute: VelvetAttribute) => {
 const Attribute = (props: AttributeProps) => {
     const AttributeComponent = AttributeComponents[props.attribute.code];
     const FieldComponent = FieldComponents[props.attribute.type];
-    console.log(props.attribute.code);
     return (
         <>
             <Grid item xs={5} sx={{mb: 2, pr: 3, textAlign: "right"}}>
