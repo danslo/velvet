@@ -29,9 +29,7 @@ const Product = () => {
                             <AccordionSummary>{group.label}</AccordionSummary>
                             <AccordionDetails>
                                 <Grid container spacing={2}>
-                                    {group.attributes.map(attribute => {
-                                        if (attribute.code !== 'sku') return null;
-                                        return (
+                                    {group.attributes.map(attribute => (
                                             <Attribute
                                                 key={attribute.code}
                                                 // @ts-ignore
@@ -42,7 +40,7 @@ const Product = () => {
                                                 product={data.productView}
                                             />
                                         )
-                                    })}
+                                    )}
                                 </Grid>
                             </AccordionDetails>
                         </Accordion>
