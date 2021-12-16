@@ -50,7 +50,7 @@ query getProduct($product_id: Int!) {
                         }
                     }
                     ... on VelvetTierPriceAttributeValue {
-                        prices {
+                        tier_price {
                             price_id
                         }
                     }
