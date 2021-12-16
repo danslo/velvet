@@ -8,7 +8,8 @@ const Text = (props: FieldComponentProps) => (
         helperText={props.error ? props.error.message : null}
         onChange={(e) => props.onChange(e.target.value)}
         value={props.value ?? ''}
-        variant="standard"/>
+        variant="standard"
+        inputRef={props.inputRef}/>
 );
 
 export default Text;

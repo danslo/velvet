@@ -3,6 +3,7 @@ import {TextField} from "@mui/material";
 
 const Date = (props: FieldComponentProps) => (
     <TextField
+        inputRef={props.inputRef}
         error={!!props.error}
         helperText={props.error ? props.error.message : null}
         type="date"

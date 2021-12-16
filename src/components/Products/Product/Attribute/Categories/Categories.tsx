@@ -46,7 +46,7 @@ const Categories: FunctionComponent<AttributeProps> = props => {
             defaultExpandIcon={<ChevronRightIcon/>}
             sx={{flexGrow: 1, maxWidth: 400, overflowY: 'auto'}}>
             {props.product.categories?.map(category => (
-                <Category category={category}/>
+                <Category key={category.id} category={category}/>
             ))}
         </TreeView>
     );

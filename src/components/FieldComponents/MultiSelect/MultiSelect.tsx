@@ -3,6 +3,7 @@ import {FieldComponentProps} from "../FieldComponents";
 
 const MultiSelect = (props: FieldComponentProps) => (
     <TextField
+        inputRef={props.inputRef}
         select
         disabled={props.disabled}
         variant="standard"

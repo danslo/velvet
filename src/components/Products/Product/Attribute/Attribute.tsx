@@ -37,6 +37,7 @@ const rulesFromAttribute = (attribute: VelvetAttribute) => {
 const Attribute = (props: AttributeProps) => {
     const AttributeComponent = AttributeComponents[props.attribute.code];
     const FieldComponent = FieldComponents[props.attribute.type];
+    console.log(props.attribute.code);
     return (
         <>
             <Grid item xs={5} sx={{mb: 2, pr: 3, textAlign: "right"}}>
@@ -50,10 +51,10 @@ const Attribute = (props: AttributeProps) => {
                         <Controller
                             control={props.control}
                             defaultValue={(props.attribute.value as VelvetStringAttributeValue).value}
-                            render={({field: {onChange, value}, fieldState: {error}}) => {
+                            render={({field: {onChange, value, ref}, fieldState: {error}}) => {
                                 return FieldComponent ? (
                                     <FieldComponent
-                                        disabled={false}
+                                        inputRef={ref}
                                         value={value}
                                         onChange={onChange}
                                         options={props.attribute.options ?? []}

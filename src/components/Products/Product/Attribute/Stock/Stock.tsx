@@ -29,9 +29,10 @@ const Stock: FunctionComponent<AttributeProps> = props => {
             <FormControlLabel
                 label="Quantity"
                 control={
-                    <TextField defaultValue={stockValue.qty}
-                               variant="standard" value={qty}
-                               onChange={e => setQty(parseInt(e.target.value))}/>
+                    <TextField
+                        variant="standard"
+                        value={qty}
+                        onChange={e => setQty(parseInt(e.target.value))}/>
                 }/>
         </FormGroup>
     );

@@ -6,13 +6,16 @@ import Textarea from "./Textarea/Textarea";
 import Boolean from "./Boolean/Boolean";
 import Date from "./Date/Date";
 import {FieldError} from "react-hook-form";
+import {RefCallBack} from "react-hook-form/dist/types";
 
 export type FieldComponentProps = {
-    disabled: boolean;
     value: string | null;
     onChange: (value: string) => void;
     options: Array<{ label: string, value: string | null }>;
-    error: FieldError | undefined;
+
+    error?: FieldError;
+    inputRef?: RefCallBack;
+    disabled?: boolean;
 }
 
 export const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {

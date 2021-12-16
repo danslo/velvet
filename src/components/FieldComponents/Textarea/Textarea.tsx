@@ -3,6 +3,7 @@ import {FieldComponentProps} from "../FieldComponents";
 
 const Textarea = (props: FieldComponentProps) => (
     <TextField
+        inputRef={props.inputRef}
         disabled={props.disabled}
         error={!!props.error}
         helperText={props.error ? props.error.message : null}
