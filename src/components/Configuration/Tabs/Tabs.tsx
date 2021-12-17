@@ -7,9 +7,7 @@ import {useScopeContext} from "../../../context/scope";
 
 const Tabs = () => {
     const {currentScope} = useScopeContext();
-    const {data, loading, error} = useGetConfigurationTabsQuery({
-        variables: {scope_type: currentScope?.type}
-    });
+    const {data, loading, error} = useGetConfigurationTabsQuery({variables: {scope_type: currentScope?.type}});
 
     return (
         <LoaderHandler loading={loading} error={error}>

@@ -12,9 +12,7 @@ const Payment = ({caption, methods}: PaymentInformation) => {
             <Typography variant="h6">{caption}</Typography>
             <List>
                 <ListItem disablePadding>
-                    {methods.map(method => (
-                        <ListItemText sx={{m: 0}} primary={method!.name}/>
-                    ))}
+                    {methods.map(method => (<ListItemText sx={{m: 0}} primary={method!.name}/>))}
                 </ListItem>
             </List>
         </Box>

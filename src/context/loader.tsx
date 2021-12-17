@@ -14,20 +14,11 @@ export const LoaderContext = createContext<{
 
 export const LoaderProvider: FunctionComponent = ({children}) => {
     const [loaders, setLoaders] = useState<Array<boolean>>([]);
-
     return (
         <LoaderContext.Provider value={{
-            clear: () => {
-                setLoaders([]);
-            },
-            pop: () => {
-                if (loaders.length) {
-                    setLoaders(loaders.slice(1));
-                }
-            },
-            push: () => {
-                setLoaders((prevState => ([...prevState, true])));
-            },
+            clear: () => setLoaders([]),
+            pop: () => setLoaders(loaders.slice(1)),
+            push: () => setLoaders((prevState => ([...prevState, true]))),
             loading: loaders.length > 0
         }}>
             {children}

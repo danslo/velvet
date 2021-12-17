@@ -6,7 +6,7 @@ import SearchTerms from "../SearchTerms/SearchTerms";
 import React from "react";
 
 const Summary = () => {
-    const {data, loading, error} = useGetDashboardSummaryQuery({});
+    const {data, loading, error} = useGetDashboardSummaryQuery();
 
     return (
         <LoaderHandler loading={loading} error={error}>

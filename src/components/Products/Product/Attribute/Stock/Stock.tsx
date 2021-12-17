@@ -21,18 +21,14 @@ const Stock: FunctionComponent<AttributeProps> = props => {
             <FormControlLabel
                 label="In Stock"
                 control={
-                    <Switch defaultChecked={stockValue.is_in_stock}
-                            value={isInStock}
+                    <Switch defaultChecked={stockValue.is_in_stock} value={isInStock}
                             onChange={e => setIsInStock(e.target.checked)}/>
                 }/>
 
             <FormControlLabel
                 label="Quantity"
                 control={
-                    <TextField
-                        variant="standard"
-                        value={qty}
-                        onChange={e => setQty(parseInt(e.target.value))}/>
+                    <TextField variant="standard" value={qty} onChange={e => setQty(parseInt(e.target.value))}/>
                 }/>
         </FormGroup>
     );

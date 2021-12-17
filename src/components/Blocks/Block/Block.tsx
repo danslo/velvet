@@ -11,28 +11,21 @@ const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
     const {blockId} = useParams();
     const {register, handleSubmit} = useForm({shouldUseNativeValidation: true});
     const [saveBlockMutation] = useSaveBlockMutation();
+    const {data, loading, error} = useGetBlockQuery({variables: {block_id: parseInt(blockId!)}});
 
-    const {data, loading, error} = useGetBlockQuery({
-        variables: {
-            block_id: parseInt(blockId!)
-        }
-    });
-
-    const onSubmit = async (stuff: any) => {
-        saveBlockMutation({
-            variables: {
-                input: stuff
-            }
-        }).then(result => {
-            snackbarShowMessage('Block was successfully saved.');
-        })
+    const onSubmit = async (stuff: any /* todo */) => {
+        saveBlockMutation({variables: {input: stuff}})
+            .then(result => {
+                if (result.data?.saveBlock) {
+                    snackbarShowMessage('Block was successfully saved.');
+                }
+            })
     };
 
     return (
         <LoaderHandler loading={loading} error={error}>
             {data && (
                 <Paper sx={{p: 3}}>
-
                     <Typography variant="h6"/>
                     <form>
                         <input {...register('block_id')} value={data.block.block_id} hidden={true}/>

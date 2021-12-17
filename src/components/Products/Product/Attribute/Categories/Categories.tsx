@@ -13,6 +13,7 @@ const Categories: FunctionComponent<AttributeProps> = props => {
     const [expanded, setExpanded] = React.useState<string[]>(
         [props.product.categories![0].id!.toString()]
     );
+
     const [selected, setSelected] = React.useState<string[]>(defaultCategories);
 
     const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
@@ -31,9 +32,7 @@ const Categories: FunctionComponent<AttributeProps> = props => {
         }
     };
 
-    useEffect(() => {
-        props.setValue('category_ids', selected);
-    }, [props, selected]);
+    useEffect(() => props.setValue('category_ids', selected), [props, selected]);
 
     return (
         <TreeView

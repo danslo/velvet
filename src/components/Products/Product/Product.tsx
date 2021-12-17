@@ -10,11 +10,7 @@ import {withLayout} from "../../../hocs/layout";
 const Product = () => {
     const {productId} = useParams();
     const {control, handleSubmit, setValue} = useForm();
-    const {data, loading, error} = useGetProductQuery({
-        variables: {
-            product_id: parseInt(productId!)
-        }
-    });
+    const {data, loading, error} = useGetProductQuery({variables: {product_id: parseInt(productId!)}});
 
     return (
         <LoaderHandler loading={loading} error={error}>

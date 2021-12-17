@@ -5,7 +5,6 @@ import {useGetConfigurationScopesQuery} from "../../../types";
 import {Menu, MenuItem} from "@mui/material";
 import {OptionalScopeWithoutChildren, useScopeContext} from "../../../context/scope";
 
-
 const Switcher = () => {
     const {currentScope, setCurrentScope} = useScopeContext();
     const {data, loading, error} = useGetConfigurationScopesQuery();

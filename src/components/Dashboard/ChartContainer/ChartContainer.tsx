@@ -9,12 +9,7 @@ import TabPanel from "../TabPanel/TabPanel";
 const ChartContainer = () => {
     const [period, setPeriod] = React.useState('7d');
     const [tab, setTab] = React.useState(0);
-
-    const {data, loading, error} = useGetDashboardSalesQuery({
-        variables: {
-            period: period
-        }
-    });
+    const {data, loading, error} = useGetDashboardSalesQuery({variables: {period: period}});
 
     const handleChangePeriod = (event: SelectChangeEvent) => {
         setPeriod(event.target.value as string);

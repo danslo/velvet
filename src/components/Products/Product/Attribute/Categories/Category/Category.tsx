@@ -7,9 +7,7 @@ type CategoryProps = {
 
 const Category = (props: CategoryProps) => (
     <TreeItem nodeId={props.category!.id!.toString()} label={props.category!.name}>
-        {props.category!.children!.map(child => (
-            <Category key={child!.id} category={child}/>
-        ))}
+        {props.category!.children!.map(child => (<Category key={child!.id} category={child}/>))}
     </TreeItem>
 )
 

@@ -16,7 +16,6 @@ const Tabs = () => {
     return (
         <LoaderHandler loading={loading} error={error}>
             {data && (<Paper sx={{p: 2, mb: 2}}>
-
                 <Box sx={{borderBottom: 1, borderColor: 'divider', mb: 2}}>
                     <MTabs value={tab} onChange={handleChangeTab}>
                         <Tab label="New Customers"/>

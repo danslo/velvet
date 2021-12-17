@@ -13,7 +13,7 @@ const LoaderHandler = ({children, loading, error}: LoaderProps): JSX.Element => 
                 clear();
             }
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (loading) {
