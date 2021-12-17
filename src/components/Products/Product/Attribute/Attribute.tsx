@@ -7,6 +7,7 @@ import Price from "./Price/Price";
 import Stock from "./Stock/Stock";
 import Categories from "./Categories/Categories";
 import {UseFormSetValue} from "react-hook-form/dist/types/form";
+import Weight from "./Weight/Weight";
 
 export type AttributeProps = {
     attribute: VelvetAttribute,
@@ -18,7 +19,8 @@ export type AttributeProps = {
 const AttributeComponents: { [code: string]: FunctionComponent<AttributeProps> } = {
     price: Price,
     quantity_and_stock_status: Stock,
-    category_ids: Categories
+    category_ids: Categories,
+    weight: Weight
 }
 
 const attributeIsRequired = (attribute: VelvetAttribute) => {

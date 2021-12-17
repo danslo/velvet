@@ -36,5 +36,4 @@ export const FieldComponents: { [type: string]: FunctionComponent<FieldComponent
     date: Date,
 
     weight: Text, // todo
-    price: Text,  // todo
 }
