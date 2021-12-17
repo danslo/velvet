@@ -18,16 +18,14 @@ export type FieldComponentProps = {
     disabled?: boolean;
 }
 
-export const textFieldProps = (props: FieldComponentProps) => {
-    return {
-        inputRef: props.inputRef,
-        value: props.value ?? '',
-        disabled: props.disabled,
-        onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => props.onChange(e.target.value),
-        error: !!props.error,
-        helperText: props.error ? props.error.message : null
-    }
-}
+export const textFieldProps = (props: FieldComponentProps) => ({
+    inputRef: props.inputRef,
+    value: props.value ?? '',
+    disabled: props.disabled,
+    onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => props.onChange(e.target.value),
+    error: !!props.error,
+    helperText: props.error ? props.error.message : null
+});
 
 export const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {
     text: Text,
