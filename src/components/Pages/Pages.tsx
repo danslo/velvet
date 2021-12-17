@@ -2,7 +2,7 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {withGrid, WithGridProps} from "../../hocs/grid";
-import {GetCmsPageGridQuery, VelvetCmsPage, useGetCmsPageGridQuery} from "../../types";
+import {GetCmsPageGridQuery, useGetCmsPageGridQuery, VelvetCmsPage} from "../../types";
 import {withLayout} from "../../hocs/layout";
 
 const Pages = ({data}: WithGridProps<GetCmsPageGridQuery>) => {

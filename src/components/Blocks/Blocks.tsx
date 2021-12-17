@@ -1,7 +1,7 @@
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React from "react";
 import {withGrid, WithGridProps} from "../../hocs/grid";
-import {GetCmsBlockGridQuery, VelvetCmsBlock, useGetCmsBlockGridQuery} from "../../types";
+import {GetCmsBlockGridQuery, useGetCmsBlockGridQuery, VelvetCmsBlock} from "../../types";
 import {withLayout} from "../../hocs/layout";
 import {useNavigate} from "react-router-dom";
 
