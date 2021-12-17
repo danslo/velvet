@@ -1,7 +1,7 @@
 import {Grid} from "@mui/material";
 import React, {useState} from "react";
 import Switcher from "./Switcher/Switcher";
-import {ConfigurationScopeContext, OptionalScopeWithoutChildren} from "../../context/configuration.scope";
+import {OptionalScopeWithoutChildren, ScopeContext} from "../../context/scope";
 import Tabs from "./Tabs/Tabs";
 import Section from "./Section/Section";
 import {withLayout} from "../../hocs/layout";
@@ -9,7 +9,7 @@ import {withLayout} from "../../hocs/layout";
 const Configuration = () => {
     const [currentScope, setCurrentScope] = useState<OptionalScopeWithoutChildren>(null);
     return (
-        <ConfigurationScopeContext.Provider value={{currentScope, setCurrentScope}}>
+        <ScopeContext.Provider value={{currentScope, setCurrentScope}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Switcher/>
@@ -21,7 +21,7 @@ const Configuration = () => {
                     <Section/>
                 </Grid>
             </Grid>
-        </ConfigurationScopeContext.Provider>
+        </ScopeContext.Provider>
     )
 }
 

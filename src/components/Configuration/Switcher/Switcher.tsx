@@ -3,11 +3,11 @@ import Button from '@mui/material/Button';
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {useGetConfigurationScopesQuery} from "../../../types";
 import {Menu, MenuItem} from "@mui/material";
-import {OptionalScopeWithoutChildren, useConfigurationScopeContext} from "../../../context/configuration.scope";
+import {OptionalScopeWithoutChildren, useScopeContext} from "../../../context/scope";
 
 
 const Switcher = () => {
-    const {currentScope, setCurrentScope} = useConfigurationScopeContext();
+    const {currentScope, setCurrentScope} = useScopeContext();
     const {data, loading, error} = useGetConfigurationScopesQuery();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

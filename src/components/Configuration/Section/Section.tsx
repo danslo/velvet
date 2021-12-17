@@ -9,10 +9,10 @@ import React from "react";
 import Group from "../Group/Group";
 import {withSnackbar, WithSnackbarProps} from "../../../hocs/snackbar";
 import Field from "../Field/Field";
-import {useConfigurationScopeContext} from "../../../context/configuration.scope";
+import {useScopeContext} from "../../../context/scope";
 
 const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
-    const {currentScope} = useConfigurationScopeContext();
+    const {currentScope} = useScopeContext();
     const {section = "general"} = useParams();
     const {data, loading, error} = useGetConfigurationSectionQuery({
         variables: {
