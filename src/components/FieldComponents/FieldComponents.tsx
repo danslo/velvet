@@ -1,4 +1,4 @@
-import {FunctionComponent} from "react";
+import {ChangeEvent, FunctionComponent} from "react";
 import Text from "./Text/Text";
 import Select from "./Select/Select";
 import MultiSelect from "./MultiSelect/MultiSelect";
@@ -16,6 +16,17 @@ export type FieldComponentProps = {
     error?: FieldError;
     inputRef?: RefCallBack;
     disabled?: boolean;
+}
+
+export const textFieldProps = (props: FieldComponentProps) => {
+    return {
+        inputRef: props.inputRef,
+        value: props.value ?? '',
+        disabled: props.disabled,
+        onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => props.onChange(e.target.value),
+        error: !!props.error,
+        helperText: props.error ? props.error.message : null
+    }
 }
 
 export const FieldComponents: { [type: string]: FunctionComponent<FieldComponentProps> } = {
