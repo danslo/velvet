@@ -18,6 +18,8 @@ export type AttributeProps = {
 
 const AttributeComponents: { [code: string]: FunctionComponent<AttributeProps> } = {
     price: Price,
+    special_price: Price,
+    msrp: Price,
     quantity_and_stock_status: Stock,
     category_ids: Categories,
     weight: Weight
@@ -61,7 +63,7 @@ const Attribute = (props: AttributeProps) => {
                                         options={props.attribute.options ?? []}
                                         error={error}/>
                                 ) : (
-                                    <>{props.attribute.type} not implemented</>
+                                    <>{props.attribute.type} not implemented ({props.attribute.code})</>
                                 )
                             }}
                             name={props.attribute.code}
