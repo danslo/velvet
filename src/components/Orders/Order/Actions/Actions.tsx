@@ -96,7 +96,7 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
                     endIcon={<KeyboardArrowDownIcon/>}
                     onClick={openMenu}>Actions</Button>
 
-            <Menu anchorEl={anchorEl} open={open} onClose={closeMenu}>
+            <Menu anchorEl={anchorEl} open={open} onClose={closeMenu} sx={{mt: 1}}>
                 <MenuItem disabled={!order.can_ship} onClick={shipOrder}>Ship</MenuItem>
                 <MenuItem disabled={!order.can_cancel} onClick={cancelOrder}>Cancel</MenuItem>
                 <MenuItem disabled={!order.can_invoice} onClick={invoiceOrder}>Invoice</MenuItem>
