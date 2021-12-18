@@ -89,8 +89,9 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
     }
 
     return (
-        <Box sx={{my: 1}}>
+        <Box sx={{my: 1, mb: 5, zIndex: 1000}}>
             <Button variant="contained"
+                    sx={{position: "fixed", right: 0, mr: 3}}
                     disableElevation
                     endIcon={<KeyboardArrowDownIcon/>}
                     onClick={openMenu}>Actions</Button>
