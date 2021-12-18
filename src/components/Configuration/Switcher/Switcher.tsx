@@ -29,14 +29,14 @@ const Switcher = () => {
                     </Button>
                     <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
                         {data.configurationScopes.map(def => (
-                            <div>
+                            <div key={def.scope_id}>
                                 <MenuItem
                                     key={def.scope_id}
                                     onClick={() => handleClose(null)}>
                                     {def.name}
                                 </MenuItem>
                                 {def.children.map(website => (
-                                    <div>
+                                    <div key={website.scope_id}>
                                         <MenuItem
                                             key={website.scope_id}
                                             onClick={() => handleClose(website)}
@@ -44,7 +44,7 @@ const Switcher = () => {
                                             &nbsp;{website.name}
                                         </MenuItem>
                                         {website.children.map(group => (
-                                            <div>
+                                            <div key={group.scope_id}>
                                                 <MenuItem
                                                     key={group.scope_id}
                                                     onClick={() => handleClose(group)}

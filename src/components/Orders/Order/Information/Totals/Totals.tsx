@@ -32,7 +32,7 @@ const Totals = ({totals, caption}: TotalsProps) => (
                         <List>
                             <ListItem disablePadding>
                                 {totals.discounts && totals.discounts.map(discount => (
-                                    <ListItemText sx={{m: 0}} primary={discount!.amount.value}
+                                    <ListItemText key={discount!.label} sx={{m: 0}} primary={discount!.amount.value}
                                                   secondary={discount!.label}/>
                                 ))}
                             </ListItem>

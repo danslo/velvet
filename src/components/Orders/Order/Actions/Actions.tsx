@@ -50,6 +50,7 @@ const Actions = (props: ActionsProps) => {
                     const Action = action.component;
                     return (
                         <Action
+                            key={typeof Action}
                             orderId={props.orderId}
                             disabled={action.disabled}
                             onComplete={closeMenu}

@@ -11,7 +11,7 @@ const StatusHistory = ({caption, status_history}: NotesProps) => (
         <Typography variant="h6">{caption}</Typography>
         <List>
             {status_history.map(status => (
-                <Box sx={{mb: 2}}>
+                <Box key={status.status} sx={{mb: 2}}>
                     <ListItemText sx={{textTransform: "capitalize"}} primary={status.status}
                                   secondary={status.created_at}/>
                     <ListItemText primary={"Customer Notified: " + (status.customer_notified ? "Yes" : "No")}/>

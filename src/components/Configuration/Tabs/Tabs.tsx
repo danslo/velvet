@@ -13,13 +13,13 @@ const Tabs = () => {
         <LoaderHandler loading={loading} error={error}>
             {data && (<>
                 {data.configurationTabs.map(tab => (
-                    <Accordion>
+                    <Accordion key={tab.label}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                             <Typography>{tab.label}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             {tab.sections.map(section => (
-                                <Box sx={{mb: 1}}>
+                                <Box sx={{mb: 1}} key={section.path}>
                                     <Link style={{textDecoration: "none", color: "black", fontSize: "0.9rem"}}
                                           to={"/configuration/" + section.path}>
                                         {section.label}

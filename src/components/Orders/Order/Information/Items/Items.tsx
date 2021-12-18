@@ -35,7 +35,7 @@ const Items = ({caption, items}: ItemsProps) => (
             </TableHead>
             <TableBody>
                 {items.map(item => (
-                    <TableRow>
+                    <TableRow key={item!.id}>
                         <TableCell>{item!.product_name}</TableCell>
                         <TableCell>{item!.status}</TableCell>
                         <TableCell>{item!.quantity_ordered}</TableCell>
@@ -45,7 +45,8 @@ const Items = ({caption, items}: ItemsProps) => (
                         <TableCell>{item!.discounts && (
                             <List>
                                 {item!.discounts.map(discount => (
-                                    <ListItemText primary={discount!.amount.value} secondary={discount!.label}/>
+                                    <ListItemText key={discount!.label} primary={discount!.amount.value}
+                                                  secondary={discount!.label}/>
                                 ))}
                             </List>
                         )}</TableCell>

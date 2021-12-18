@@ -13,7 +13,7 @@ const MultiSelect = (props: FieldComponentProps) => (
         SelectProps={{multiple: true, value: props.value?.split(','), autoWidth: true}}
     >
         {props.options?.map(option => (
-            <MenuItem value={option.value ?? undefined}>{option.label}</MenuItem>
+            <MenuItem key={option.label} value={option.value ?? undefined}>{option.label}</MenuItem>
         ))}
     </TextField>
 )
