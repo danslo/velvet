@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {Button, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
+import {Button, FormControlLabel, Paper, Switch, TextField} from "@mui/material";
 import MUIRichTextEditor from "mui-rte";
 import {useForm} from "react-hook-form";
 import {useGetBlockQuery, useSaveBlockMutation} from "../../../types";
@@ -26,7 +26,6 @@ const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
         <LoaderHandler loading={loading} error={error}>
             {data && (
                 <Paper sx={{p: 3}}>
-                    <Typography variant="h6"/>
                     <form>
                         <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
 
