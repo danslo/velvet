@@ -1,6 +1,5 @@
 import {useParams} from "react-router-dom";
 import {Button, FormControlLabel, Paper, Switch, TextField} from "@mui/material";
-import MUIRichTextEditor from "mui-rte";
 import {useForm} from "react-hook-form";
 import {useGetBlockQuery, useSaveBlockMutation} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
@@ -38,8 +37,11 @@ const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
                             control={<Switch {...register('is_active')}
                                              defaultChecked={!!data.block.is_active}/>}
                             label="Active"/>
-                        <MUIRichTextEditor label="Start typing..." defaultValue={data.block.content}/>
-                        <br/><br/><br/><br/>
+                        <br/>
+                        <TextField {...register('content')} defaultValue={data.block.content} multiline rows={4}
+                                   fullWidth={true}
+                                   helperText="Content"/>
+                        <br/><br/>
                         <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save</Button>
                     </form>
                 </Paper>
