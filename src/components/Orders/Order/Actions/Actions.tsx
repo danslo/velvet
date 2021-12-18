@@ -1,4 +1,4 @@
-import {Box, Button} from "@mui/material";
+import {Box, Button, Menu, MenuItem} from "@mui/material";
 import {
     useCancelOrderMutation,
     useHoldOrderMutation,
@@ -9,6 +9,8 @@ import {
     VelvetOrder
 } from "../../../../types";
 import {withSnackbar, WithSnackbarProps} from "../../../../hocs/snackbar";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import React from "react";
 
 type ActionsProps = {
     order: Partial<VelvetOrder>
@@ -32,6 +34,7 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
             .then((result) => {
                 if (result.data?.cancelOrder) snackbarShowMessage('Order was cancelled.');
             });
+        closeMenu();
     }
 
     const shipOrder = () => {
@@ -39,6 +42,7 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
             .then((result) => {
                 if (result.data?.shipOrder) snackbarShowMessage('Order was shipped.');
             });
+        closeMenu();
     }
 
     const holdOrder = () => {
@@ -46,6 +50,7 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
             .then((result) => {
                 if (result.data?.holdOrder) snackbarShowMessage('Order was held.');
             });
+        closeMenu();
     }
 
     const unholdOrder = () => {
@@ -53,6 +58,7 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
             .then((result) => {
                 if (result.data?.unholdOrder) snackbarShowMessage('Order was unheld.');
             });
+        closeMenu();
     }
 
     const invoiceOrder = () => {
@@ -60,6 +66,7 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
             .then((result) => {
                 if (result.data?.invoiceOrder) snackbarShowMessage('Order was invoiced.');
             });
+        closeMenu();
     }
 
     const refundOrder = () => {
@@ -67,21 +74,35 @@ const Actions = ({order, orderId, snackbarShowMessage}: ActionsProps) => {
             .then((result) => {
                 if (result.data?.refundOrder) snackbarShowMessage('Order was refunded.');
             });
+        closeMenu();
+    }
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const openMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    }
+
+    const closeMenu = () => {
+        setAnchorEl(null);
     }
 
     return (
         <Box sx={{my: 1}}>
-            <Button variant="contained" size="large" disabled={!order.can_ship} onClick={shipOrder}>Ship</Button>
-            <Button variant="contained" size="large" disabled={!order.can_cancel} onClick={cancelOrder}
-                    sx={{ml: 1}}>Cancel</Button>
-            <Button variant="contained" size="large" disabled={!order.can_invoice} onClick={invoiceOrder}
-                    sx={{ml: 1}}>Invoice</Button>
-            <Button variant="contained" size="large" disabled={!order.can_hold} onClick={holdOrder}
-                    sx={{ml: 1}}>Hold</Button>
-            <Button variant="contained" size="large" disabled={!order.can_unhold} onClick={unholdOrder}
-                    sx={{ml: 1}}>Unhold</Button>
-            <Button variant="contained" size="large" disabled={!order.can_creditmemo} onClick={refundOrder}
-                    sx={{ml: 1}}>Refund</Button>
+            <Button variant="contained"
+                    disableElevation
+                    endIcon={<KeyboardArrowDownIcon/>}
+                    onClick={openMenu}>Actions</Button>
+
+            <Menu anchorEl={anchorEl} open={open} onClose={closeMenu}>
+                <MenuItem disabled={!order.can_ship} onClick={shipOrder}>Ship</MenuItem>
+                <MenuItem disabled={!order.can_cancel} onClick={cancelOrder}>Cancel</MenuItem>
+                <MenuItem disabled={!order.can_invoice} onClick={invoiceOrder}>Invoice</MenuItem>
+                <MenuItem disabled={!order.can_hold} onClick={holdOrder}>Hold</MenuItem>
+                <MenuItem disabled={!order.can_unhold} onClick={unholdOrder}>Unhold</MenuItem>
+                <MenuItem disabled={!order.can_creditmemo} onClick={refundOrder}>Refund</MenuItem>
+            </Menu>
         </Box>
     )
 }
