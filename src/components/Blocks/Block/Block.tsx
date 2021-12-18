@@ -26,19 +26,30 @@ const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
             {data && (
                 <Paper sx={{p: 3}}>
                     <form>
-                        <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
+                        <input {...register('block_id')}
+                               value={data.block.block_id}
+                               hidden={true}/>
 
-                        <TextField {...register('title')} defaultValue={data.block.title} helperText="Title"/>
+                        <TextField {...register('title')}
+                                   defaultValue={data.block.title}
+                                   variant="standard"
+                                   helperText="Title"/>
                         <br/>
-                        <TextField {...register('identifier')} defaultValue={data.block.identifier}
+                        <TextField {...register('identifier')}
+                                   defaultValue={data.block.identifier}
+                                   variant="standard"
                                    helperText="Identifier"/>
                         <br/>
                         <FormControlLabel
-                            control={<Switch {...register('is_active')}
-                                             defaultChecked={!!data.block.is_active}/>}
+                            control={<Switch
+                                {...register('is_active')}
+                                defaultChecked={!!data.block.is_active}/>}
                             label="Active"/>
                         <br/>
-                        <TextField {...register('content')} defaultValue={data.block.content} multiline rows={4}
+                        <TextField {...register('content')}
+                                   defaultValue={data.block.content}
+                                   variant="standard"
+                                   multiline rows={4}
                                    fullWidth={true}
                                    helperText="Content"/>
                         <br/><br/>
