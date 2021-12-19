@@ -4,10 +4,11 @@ import {Navigate} from "react-router-dom";
 import {useMutation} from "@apollo/client";
 import {GenerateAdminTokenDocument} from "../../types";
 import {setClientLink} from "../../utils/client";
-import {withSnackbar, WithSnackbarProps} from "../../hocs/snackbar";
 import {AuthContext} from "../../context/auth";
+import {useSnackbar} from "notistack";
 
-const Login = ({snackbarShowMessage}: WithSnackbarProps) => {
+const Login = () => {
+    const {enqueueSnackbar} = useSnackbar();
     const {token, setToken} = useContext(AuthContext);
     const [generateAdminTokenMutation] = useMutation(GenerateAdminTokenDocument);
 
@@ -20,7 +21,7 @@ const Login = ({snackbarShowMessage}: WithSnackbarProps) => {
                 setToken(token);
             })
             .catch(reason => {
-                snackbarShowMessage(reason.message);
+                enqueueSnackbar(reason.message);
             });
     }
 
@@ -55,4 +56,4 @@ const Login = ({snackbarShowMessage}: WithSnackbarProps) => {
     )
 }
 
-export default withSnackbar(Login);
+export default Login;

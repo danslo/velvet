@@ -7,11 +7,12 @@ import {
 } from "../../../types";
 import React from "react";
 import Group from "../Group/Group";
-import {withSnackbar, WithSnackbarProps} from "../../../hocs/snackbar";
 import Field from "../Field/Field";
 import {useScopeContext} from "../../../context/scope";
+import {useSnackbar} from "notistack";
 
-const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
+const Section = () => {
+    const {enqueueSnackbar} = useSnackbar();
     const {currentScope} = useScopeContext();
     const {section = "general"} = useParams();
     const {data, loading, error} = useGetConfigurationSectionQuery({
@@ -33,9 +34,9 @@ const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
                 scope_id: currentScope?.scope_id
             }
         }).then(() => {
-            snackbarShowMessage('Configuration was saved.');
+            enqueueSnackbar('Configuration was saved.');
         }).catch((error) => {
-            snackbarShowMessage(error.message);
+            enqueueSnackbar(error.message);
         });
     }
 
@@ -47,9 +48,9 @@ const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
                 scope_id: currentScope?.scope_id
             }
         }).then(() => {
-            snackbarShowMessage('Configuration was restored.');
+            enqueueSnackbar('Configuration was restored.');
         }).catch((error) => {
-            snackbarShowMessage(error.message);
+            enqueueSnackbar(error.message);
         });
     }
 
@@ -70,4 +71,4 @@ const Section = ({snackbarShowMessage}: WithSnackbarProps) => {
     );
 }
 
-export default withSnackbar(Section);
+export default Section;

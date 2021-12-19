@@ -1,6 +1,5 @@
 import {Box, Button, Menu} from "@mui/material";
 import {VelvetOrder} from "../../../../types";
-import {withSnackbar, WithSnackbarProps} from "../../../../hocs/snackbar";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import React, {FunctionComponent} from "react";
 import Cancel from "./Cancel/Cancel";
@@ -9,20 +8,23 @@ import Invoice from "./Invoice/Invoice";
 import Hold from "./Hold/Hold";
 import Unhold from "./Unhold/Unhold";
 import Refund from "./Refund/Refund";
+import {useSnackbar} from "notistack";
 
 type ActionsProps = {
     order: Partial<VelvetOrder>
     orderId: number
-} & WithSnackbarProps;
+}
 
 export type ActionProps = {
     orderId: number
     onComplete: () => void
     onSuccess: () => void
     disabled: boolean
-};
+}
 
 const Actions = (props: ActionsProps) => {
+    const {enqueueSnackbar} = useSnackbar();
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -54,7 +56,7 @@ const Actions = (props: ActionsProps) => {
                             orderId={props.orderId}
                             disabled={action.disabled}
                             onComplete={closeMenu}
-                            onSuccess={() => props.snackbarShowMessage(action.message)}
+                            onSuccess={() => enqueueSnackbar(action.message)}
                         />
                     )
                 })}
@@ -63,4 +65,4 @@ const Actions = (props: ActionsProps) => {
     )
 }
 
-export default withSnackbar(Actions);
+export default Actions;

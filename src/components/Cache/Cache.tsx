@@ -3,9 +3,10 @@ import {Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, Tabl
 import React, {useState} from "react";
 import {useCleanCacheMutation, useGetCacheTypesQuery, useToggleCacheMutation} from "../../types";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
-import {withSnackbar, WithSnackbarProps} from "../../hocs/snackbar";
+import {useSnackbar} from "notistack";
 
-const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
+const Cache = () => {
+    const {enqueueSnackbar} = useSnackbar();
     const [toggleCacheMutation] = useToggleCacheMutation({refetchQueries: ['getCacheTypes']});
     const [cleanCacheMutation] = useCleanCacheMutation();
     const {data, loading, error} = useGetCacheTypesQuery();
@@ -39,7 +40,7 @@ const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
             }
         }).then((result) => {
             if (result.data?.toggleCache) {
-                snackbarShowMessage("Cache was successfully " + (enable ? "enabled" : "disabled") + ".");
+                enqueueSnackbar("Cache was successfully " + (enable ? "enabled" : "disabled") + ".");
             }
         });
         handleClose();
@@ -52,7 +53,7 @@ const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
             }
         }).then((result) => {
             if (result.data?.cleanCache) {
-                snackbarShowMessage("Cache was successfully cleaned.");
+                enqueueSnackbar("Cache was successfully cleaned.");
             }
         });
         handleClose();
@@ -105,4 +106,4 @@ const Cache = ({snackbarShowMessage}: WithSnackbarProps) => {
     );
 }
 
-export default withSnackbar(withLayout(Cache));
+export default withLayout(Cache);

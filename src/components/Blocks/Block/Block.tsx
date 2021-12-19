@@ -4,9 +4,10 @@ import {useForm} from "react-hook-form";
 import {useGetBlockQuery, useSaveBlockMutation} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {withLayout} from "../../../hocs/layout";
-import {withSnackbar, WithSnackbarProps} from "../../../hocs/snackbar";
+import {useSnackbar} from "notistack";
 
-const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
+const Block = () => {
+    const {enqueueSnackbar} = useSnackbar();
     const {blockId} = useParams();
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm({shouldUseNativeValidation: true});
@@ -23,7 +24,7 @@ const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
             .then(result => {
                 if (result.data?.saveBlock) {
                     navigate('/blocks/' + result.data.saveBlock.block_id, {replace: true});
-                    snackbarShowMessage('Block was successfully saved.');
+                    enqueueSnackbar('Block was successfully saved.');
                 }
             })
     };
@@ -67,4 +68,4 @@ const Block = ({snackbarShowMessage}: WithSnackbarProps) => {
     )
 }
 
-export default withSnackbar(withLayout(Block));
+export default withLayout(Block);

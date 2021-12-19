@@ -29,6 +29,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
     "mui-rte": "^2.0.1",
+    "notistack": "^2.0.3",
     "react": "^17.0.2",
     "react-apollo": "^3.1.5",
     "react-dom": "^17.0.2",

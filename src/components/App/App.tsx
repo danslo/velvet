@@ -7,17 +7,20 @@ import {AuthProvider} from "../../context/auth";
 import {client} from "../../utils/client";
 import {ApolloProvider} from "@apollo/client";
 import {LoaderProvider} from "../../context/loader";
+import {SnackbarProvider} from "notistack";
 
 const App = () => (
     <AuthProvider>
         <ApolloProvider client={client}>
             <ThemeProvider theme={createTheme(theme)}>
-                <LoaderProvider>
-                    <CssBaseline/>
-                    <BrowserRouter>
-                        <Routes/>
-                    </BrowserRouter>
-                </LoaderProvider>
+                <SnackbarProvider>
+                    <LoaderProvider>
+                        <CssBaseline/>
+                        <BrowserRouter>
+                            <Routes/>
+                        </BrowserRouter>
+                    </LoaderProvider>
+                </SnackbarProvider>
             </ThemeProvider>
         </ApolloProvider>
     </AuthProvider>
