@@ -91,6 +91,11 @@ const routes: Array<route> = [
         is_private: true,
         children: [
             {
+                path: 'create',
+                component: Block,
+                is_private: true
+            },
+            {
                 path: ':blockId',
                 component: Block,
                 is_private: true

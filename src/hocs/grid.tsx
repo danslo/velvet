@@ -51,8 +51,14 @@ export function withGrid<Query extends RequiredGridFields>(
 
         return (
             <>
-                <TablePagination component="div" count={pageCount} page={page} onPageChange={handleChangePage}
-                                 rowsPerPage={rowsPerPage} onRowsPerPageChange={handleChangeRowsPerPage}/>
+                <TablePagination
+                    component="div"
+                    count={pageCount}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}/>
+                
                 <LoaderHandler loading={loading} error={error}>
                     {data && (<WrappedComponent data={data}/>)}
                 </LoaderHandler>
