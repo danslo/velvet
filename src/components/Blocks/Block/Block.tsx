@@ -1,17 +1,20 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, FormControlLabel, Paper, Switch, TextField} from "@mui/material";
-import {useForm} from "react-hook-form";
+import {Button, FormControlLabel, Paper, Switch} from "@mui/material";
+import {Controller, useForm} from "react-hook-form";
 import {useGetBlockQuery, useSaveBlockMutation} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {withLayout} from "../../../hocs/layout";
 import {useSnackbar} from "notistack";
 import Header from "../../Header/Header";
+import React from "react";
+import Text from "../../FieldComponents/Text/Text";
+import Textarea from "../../FieldComponents/Textarea/Textarea";
 
 const Block = () => {
     const {enqueueSnackbar} = useSnackbar();
     const {blockId} = useParams();
     const navigate = useNavigate();
-    const {register, handleSubmit} = useForm({shouldUseNativeValidation: true});
+    const {register, control, handleSubmit} = useForm();
     const [saveBlockMutation] = useSaveBlockMutation();
     const {data, loading, error} = useGetBlockQuery({
         skip: typeof blockId === 'undefined',
@@ -35,36 +38,62 @@ const Block = () => {
             {!loading && (
                 <>
                     <Header text={data ? "Block: " + data.block.identifier : "Add Block"}>
-                        <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save</Button>
+                        <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save Block</Button>
                     </Header>
                     <Paper sx={{p: 3}}>
                         <form>
                             {data?.block.block_id && (
                                 <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
                             )}
-                            <TextField {...register('title')}
-                                       defaultValue={data?.block.title}
-                                       variant="standard"
-                                       helperText="Title"/>
-                            <br/>
-                            <TextField {...register('identifier')}
-                                       defaultValue={data?.block.identifier}
-                                       variant="standard"
-                                       helperText="Identifier"/>
-                            <br/>
-                            <FormControlLabel
-                                control={<Switch
-                                    {...register('is_active')}
-                                    defaultChecked={!!data?.block.is_active}/>}
-                                label="Active"/>
-                            <br/>
-                            <TextField {...register('content')}
-                                       defaultValue={data?.block.content}
-                                       variant="standard"
-                                       multiline rows={4}
-                                       fullWidth={true}
-                                       helperText="Content"/>
+
+                            <Controller
+                                control={control}
+                                defaultValue={data?.block.title}
+                                name="title"
+                                rules={{required: "Title is required."}}
+                                render={({field: {onChange, value, ref}, fieldState: {error}}) => (
+                                    <Text
+                                        label="Title"
+                                        inputRef={ref}
+                                        value={value}
+                                        onChange={onChange}
+                                        error={error}/>
+                                )}/>
                             <br/><br/>
+
+                            <Controller
+                                control={control}
+                                defaultValue={data?.block.identifier}
+                                name="identifier"
+                                rules={{required: "Identifier is required."}}
+                                render={({field: {onChange, value, ref}, fieldState: {error}}) => (
+                                    <Text
+                                        label="Identifier"
+                                        inputRef={ref}
+                                        value={value}
+                                        onChange={onChange}
+                                        error={error}/>
+                                )}/>
+                            <br/><br/>
+
+                            <FormControlLabel
+                                control={<Switch {...register('is_active')} defaultChecked={!!data?.block.is_active}/>}
+                                label="Active"/>
+                            <br/><br/>
+
+                            <Controller
+                                control={control}
+                                defaultValue={data?.block.content}
+                                name="content"
+                                rules={{required: "Content is required."}}
+                                render={({field: {onChange, value, ref}, fieldState: {error}}) => (
+                                    <Textarea
+                                        label="Content"
+                                        inputRef={ref}
+                                        value={value}
+                                        onChange={onChange}
+                                        error={error}/>
+                                )}/>
                         </form>
                     </Paper>
                 </>

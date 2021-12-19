@@ -7,7 +7,7 @@ const Select = (props: FieldComponentProps) => (
         select
         SelectProps={{displayEmpty: true}}
         variant="standard">
-        {props.options.map(option => (
+        {props.options?.map(option => (
             <MenuItem key={option.label} value={option.value ?? ''}>{option.label}</MenuItem>
         ))}
     </TextField>

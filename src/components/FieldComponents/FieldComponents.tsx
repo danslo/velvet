@@ -11,8 +11,8 @@ import {RefCallBack} from "react-hook-form/dist/types";
 export type FieldComponentProps = {
     value: string | null;
     onChange: (value: string) => void;
-    options: Array<{ label: string, value: string | null }>;
-
+    label?: string
+    options?: Array<{ label: string, value: string | null }>;
     error?: FieldError;
     inputRef?: RefCallBack;
     disabled?: boolean;
@@ -22,6 +22,7 @@ export const textFieldProps = (props: FieldComponentProps) => ({
     inputRef: props.inputRef,
     value: props.value ?? '',
     disabled: props.disabled,
+    label: props.label,
     onChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => props.onChange(e.target.value),
     error: !!props.error,
     helperText: props.error ? props.error.message : null
