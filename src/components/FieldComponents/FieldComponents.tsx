@@ -34,7 +34,5 @@ export const FieldComponents: { [type: string]: FunctionComponent<FieldComponent
     multiselect: MultiSelect,
     textarea: Textarea,
     boolean: Boolean,
-    date: Date,
-
-    weight: Text, // todo
+    date: Date
 }
