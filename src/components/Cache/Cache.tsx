@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import {useCleanCacheMutation, useGetCacheTypesQuery, useToggleCacheMutation} from "../../types";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
 import {useSnackbar} from "notistack";
+import Header from "../Header/Header";
 
 const Cache = () => {
     const {enqueueSnackbar} = useSnackbar();
@@ -62,45 +63,48 @@ const Cache = () => {
     return (
         <LoaderHandler loading={loading} error={error}>
             {data && (
-                <TableContainer component={Paper} sx={{mb: 2}}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Cache Type</TableCell>
-                                <TableCell>Description</TableCell>
-                                <TableCell>Tags</TableCell>
-                                <TableCell>Status</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {data.cacheTypes.map(cacheType => (
-                                <TableRow
-                                    key={cacheType.id}
-                                    id={cacheType.id}
-                                    hover={true}
-                                    onClick={handleContextMenu}
-                                    sx={{cursor: "pointer"}}>
-                                    <TableCell>{cacheType.cache_type}</TableCell>
-                                    <TableCell>{cacheType.description}</TableCell>
-                                    <TableCell>{cacheType.tags}</TableCell>
-                                    <TableCell>{cacheType.status}</TableCell>
+                <>
+                    <Header text="Cache Management"/>
+                    <TableContainer component={Paper} sx={{mb: 2}}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Cache Type</TableCell>
+                                    <TableCell>Description</TableCell>
+                                    <TableCell>Tags</TableCell>
+                                    <TableCell>Status</TableCell>
                                 </TableRow>
-                            ))}
-                            <Menu
-                                open={contextMenu !== null}
-                                onClose={handleClose}
-                                anchorReference="anchorPosition"
-                                anchorPosition={contextMenu !== null ? {
-                                    top: contextMenu.mouseY,
-                                    left: contextMenu.mouseX
-                                } : undefined}>
-                                <MenuItem onClick={() => toggleCache(true)}>Enable</MenuItem>
-                                <MenuItem onClick={() => toggleCache(false)}>Disable</MenuItem>
-                                <MenuItem onClick={cleanCache}>Clean</MenuItem>
-                            </Menu>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {data.cacheTypes.map(cacheType => (
+                                    <TableRow
+                                        key={cacheType.id}
+                                        id={cacheType.id}
+                                        hover={true}
+                                        onClick={handleContextMenu}
+                                        sx={{cursor: "pointer"}}>
+                                        <TableCell>{cacheType.cache_type}</TableCell>
+                                        <TableCell>{cacheType.description}</TableCell>
+                                        <TableCell>{cacheType.tags}</TableCell>
+                                        <TableCell>{cacheType.status}</TableCell>
+                                    </TableRow>
+                                ))}
+                                <Menu
+                                    open={contextMenu !== null}
+                                    onClose={handleClose}
+                                    anchorReference="anchorPosition"
+                                    anchorPosition={contextMenu !== null ? {
+                                        top: contextMenu.mouseY,
+                                        left: contextMenu.mouseX
+                                    } : undefined}>
+                                    <MenuItem onClick={() => toggleCache(true)}>Enable</MenuItem>
+                                    <MenuItem onClick={() => toggleCache(false)}>Disable</MenuItem>
+                                    <MenuItem onClick={cleanCache}>Clean</MenuItem>
+                                </Menu>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </>
             )}
         </LoaderHandler>
     );
