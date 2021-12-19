@@ -13,7 +13,7 @@ const App = () => (
     <AuthProvider>
         <ApolloProvider client={client}>
             <ThemeProvider theme={createTheme(theme)}>
-                <SnackbarProvider>
+                <SnackbarProvider autoHideDuration={2000}>
                     <LoaderProvider>
                         <CssBaseline/>
                         <BrowserRouter>
