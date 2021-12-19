@@ -6,11 +6,11 @@ type HeaderProps = {
 }
 
 const Header: FunctionComponent<HeaderProps> = (props) => (
-    <Toolbar disableGutters variant="dense">
+    <Toolbar disableGutters variant="dense" sx={{mb: 2}}>
         <Box display="flex" flexGrow={1}>
-            <Typography variant="h5" sx={{mb: 2}}>{props.text}</Typography>
+            <Typography variant="h5">{props.text}</Typography>
         </Box>
-        {props.children}
+        <Box>{props.children}</Box>
     </Toolbar>
 )
 

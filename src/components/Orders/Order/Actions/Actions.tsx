@@ -41,7 +41,7 @@ const Actions = (props: ActionsProps) => {
     ];
 
     return (
-        <Box sx={{mb: 2}}>
+        <Box>
             <Button variant="contained"
                     disableElevation
                     endIcon={<KeyboardArrowDownIcon/>}

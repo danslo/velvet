@@ -5,6 +5,7 @@ import {useGetBlockQuery, useSaveBlockMutation} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {withLayout} from "../../../hocs/layout";
 import {useSnackbar} from "notistack";
+import Header from "../../Header/Header";
 
 const Block = () => {
     const {enqueueSnackbar} = useSnackbar();
@@ -32,37 +33,41 @@ const Block = () => {
     return (
         <LoaderHandler loading={loading} error={error}>
             {!loading && (
-                <Paper sx={{p: 3}}>
-                    <form>
-                        {data?.block.block_id && (
-                            <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
-                        )}
-                        <TextField {...register('title')}
-                                   defaultValue={data?.block.title}
-                                   variant="standard"
-                                   helperText="Title"/>
-                        <br/>
-                        <TextField {...register('identifier')}
-                                   defaultValue={data?.block.identifier}
-                                   variant="standard"
-                                   helperText="Identifier"/>
-                        <br/>
-                        <FormControlLabel
-                            control={<Switch
-                                {...register('is_active')}
-                                defaultChecked={!!data?.block.is_active}/>}
-                            label="Active"/>
-                        <br/>
-                        <TextField {...register('content')}
-                                   defaultValue={data?.block.content}
-                                   variant="standard"
-                                   multiline rows={4}
-                                   fullWidth={true}
-                                   helperText="Content"/>
-                        <br/><br/>
+                <>
+                    <Header text={data ? "Block: " + data.block.identifier : "Add Block"}>
                         <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save</Button>
-                    </form>
-                </Paper>
+                    </Header>
+                    <Paper sx={{p: 3}}>
+                        <form>
+                            {data?.block.block_id && (
+                                <input {...register('block_id')} value={data.block.block_id} hidden={true}/>
+                            )}
+                            <TextField {...register('title')}
+                                       defaultValue={data?.block.title}
+                                       variant="standard"
+                                       helperText="Title"/>
+                            <br/>
+                            <TextField {...register('identifier')}
+                                       defaultValue={data?.block.identifier}
+                                       variant="standard"
+                                       helperText="Identifier"/>
+                            <br/>
+                            <FormControlLabel
+                                control={<Switch
+                                    {...register('is_active')}
+                                    defaultChecked={!!data?.block.is_active}/>}
+                                label="Active"/>
+                            <br/>
+                            <TextField {...register('content')}
+                                       defaultValue={data?.block.content}
+                                       variant="standard"
+                                       multiline rows={4}
+                                       fullWidth={true}
+                                       helperText="Content"/>
+                            <br/><br/>
+                        </form>
+                    </Paper>
+                </>
             )}
         </LoaderHandler>
     )
