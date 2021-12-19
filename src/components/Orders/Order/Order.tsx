@@ -10,6 +10,7 @@ import Tabs from "./Tabs/Tabs";
 import Shipments from "./Shipments/Shipments";
 import Invoices from "./Invoices/Invoices";
 import Creditmemos from "./Creditmemos/Creditmemos";
+import Header from "../../Header/Header";
 
 const Order = () => {
     const {orderId, tab = "information"} = useParams();
@@ -36,17 +37,19 @@ const Order = () => {
     return (
         <LoaderHandler loading={loading} error={error}>
             {data && (
-                <Grid container spacing={2}>
-                    <Grid container justifyContent="flex-end">
+                <>
+                    <Header text={"Order #" + data.order.number}>
                         <Actions orderId={actualOrderId} order={data.order}/>
+                    </Header>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={3}>
+                            <Tabs orderId={actualOrderId}/>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                            {renderTab(tab, data.order)}
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={3}>
-                        <Tabs orderId={actualOrderId}/>
-                    </Grid>
-                    <Grid item xs={12} md={9}>
-                        {renderTab(tab, data.order)}
-                    </Grid>
-                </Grid>
+                </>
             )}
         </LoaderHandler>
     )
