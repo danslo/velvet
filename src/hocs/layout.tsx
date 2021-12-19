@@ -9,7 +9,7 @@ export function withLayout<P>(WrappedComponent: React.ComponentType<P>) {
         <>
             <Navbar/>
             <ProgressBar/>
-            <Container maxWidth={false} sx={{py: 3}}>
+            <Container maxWidth={false} sx={{p: 3}} disableGutters>
                 <WrappedComponent {...props} />
             </Container>
             <Footer/>
