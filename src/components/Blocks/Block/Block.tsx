@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {Button, FormControlLabel, Paper, Switch} from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
-import {useGetBlockQuery, useSaveBlockMutation} from "../../../types";
+import {useDeleteBlockMutation, useGetBlockQuery, useSaveBlockMutation} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
 import {withLayout} from "../../../hocs/layout";
 import {useSnackbar} from "notistack";
@@ -16,29 +16,46 @@ const Block = () => {
     const navigate = useNavigate();
     const {register, control, handleSubmit} = useForm();
     const [saveBlockMutation] = useSaveBlockMutation();
+    const [deleteBlockMutation] = useDeleteBlockMutation();
+    const isNewBlock = typeof blockId === 'undefined';
     const {data, loading, error} = useGetBlockQuery({
-        skip: typeof blockId === 'undefined',
+        skip: isNewBlock,
         variables: {
             block_id: parseInt(blockId!)
         }
     });
 
-    const onSubmit = async (stuff: any /* todo */) => {
+    const saveBlock = (stuff: any /* todo */) => {
         saveBlockMutation({variables: {input: stuff}})
             .then(result => {
                 if (result.data?.saveBlock) {
                     navigate('/blocks/' + result.data.saveBlock.block_id, {replace: true});
-                    enqueueSnackbar('Block was successfully saved.');
+                    enqueueSnackbar('Block was saved.');
                 }
             })
     };
+
+    const deleteBlock = () => {
+        deleteBlockMutation({variables: {block_id: parseInt(blockId!)}})
+            .then(result => {
+                if (result.data?.deleteBlock) {
+                    navigate('/blocks', {replace: true});
+                    enqueueSnackbar('Block was deleted.');
+                }
+            })
+    }
 
     return (
         <LoaderHandler loading={loading} error={error}>
             {!loading && (
                 <>
                     <Header text={data ? "Block: " + data.block.identifier : "Add Block"}>
-                        <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>Save Block</Button>
+                        <Button variant="contained" onClick={handleSubmit(saveBlock)}>Save Block</Button>
+                        {!isNewBlock && (
+                            <Button sx={{ml: 1}} variant="contained" onClick={deleteBlock}>
+                                Delete Block
+                            </Button>
+                        )}
                     </Header>
                     <Paper sx={{p: 3}}>
                         <form>

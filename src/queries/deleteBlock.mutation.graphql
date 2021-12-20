@@ -1,0 +1,3 @@
+mutation deleteBlock($block_id: Int!) {
+    deleteBlock(block_id: $block_id)
+}
