@@ -1,8 +1,7 @@
 import React, {FormEvent, useContext} from "react";
 import {Box, Button, Container, TextField, Typography} from "@mui/material";
 import {Navigate} from "react-router-dom";
-import {useMutation} from "@apollo/client";
-import {GenerateAdminTokenDocument} from "../../types";
+import {useGenerateAdminTokenMutation} from "../../types";
 import {setClientLink} from "../../utils/client";
 import {AuthContext} from "../../context/auth";
 import {useSnackbar} from "notistack";
@@ -10,12 +9,12 @@ import {useSnackbar} from "notistack";
 const Login = () => {
     const {enqueueSnackbar} = useSnackbar();
     const {token, setToken} = useContext(AuthContext);
-    const [generateAdminTokenMutation] = useMutation(GenerateAdminTokenDocument);
+    const [generateAdminTokenMutation] = useGenerateAdminTokenMutation();
 
     const login = async (username: string, password: string) => {
         generateAdminTokenMutation({variables: {username: username, password: password}})
             .then(result => {
-                const token = result.data.generateAdminToken;
+                const token = result.data!.generateAdminToken;
                 localStorage.setItem('token', token);
                 setClientLink(token);
                 setToken(token);
