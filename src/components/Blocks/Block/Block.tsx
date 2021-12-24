@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {Paper} from "@mui/material";
+import {Button, Paper} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useDeleteBlockMutation, useGetBlockQuery, useSaveBlockMutation} from "../../../types";
 import LoaderHandler from "../../LoaderHandler/LoaderHandler";
@@ -7,7 +7,6 @@ import {withLayout} from "../../../hocs/layout";
 import Header from "../../Header/Header";
 import React from "react";
 import Form from "./Form/Form";
-import Actions from "./Actions/Actions";
 import {useSnackbar} from "notistack";
 
 const Block = () => {
@@ -47,18 +46,18 @@ const Block = () => {
             {!loading && (
                 <>
                     <Header text={data ? "Block: " + data.block.identifier : "Add Block"}>
-                        <Actions
-                            canDelete={!isNewBlock}
-                            onDelete={() => deleteBlock(parseInt(blockId!))}
-                            onSave={handleSubmit(saveBlock)}
-                        />
+                        <Button variant="contained" onClick={handleSubmit(saveBlock)}>Save</Button>
+                        {!isNewBlock && (
+                            <Button
+                                sx={{ml: 1}}
+                                variant="contained"
+                                onClick={() => deleteBlock(parseInt(blockId!))}>
+                                Delete
+                            </Button>
+                        )}
                     </Header>
                     <Paper sx={{p: 3}}>
-                        <Form
-                            data={data}
-                            register={register}
-                            control={control}
-                        />
+                        <Form data={data} register={register} control={control}/>
                     </Paper>
                 </>
             )}
