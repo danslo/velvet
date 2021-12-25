@@ -1,0 +1,3 @@
+mutation deletePage($page_id: Int!) {
+    deletePage(page_id: $page_id)
+}

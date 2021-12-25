@@ -1,0 +1,5 @@
+mutation savePage($input: VelvetCmsPageInput!) {
+    savePage(input: $input) {
+        page_id
+    }
+}

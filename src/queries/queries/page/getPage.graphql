@@ -1,0 +1,24 @@
+query getPage($page_id: Int!) {
+    page(page_id: $page_id) {
+        page_id
+        title
+        page_layout
+        meta_keywords
+        meta_description
+        identifier
+        content_heading
+        content
+        creation_time
+        update_time
+        is_active
+        sort_order
+        layout_update_xml
+        custom_theme
+        custom_root_template
+        custom_layout_update_xml
+        layout_update_selected
+        custom_theme_from
+        custom_theme_to
+        meta_title
+    }
+}
