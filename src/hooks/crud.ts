@@ -9,17 +9,15 @@ function useCrud<LoadQuery, LoadVariables, SaveQuery, SaveVariables, DeleteQuery
     deleteDocument: TypedDocumentNode<DeleteQuery, DeleteVariables>,
     loadVariables: LoadVariables,
     getSaveReturnUrl: (result: FetchResult<SaveQuery>) => string,
-    getDeleteReturnUrl: () => string,
-    entityId?: string
+    getDeleteReturnUrl: (result: FetchResult<DeleteQuery>) => string,
+    skipLoadQuery: boolean
 ) {
-    const isNewEntity = typeof entityId === 'undefined';
-
     const {enqueueSnackbar} = useSnackbar();
     const navigate = useNavigate();
 
     const {data, loading, error} = Apollo.useQuery<LoadQuery, LoadVariables>(loadDocument, {
         variables: loadVariables,
-        skip: isNewEntity
+        skip: skipLoadQuery
     });
 
     const [saveMutation] = Apollo.useMutation<SaveQuery, SaveVariables>(saveDocument, {});
@@ -34,9 +32,9 @@ function useCrud<LoadQuery, LoadVariables, SaveQuery, SaveVariables, DeleteQuery
 
     const [deleteMutation] = Apollo.useMutation<DeleteQuery, DeleteVariables>(deleteDocument, {});
     const onDelete = (variables: DeleteVariables) => deleteMutation({variables: variables})
-        .then(() => {
+        .then(result => {
             enqueueSnackbar('Successfully deleted.');
-            navigate(getDeleteReturnUrl(), {replace: true});
+            navigate(getDeleteReturnUrl(result), {replace: true});
         })
         .catch(error => {
             enqueueSnackbar('Unable to delete entity: ' + error.message, {variant: 'error'});
@@ -47,8 +45,7 @@ function useCrud<LoadQuery, LoadVariables, SaveQuery, SaveVariables, DeleteQuery
         loading: loading,
         error: error,
         onSave: onSave,
-        onDelete: onDelete,
-        showDelete: !isNewEntity
+        onDelete: onDelete
     }
 }
 

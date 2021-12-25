@@ -19,6 +19,9 @@ import FormLayout from "../../FormLayout/FormLayout";
 
 const Block = () => {
     const {blockId} = useParams();
+    const blockVariables = {block_id: parseInt(blockId!)};
+    const isNewBlock = typeof blockId === 'undefined';
+
     const {register, control, handleSubmit} = useForm();
 
     const {
@@ -26,24 +29,23 @@ const Block = () => {
         loading,
         error,
         onSave,
-        onDelete,
-        showDelete
+        onDelete
     } = useCrud<GetBlockQuery, GetBlockQueryVariables, SaveBlockMutation, SaveBlockMutationVariables, DeleteBlockMutation, DeleteBlockMutationVariables>(
         GetBlockDocument,
         SaveBlockDocument,
         DeleteBlockDocument,
-        {block_id: parseInt(blockId!)},
-        result => '/blocks/' + result.data?.saveBlock.block_id,
+        blockVariables,
+        result => '/blocks/' + result.data!.saveBlock.block_id,
         () => '/blocks',
-        blockId
+        isNewBlock
     );
 
     return (
         <FormLayout
             error={error}
             loading={loading}
-            showDelete={showDelete}
-            onDelete={() => onDelete({block_id: parseInt(blockId!)})}
+            showDelete={!isNewBlock}
+            onDelete={() => onDelete(blockVariables)}
             onSave={handleSubmit((input: any) => onSave({input: input}))}
             header={data ? "Block: " + data.block.identifier : "Add Block"}>
             <Form data={data} register={register} control={control}/>
