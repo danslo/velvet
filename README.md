@@ -4,10 +4,9 @@
 
 1. Make sure that the following extensions are installed on your M2 backend:
     - The [m2-module-velvet](https://github.com/danslo/m2-module-velvet) metapackage.
-    - In case you are running on separate domains (which is likely during development),
-      the [Magento 2 CORS](https://github.com/graycoreio/magento2-cors) module.
 2. Run the GraphQL code generator: `REACT_APP_BACKEND_URL="https://magento24.test/graphql" yarn codegen`
 3. Start the application: `REACT_APP_BACKEND_URL="https://magento24.test/graphql" yarn start`
+4. Visit http://localhost:3000/
 
 ## License
 
