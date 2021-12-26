@@ -25,12 +25,7 @@ const Form = ({data, register, control}: FormProps) => (
                 name="title"
                 rules={{required: "Title is required."}}
                 render={({field: {onChange, value, ref}, fieldState: {error}}) => (
-                    <Text
-                        label="Title"
-                        inputRef={ref}
-                        value={value}
-                        onChange={onChange}
-                        error={error}/>
+                    <Text label="Title" inputRef={ref} value={value} onChange={onChange} error={error}/>
                 )}/>
             <br/><br/>
 
@@ -40,12 +35,7 @@ const Form = ({data, register, control}: FormProps) => (
                 name="identifier"
                 rules={{required: "Identifier is required."}}
                 render={({field: {onChange, value, ref}, fieldState: {error}}) => (
-                    <Text
-                        label="Identifier"
-                        inputRef={ref}
-                        value={value}
-                        onChange={onChange}
-                        error={error}/>
+                    <Text label="Identifier" inputRef={ref} value={value} onChange={onChange} error={error}/>
                 )}/>
             <br/><br/>
 
@@ -60,12 +50,7 @@ const Form = ({data, register, control}: FormProps) => (
                 name="content"
                 rules={{required: "Content is required."}}
                 render={({field: {onChange, value, ref}, fieldState: {error}}) => (
-                    <Textarea
-                        label="Content"
-                        inputRef={ref}
-                        value={value}
-                        onChange={onChange}
-                        error={error}/>
+                    <Textarea label="Content" inputRef={ref} value={value} onChange={onChange} error={error}/>
                 )}/>
         </form>
     </Paper>
