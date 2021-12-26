@@ -20,5 +20,20 @@ query getPage($page_id: Int!) {
         custom_theme_from
         custom_theme_to
         meta_title
+
+        layouts {
+            value
+            label
+        }
+
+        custom_layouts {
+            value
+            label
+        }
+
+        themes {
+            value
+            label
+        }
     }
 }

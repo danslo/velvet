@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from "react";
 import LoaderHandler from "../LoaderHandler/LoaderHandler";
 import Header from "../Header/Header";
-import {Button, Paper} from "@mui/material";
+import {Button} from "@mui/material";
 import {ApolloError} from "@apollo/client/errors";
 
 type FormLayoutProps = {
@@ -23,7 +23,7 @@ const FormLayout: FunctionComponent<FormLayoutProps> = (props) => (
                         <Button sx={{ml: 1}} variant="contained" onClick={props.onDelete}>Delete</Button>
                     )}
                 </Header>
-                <Paper sx={{p: 3}}>{props.children}</Paper>
+                {props.children}
             </>
         )}
     </LoaderHandler>

@@ -4,6 +4,7 @@ import {FieldComponentProps, textFieldProps} from "../FieldComponents";
 const Select = (props: FieldComponentProps) => (
     <TextField
         {...textFieldProps(props)}
+        fullWidth={true}
         select
         SelectProps={{displayEmpty: true}}
         variant="standard">
