@@ -58,9 +58,12 @@ export function withGrid<Query extends RequiredGridFields>(
                     onPageChange={handleChangePage}
                     rowsPerPage={rowsPerPage}
                     onRowsPerPageChange={handleChangeRowsPerPage}/>
-                
+
                 <LoaderHandler loading={loading} error={error}>
-                    {data && (<WrappedComponent data={data}/>)}
+                    {!loading && (
+                        ((data && data.grid.total_items > 0) &&
+                            (<WrappedComponent data={data}/>)) || <>No records found.</>
+                    )}
                 </LoaderHandler>
             </>
         )
