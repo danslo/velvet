@@ -12,7 +12,8 @@ const Cancel = (props: ActionProps) => {
                 if (result.data?.cancelOrder) {
                     props.onSuccess();
                 }
-            });
+            })
+            .catch(error => props.onError(error.message));
         props.onComplete();
     }
 

@@ -19,6 +19,7 @@ export type ActionProps = {
     orderId: number
     onComplete: () => void
     onSuccess: () => void
+    onError: (message: string) => void
     disabled: boolean
 }
 
@@ -55,6 +56,7 @@ const Actions = (props: ActionsProps) => {
                             orderId={props.orderId}
                             disabled={action.disabled}
                             onComplete={closeMenu}
+                            onError={message => enqueueSnackbar(message, {variant: "error"})}
                             onSuccess={() => enqueueSnackbar(action.message)}
                         />
                     )

@@ -12,7 +12,8 @@ const Unhold = (props: ActionProps) => {
                 if (result.data?.unholdOrder) {
                     props.onSuccess();
                 }
-            });
+            })
+            .catch(error => props.onError(error.message));
         props.onComplete();
     }
 

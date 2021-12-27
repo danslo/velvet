@@ -12,7 +12,8 @@ const Hold = (props: ActionProps) => {
                 if (result.data?.holdOrder) {
                     props.onSuccess();
                 }
-            });
+            })
+            .catch(error => props.onError(error.message));
         props.onComplete();
     }
 

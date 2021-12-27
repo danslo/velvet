@@ -12,7 +12,8 @@ const Refund = (props: ActionProps) => {
                 if (result.data?.refundOrder) {
                     props.onSuccess();
                 }
-            });
+            })
+            .catch(error => props.onError(error.message));
         props.onComplete();
     }
 

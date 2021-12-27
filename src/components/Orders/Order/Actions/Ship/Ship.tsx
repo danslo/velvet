@@ -12,7 +12,8 @@ const Ship = (props: ActionProps) => {
                 if (result.data?.shipOrder) {
                     props.onSuccess();
                 }
-            });
+            })
+            .catch(error => props.onError(error.message));
         props.onComplete();
     }
 

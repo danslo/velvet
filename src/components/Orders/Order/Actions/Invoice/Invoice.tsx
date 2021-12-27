@@ -12,7 +12,8 @@ const Invoice = (props: ActionProps) => {
                 if (result.data?.invoiceOrder) {
                     props.onSuccess();
                 }
-            });
+            })
+            .catch(error => props.onError(error.message));
         props.onComplete();
     }
 
