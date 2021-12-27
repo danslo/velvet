@@ -1,0 +1,3 @@
+mutation saveProduct($input: VelvetProductInput!) {
+    saveProduct(input: $input)
+}

@@ -1,0 +1,3 @@
+mutation deleteProduct($product_id: Int!) {
+    deleteProduct(entity_id: $product_id)
+}
