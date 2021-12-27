@@ -14,141 +14,58 @@ import Block from "../components/Blocks/Block/Block";
 import Product from "../components/Products/Product/Product";
 import Products from "../components/Products/Products";
 import Page from "../components/Pages/Page/Page";
+import Attributes from "../components/Attributes/Attributes";
 
 type route = {
     path: string,
     component?: FunctionComponent,
-    is_private: boolean,
+    is_public?: boolean,
     children?: Array<route>
 };
 
 const routes: Array<route> = [
+    {path: '/', component: Login, is_public: true},
+    {path: 'dashboard', component: Dashboard},
+    {path: 'cache', component: Cache},
+    {path: 'indexers', component: Indexers},
+    {path: 'customers', component: Customers},
+    {path: 'attributes', component: Attributes},
+    {path: '*', component: PageNotFound, is_public: true},
     {
-        path: '/',
-        component: Login,
-        is_private: false
-    },
-    {
-        path: 'dashboard',
-        component: Dashboard,
-        is_private: true
-    },
-    {
-        path: 'cache',
-        component: Cache,
-        is_private: true
-    },
-    {
-        path: 'indexers',
-        component: Indexers,
-        is_private: true
-    },
-    {
-        path: 'orders',
-        is_private: true,
-        children: [
+        path: 'orders', children: [
             {
-                path: ':orderId',
-                component: Order,
-                is_private: true,
-                children: [
-                    {
-                        path: ':tab',
-                        component: Order,
-                        is_private: true
-                    }
+                path: ':orderId', component: Order, children: [
+                    {path: ':tab', component: Order}
                 ]
             },
-            {
-                path: '',
-                component: Orders,
-                is_private: true
-            }
+            {path: '', component: Orders}
         ]
     },
     {
-        path: 'configuration',
-        is_private: true,
-        children: [
-            {
-                path: ':section',
-                component: Configuration,
-                is_private: true
-            },
-            {
-                path: '',
-                component: Configuration,
-                is_private: true
-            }
+        path: 'configuration', children: [
+            {path: ':section', component: Configuration},
+            {path: '', component: Configuration}
         ]
     },
     {
-        path: 'pages',
-        is_private: true,
-        children: [
-            {
-                path: 'create',
-                component: Page,
-                is_private: true
-            },
-            {
-                path: ':pageId',
-                component: Page,
-                is_private: true
-            },
-            {
-                path: '',
-                component: Pages,
-                is_private: true
-            }
+        path: 'pages', children: [
+            {path: 'create', component: Page},
+            {path: ':pageId', component: Page},
+            {path: '', component: Pages}
         ]
     },
     {
-        path: 'blocks',
-        is_private: true,
-        children: [
-            {
-                path: 'create',
-                component: Block,
-                is_private: true
-            },
-            {
-                path: ':blockId',
-                component: Block,
-                is_private: true
-            },
-            {
-                path: '',
-                component: Blocks,
-                is_private: true
-            }
+        path: 'blocks', children: [
+            {path: 'create', component: Block},
+            {path: ':blockId', component: Block},
+            {path: '', component: Blocks}
         ]
     },
     {
-        path: 'customers',
-        is_private: true,
-        component: Customers
-    },
-    {
-        path: 'products',
-        is_private: true,
-        children: [
-            {
-                path: ':productId',
-                component: Product,
-                is_private: true
-            },
-            {
-                path: '',
-                component: Products,
-                is_private: true
-            }
+        path: 'products', children: [
+            {path: ':productId', component: Product},
+            {path: '', component: Products}
         ]
-    },
-    {
-        path: '*',
-        component: PageNotFound,
-        is_private: false
     }
 ];
 
