@@ -1,12 +1,29 @@
 # Velvet
 
+Velvet is an administration backend for [Magento 2](https://github.com/magento/magento2) websites.
+
+There are many options for running a Magento storefront headlessly, such
+as [Daffodil](https://github.com/graycoreio/daffodil), [PWA Studio](https://github.com/magento/pwa-studio)
+and [Vue Storefront](https://github.com/vuestorefront/vue-storefront).
+
+No such solution currently exists to replace the traditional Magento administrative backend. That's where Velvet comes
+in. It is the missing piece to run Magento completely headless.
+
+Velvet is built with modern web technologies such as React, Typescript, GraphQL and MUI.
+
+**DISCLAIMER: Velvet is still in heavy development, with many features missing. It is not production-ready.**
+
 ## Installation
 
-1. Make sure that the following extensions are installed on your M2 backend:
+1. Make sure that the following extensions are installed on your M2 instance:
     - The [m2-module-velvet](https://github.com/danslo/m2-module-velvet) metapackage.
 2. Run the GraphQL code generator: `REACT_APP_BACKEND_URL="https://magento24.test/graphql" yarn codegen`
 3. Start the application: `REACT_APP_BACKEND_URL="https://magento24.test/graphql" yarn start`
 4. Visit http://localhost:3000/
+
+## Screenshot
+
+<img src="https://i.imgur.com/NY5vBzx.png" width="100%" />
 
 ## License
 
