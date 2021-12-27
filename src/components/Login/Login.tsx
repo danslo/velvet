@@ -1,28 +1,10 @@
-import React, {FormEvent, useContext} from "react";
+import React, {FormEvent} from "react";
 import {Box, Button, Container, TextField, Typography} from "@mui/material";
 import {Navigate} from "react-router-dom";
-import {useGenerateAdminTokenMutation} from "../../types";
-import {setClientLink} from "../../utils/client";
-import {AuthContext} from "../../context/auth";
-import {useSnackbar} from "notistack";
+import useAuth from "../../hooks/auth";
 
 const Login = () => {
-    const {enqueueSnackbar} = useSnackbar();
-    const {token, setToken} = useContext(AuthContext);
-    const [generateAdminTokenMutation] = useGenerateAdminTokenMutation();
-
-    const login = async (username: string, password: string) => {
-        generateAdminTokenMutation({variables: {username: username, password: password}})
-            .then(result => {
-                const token = result.data!.generateAdminToken;
-                localStorage.setItem('token', token);
-                setClientLink(token);
-                setToken(token);
-            })
-            .catch(reason => {
-                enqueueSnackbar(reason.message);
-            });
-    }
+    const {login, isLoggedIn} = useAuth();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -30,11 +12,11 @@ const Login = () => {
         const username = data.get('username')?.toString();
         const password = data.get('password')?.toString();
         if (username && password) {
-            await login(username, password);
+            login(username, password);
         }
     }
 
-    if (token) {
+    if (isLoggedIn) {
         return <Navigate to="/dashboard"/>;
     }
 
