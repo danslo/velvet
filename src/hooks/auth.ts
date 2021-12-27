@@ -28,7 +28,7 @@ export default function useAuth() {
                     setToken(token);
                 })
                 .catch(reason => {
-                    enqueueSnackbar(reason.message);
+                    enqueueSnackbar(reason.message, {variant: "error"});
                 });
         }
     }
