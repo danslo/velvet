@@ -29,12 +29,7 @@ const Product = () => {
         error,
         onSave,
         onDelete
-    } = useCrud<GetProductQuery,
-        GetProductQueryVariables,
-        SaveProductMutation,
-        SaveProductMutationVariables,
-        DeleteProductMutation,
-        DeleteProductMutationVariables>(
+    } = useCrud<GetProductQuery, GetProductQueryVariables, SaveProductMutation, SaveProductMutationVariables, DeleteProductMutation, DeleteProductMutationVariables>(
         GetProductDocument,
         SaveProductDocument,
         DeleteProductDocument,
