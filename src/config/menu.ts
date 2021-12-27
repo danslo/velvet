@@ -8,6 +8,8 @@ import StorageIcon from '@mui/icons-material/Storage';
 import ConfigIcon from '@mui/icons-material/Build';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import CategoryIcon from '@mui/icons-material/Category';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 type menuItem = {
     to: string
@@ -24,6 +26,8 @@ const menu: Array<menuItem> = [
     {to: "/blocks", icon: GridViewIcon},
     {to: "/customers", icon: PeopleAltIcon},
     {to: "/products", icon: InventoryIcon},
+    {to: "/attributes", icon: CategoryIcon},
+    {to: "/reports", icon: EqualizerIcon},
 ];
 
 export default menu;

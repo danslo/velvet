@@ -15,6 +15,7 @@ import Product from "../components/Products/Product/Product";
 import Products from "../components/Products/Products";
 import Page from "../components/Pages/Page/Page";
 import Attributes from "../components/Attributes/Attributes";
+import Reports from "../components/Reports/Reports";
 
 type route = {
     path: string,
@@ -30,6 +31,7 @@ const routes: Array<route> = [
     {path: 'indexers', component: Indexers},
     {path: 'customers', component: Customers},
     {path: 'attributes', component: Attributes},
+    {path: 'reports', component: Reports},
     {path: '*', component: PageNotFound, is_public: true},
     {
         path: 'orders', children: [
