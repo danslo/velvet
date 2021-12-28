@@ -4,7 +4,7 @@ import React from "react";
 
 const Reports = () => (
     <>
-        <Header text="Attributes"/>
+        <Header text="Reports"/>
     </>
 )
 
