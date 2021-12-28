@@ -1,0 +1,19 @@
+query getProductAttributeGrid($page_number: Int = 1, $page_size: Int = 20) {
+    grid: productAttributeGrid(input: {page_number: $page_number, page_size: $page_size}) {
+        last_page_number
+        total_items
+        items {
+            ... on VelvetCatalogAttribute {
+                attribute_id
+                attribute_code
+                frontend_label
+                is_required
+                is_user_defined
+                is_visible
+                is_searchable
+                is_filterable
+                is_comparable
+            }
+        }
+    }
+}
